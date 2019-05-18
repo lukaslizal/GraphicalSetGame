@@ -12,6 +12,8 @@
 		3D0DDFA0228EBAE400EF5FAE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D0DDF9E228EBAE400EF5FAE /* Main.storyboard */; };
 		3D0DDFA2228EBAE600EF5FAE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D0DDFA1228EBAE600EF5FAE /* Assets.xcassets */; };
 		3D0DDFA5228EBAE600EF5FAE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D0DDFA3228EBAE600EF5FAE /* LaunchScreen.storyboard */; };
+		3D0DDFAD228ED2B200EF5FAE /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0DDFAC228ED2B200EF5FAE /* Game.swift */; };
+		3D0DDFAF228ED2F400EF5FAE /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0DDFAE228ED2F400EF5FAE /* Card.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		3D0DDFA1228EBAE600EF5FAE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3D0DDFA4228EBAE600EF5FAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3D0DDFA6228EBAE600EF5FAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D0DDFAC228ED2B200EF5FAE /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		3D0DDFAE228ED2F400EF5FAE /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 				3D0DDFA1228EBAE600EF5FAE /* Assets.xcassets */,
 				3D0DDFA3228EBAE600EF5FAE /* LaunchScreen.storyboard */,
 				3D0DDFA6228EBAE600EF5FAE /* Info.plist */,
+				3D0DDFAC228ED2B200EF5FAE /* Game.swift */,
+				3D0DDFAE228ED2F400EF5FAE /* Card.swift */,
 			);
 			path = SetGame;
 			sourceTree = "<group>";
@@ -136,7 +142,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D0DDF9D228EBAE400EF5FAE /* ViewController.swift in Sources */,
+				3D0DDFAD228ED2B200EF5FAE /* Game.swift in Sources */,
 				3D0DDF9B228EBAE400EF5FAE /* AppDelegate.swift in Sources */,
+				3D0DDFAF228ED2F400EF5FAE /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
