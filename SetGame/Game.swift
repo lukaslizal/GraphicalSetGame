@@ -24,35 +24,44 @@ struct Game {
             }
         }
         cardsOnTable = [Card?](repeating: nil, count: 24)
-        for _ in 0..<layedCards{
-            if let randomIndex = (0..<cardsInPack.count).randomElement(){
-                cardsOnTable.append(cardsInPack.remove(at: randomIndex))
+        try dealCards(in: 12)
+    }
+    private mutating func dealCards(in quantity : Int, subtituting cards: [Card]? = nil) throws{
+        var freeSpaceIndices = [Int]()
+        var randomPackIndices = [Int]()
+        let numberOfCards = cards != nil ? cards!.count : quantity
+        for _ in 0..<numberOfCards{
+            guard let freeTableSpaceIndex = cardsOnTable.firstIndex(of: nil) else{
+                throw CardGameError.noSpaceOnTable
             }
-            else{
-                throw CardGameError.outOfCardsError
+            guard let randomCardIndex = (0..<cardsInPack.count).randomElement() else{
+                throw CardGameError.noCardsInPack
+            }
+            freeSpaceIndices.append(freeTableSpaceIndex)
+            randomPackIndices.append(randomCardIndex)
+        }
+        // only deal cards if there is enough space for them and there is enough cards in the dealing pack
+        if(freeSpaceIndices.count == numberOfCards)
+        {
+            for index in 0..<numberOfCards{
+                cardsOnTable[freeSpaceIndices[index]] = (cardsInPack.remove(at: randomPackIndices[index]))
             }
         }
     }
-    
-    mutating func dealCard() throws {
-        guard let freeTableSpaceIndex = cardsOnTable.firstIndex(of: nil) else{
-            throw CardGameError.noSpaceOnTable
-        }
-        guard let randomCardIndex = (0..<cardsInPack.count).randomElement() else{
-            throw CardGameError.noCardsInPack
-        }
-        cardsOnTable[freeTableSpaceIndex] = cardsInPack.remove(at: randomCardIndex)
+    mutating func dealCards(in quantity : Int) throws{
+        try dealCards(in: quantity)
     }
     
-    mutating func dealCards(in quantity: Int) throws{
-        for _ in 0..<quantity{
-            try dealCard()
-        }
+    mutating func subtituteCards(from cards : [Card]) throws{
+        try dealCards(in: 0, subtituting: cards)
+    }
+    
+    func evaluateSelection(of cards: [Card]){
+        
     }
 }
 
 enum CardGameError: Error{
-    case outOfCardsError
     case noSpaceOnTable
     case noCardsInPack
 }
