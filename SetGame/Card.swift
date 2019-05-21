@@ -9,20 +9,17 @@
 import Foundation
 
 struct Card : Equatable{
-    fileprivate(set) var shape : Shape
-    fileprivate(set) var color : Color
-    fileprivate(set) var pattern : Pattern
-    fileprivate(set) var quantity : Quantity
+    let shape : Feature
+    let color : Feature
+    let pattern : Feature
+    let quantity : Feature
     
-    static func == (lhs: Card, rhs: Card) -> Bool{
-        return false
-    }
     static func allCombinations() -> [Card]{
         var packOfAllCards = [Card]()
-        for color in Color.allCases{
-            for pattern in Pattern.allCases{
-                for quantity in Quantity.allCases{
-                    for shape in Shape.allCases{
+        for color in Feature.allCases{
+            for pattern in Feature.allCases{
+                for quantity in Feature.allCases{
+                    for shape in Feature.allCases{
                         let newCard = Card(shape: shape, color: color, pattern: pattern, quantity: quantity)
                         packOfAllCards.append(newCard)
                     }
@@ -32,7 +29,11 @@ struct Card : Equatable{
         return packOfAllCards
     }
     
-    init(shape: Shape, color: Color, pattern: Pattern, quantity: Quantity){
+    func matchingFeatures(with otherCard: Card) -> (Bool,Bool,Bool,Bool){
+        return (shape == otherCard.shape, color == otherCard.color, pattern == otherCard.pattern, quantity == otherCard.quantity)
+    }
+    
+    init(shape: Feature, color: Feature, pattern: Feature, quantity: Feature){
         self.shape = shape
         self.color = color
         self.pattern = pattern
@@ -40,25 +41,10 @@ struct Card : Equatable{
     }
     
     //MARK: Card feature definitions.
-    enum Shape : CaseIterable {
-        case circle
-        case square
-        case triangle
-    }
-    enum Color : CaseIterable {
-        case red
-        case green
-        case purple
-    }
-    enum Quantity : CaseIterable {
-        case one
-        case two
-        case three
-    }
-    enum Pattern : CaseIterable {
-        case fill
-        case outline
-        case transparent
+    enum Feature : CaseIterable {
+        case type1
+        case type2
+        case type3
     }
 }
 
