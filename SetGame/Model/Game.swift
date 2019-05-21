@@ -54,37 +54,3 @@ enum CardGameError: Error{
     case noCardsInPack
 }
 
-extension Collection where Self.Element : Equatable {
-    func allElementsEqual() -> Bool {
-        for element in self{
-            guard self.first != element else{
-                return false
-            }
-        }
-        return true
-    }
-    func allElementsNotEqual() -> Bool {
-        for element in self{
-            for elementToCompare in self{
-                guard elementToCompare == element else{
-                    return false
-                }
-            }
-        }
-        return true
-    }
-}
-
-extension Collection where Self.Element == Card {
-    func evaluateSelection(of cards: [Self.Element]) -> Bool {
-        if(self.allElementsEqual() || self.allElementsNotEqual()){
-            return true
-        }
-        // TODO: Code the rest.
-        return false
-    }
-    
-    func anyOnlyTwoMatching(){
-        
-    }
-}
