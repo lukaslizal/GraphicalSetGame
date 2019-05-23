@@ -8,6 +8,12 @@
 
 import Foundation
 
+/**
+ Playing card in Set! game.
+ 
+ - author:
+ Lukas Lizal
+ */
 struct Card : Equatable, Hashable{
     let shape : Feature
     let color : Feature
@@ -20,7 +26,7 @@ struct Card : Equatable, Hashable{
         self.pattern = pattern
         self.quantity = quantity
     }
-    
+    // Return Set of all possible combinations of features in a card. 4 features, 3 options each results in 3*3*3*3 = 81 cards
     static func allCombinations() -> Set<Card>{
         var packOfAllCards = Set<Card>()
         for color in Feature.allCases{
@@ -36,11 +42,11 @@ struct Card : Equatable, Hashable{
         return packOfAllCards
     }
     
-    func matchingFeatures(with otherCard: Card) -> (Bool,Bool,Bool,Bool){
-        return (shape == otherCard.shape, color == otherCard.color, pattern == otherCard.pattern, quantity == otherCard.quantity)
-    }
+//    func matchingFeatures(with otherCard: Card) -> (Bool,Bool,Bool,Bool){
+//        return (shape == otherCard.shape, color == otherCard.color, pattern == otherCard.pattern, quantity == otherCard.quantity)
+//    }
     
-    //MARK: Card feature definitions.
+    //Generic card feature.
     enum Feature : CaseIterable {
         case type1
         case type2
