@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Card : Equatable{
+struct Card : Equatable, Hashable{
     let shape : Feature
     let color : Feature
     let pattern : Feature
@@ -21,14 +21,14 @@ struct Card : Equatable{
         self.quantity = quantity
     }
     
-    static func allCombinations() -> [Card]{
-        var packOfAllCards = [Card]()
+    static func allCombinations() -> Set<Card>{
+        var packOfAllCards = Set<Card>()
         for color in Feature.allCases{
             for pattern in Feature.allCases{
                 for quantity in Feature.allCases{
                     for shape in Feature.allCases{
                         let newCard = Card(shape: shape, color: color, pattern: pattern, quantity: quantity)
-                        packOfAllCards.append(newCard)
+                        packOfAllCards.insert(newCard)
                     }
                 }
             }
@@ -36,8 +36,8 @@ struct Card : Equatable{
         return packOfAllCards
     }
     
-    func matchingFeatures(with otherCard: Card) -> [Bool]{
-        return [shape == otherCard.shape, color == otherCard.color, pattern == otherCard.pattern, quantity == otherCard.quantity]
+    func matchingFeatures(with otherCard: Card) -> (Bool,Bool,Bool,Bool){
+        return (shape == otherCard.shape, color == otherCard.color, pattern == otherCard.pattern, quantity == otherCard.quantity)
     }
     
     //MARK: Card feature definitions.
