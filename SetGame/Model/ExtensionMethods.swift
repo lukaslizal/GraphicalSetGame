@@ -15,7 +15,7 @@ import Foundation
  Lukas Lizal
  */
 extension Collection where Element == Card {
-    func evaluateSelection(of cards: [Self.Element]) -> Bool {
+    func isSet() -> Bool {
         if(anyIncompleteMatches()){
             return false
         }
@@ -50,24 +50,3 @@ extension Collection where Element == Card {
         return featureMatchesCounter.0 == 1 || featureMatchesCounter.1 == 1 || featureMatchesCounter.2 == 1 || featureMatchesCounter.3 == 1
     }
 }
-
-//extension Collection where Self.Element : Equatable {
-//    func allElementsEqual() -> Bool {
-//        for card in self{
-//            guard self.first != card else{
-//                return false
-//            }
-//        }
-//        return true
-//    }
-//    func allElementsNotEqual() -> Bool {
-//        for card in self{
-//            for cardToCompare in self{
-//                guard cardToCompare == card else{
-//                    return false
-//                }
-//            }
-//        }
-//        return true
-//    }
-//}

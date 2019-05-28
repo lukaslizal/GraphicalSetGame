@@ -46,7 +46,7 @@ struct Card : Equatable, Hashable{
 //        return (shape == otherCard.shape, color == otherCard.color, pattern == otherCard.pattern, quantity == otherCard.quantity)
 //    }
     
-    //Generic card feature.
+    // Card's generic feature (May be used for shape, color...).
     enum Feature : CaseIterable {
         case type1
         case type2
