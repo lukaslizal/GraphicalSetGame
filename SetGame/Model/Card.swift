@@ -26,6 +26,11 @@ struct Card : Equatable, Hashable{
         self.pattern = pattern
         self.quantity = quantity
     }
+    
+    init()
+    {
+        self.init(shape: Card.Feature.type1, color: Card.Feature.type1, pattern: Card.Feature.type1, quantity: Card.Feature.type1)
+    }
     // Return Set of all possible combinations of features in a card. 4 features, 3 options each results in 3*3*3*3 = 81 cards
     static func allCombinations() -> Set<Card>{
         var packOfAllCards = Set<Card>()
@@ -47,10 +52,8 @@ struct Card : Equatable, Hashable{
 //    }
     
     // Card's generic feature (May be used for shape, color...).
-    enum Feature : CaseIterable {
-        case type1
-        case type2
-        case type3
+    enum Feature : Int, CaseIterable {
+        case type1 = 0, type2, type3
     }
 }
 

@@ -50,3 +50,34 @@ extension Collection where Element == Card {
         return featureMatchesCounter.0 == 1 || featureMatchesCounter.1 == 1 || featureMatchesCounter.2 == 1 || featureMatchesCounter.3 == 1
     }
 }
+/**
+ Extension method merges two dictionaries
+ 
+ - author:
+ Lukas Lizal
+ */
+extension Dictionary {
+    mutating func merge(dict: [Key: Value]){
+        for (k, v) in dict {
+            updateValue(v, forKey: k)
+        }
+    }
+}
+
+///**
+// Extension method merges two dictionaries
+// 
+// - author:
+// Lukas Lizal
+// */
+//extension Array<Optional> {
+//    func nilIndices() -> Array<Int>{
+//        var nilIndicesArray = Array<Int>()
+//        for index in 0..<self.count {
+//            if let _ = self[index]{
+//                nilIndicesArray.append(index)
+//            }
+//        }
+//        return nilIndicesArray
+//    }
+//}

@@ -18,108 +18,160 @@ import Foundation
  Lukas Lizal
  */
 struct Game {
-    var cardsOnTable : Array<Card?>
-    var cardsInPack : Set<Card>
+    var cardsOnTable: Array<Card?>
+    var cardsInPack: Set<Card>
     var cardsSelected = Set<Card>()
+    var cardsMatched = Set<Card>()
+    var matchedCards = Set<Card>()
     var selectedIsMatch = false {
-        didSet{
-            if selectedIsMatch == true {
+        didSet {
+            if selectedIsMatch != true {
+                print("selection matched")
                 Score.shared().playerScore += 3
             }
+            else{
+                print("selection not matched")
+            }
+            
         }
     }
-    var matchedCards = Set<Card>()
-    
-    init(with startingCardCount: Int){
+
+    var freeTableIndices: Array<Int> {
+        get{
+            var nilIndicesArray = Array<Int>()
+            for index in 0..<cardsOnTable.count {
+                if cardsOnTable[index] == nil {
+                    nilIndicesArray.append(index)
+//                    print("index " + String(index) + " free")
+                }
+//                else {
+//                    print("index " + String(index) + " taken")
+//                }
+            }
+            return nilIndicesArray
+        }
+    }
+
+    init(with startingCardCount: Int) {
         cardsInPack = Card.allCombinations()
         cardsOnTable = [Card?](repeating: nil, count: 24)
-        do{
+        do {
             try dealCards(in: startingCardCount)
         }
-        catch{
+        catch {
             print(error)
         }
+
     }
-    
-    init(){
+
+    init() {
         self.init(with: 12)
     }
     // Deal cards in places specified by [Card?] array (cards on table). When toReplace are nil, procedure finds blank spots on table and deals card over those in quantity of elements in toReplace array. When toReplace cards are not nil, new cards are dealt over cards on table specified in toReplace array.
-    private mutating func subtitute(cards toReplace : [Card?]) throws{
-        var freeTableSpaceIndices = [Int]()
+    private mutating func subtitute(cards toReplace: [Card?]) throws {
+//        var freeTableIndices = freeTableIndics()
+        var cardsToReplaceIndices = [Int]()
         let numberOfCards = toReplace.count
-        for index in 0..<numberOfCards{
-            if let cardToReplace = toReplace[index], let indexOnTable = cardsOnTable.firstIndex(of: cardToReplace){
-                freeTableSpaceIndices.append(indexOnTable)
+        for index in 0..<numberOfCards {
+            if let cardToReplace = toReplace[index], let indexOnTable = cardsOnTable.firstIndex(of: cardToReplace) {
+                cardsToReplaceIndices.append(indexOnTable)
             }
-            else{
-                guard let freeTableSpaceIndex = cardsOnTable.firstIndex(of: nil) else{
-                    throw CardGameError.noSpaceOnTable
-                }
-                freeTableSpaceIndices.append(freeTableSpaceIndex)
-            }
-        }
-        // only deal cards if there is enough space for them and there is enough cards in the dealing pack
-        if(freeTableSpaceIndices.count == numberOfCards){
-            for index in 0..<numberOfCards{
-                guard let randomCardInPack = cardsInPack.randomElement() else{
+            if(cardsToReplaceIndices.count == numberOfCards) {
+                guard let randomCardInPack = cardsInPack.randomElement() else {
                     throw CardGameError.noCardsInPack
                 }
-                cardsOnTable[freeTableSpaceIndices[index]] = (cardsInPack.remove(randomCardInPack))
+                cardsOnTable[freeTableIndices[index]] = cardsInPack.remove(randomCardInPack)
+            }
+            else {
+                print("Subtituting cards issues")
             }
         }
     }
     // Deal new cards by number.
-    mutating func dealCards(in quantity : Int) throws{
-        let toReplace = Array<Card?>(repeating: nil, count: quantity)
-        try subtitute(cards: toReplace)
+    mutating func dealCards(in quantity: Int) throws {
+//        var freeTableIndices = freeTableIndics()
+        let numberOfCards = quantity
+        for index in 0..<numberOfCards {
+            if(freeTableIndices.count >= numberOfCards) {
+                guard let randomCardInPack = cardsInPack.randomElement() else {
+                    throw CardGameError.noCardsInPack
+                }
+                guard let randomFreeTableIndex = freeTableIndices.randomElement() else {
+                    return
+                }
+                cardsOnTable[randomFreeTableIndex] = cardsInPack.remove(randomCardInPack)
+            }
+        }
+//        let fti = freeTableIndices
     }
-    // Deal new cards on place of old ones specified in toReplace.
-    mutating func dealCards(cards toReplace : [Card]) throws{
-        try subtitute(cards: toReplace)
-    }
+//    func freeTableIndics() -> Array<Int> {
+//        var nilIndicesArray = Array<Int>()
+//        for index in 0..<cardsOnTable.count {
+//            if let _ = cardsOnTable[index]{
+//            }
+//            else{
+//                nilIndicesArray.append(index)
+//            }
+//        }
+//        return nilIndicesArray
+//    }
+
+//    func freeTableSpaceIndices() -> Array<Int>{
+//        var nilIndicesArray = Array<Int>()
+//        for index in 0..<cardsOnTable.count {
+//            if let _ = cardsOnTable[index]{
+//                nilIndicesArray.append(index)
+//            }
+//        }
+//        return nilIndicesArray
+//    }
+
+    //    // Deal new cards on place of old ones specified in toReplace.
+//    mutating func dealCards(cards toReplace: [Card]) throws {
+//        try subtitute(cards: toReplace)
+//    }
     // Select or deselect card depending on conditions. Returns true only when new card selection is a Set.
-    mutating func select(_ card: Card) -> Bool{
+    mutating func select(_ card: Card) {
         // When less then three cards are slected and you tap already selected card.
-        if cardsSelected.count < 3, cardsSelected.contains(card){
+        if cardsSelected.count < 3, cardsSelected.contains(card) {
             cardsSelected.remove(card)
         }
-        else{
-            if cardsSelected.count == 3{
+        else {
+            if cardsSelected.count == 3 {
                 // When selection is a Set, deselect all, remove from table and select given card.
-                if selectedIsMatch{
+                if selectedIsMatch {
                     let oldSelection = cardsSelected
-                    if !cardsSelected.contains(card){
+                    if !cardsSelected.contains(card) {
                         cardsSelected.insert(card)
                     }
-                    for matchedCard in oldSelection{
+                    for matchedCard in oldSelection {
                         cardsSelected.remove(matchedCard)
-                        if let matchedIndex = cardsOnTable.firstIndex(of: matchedCard){
-                            cardsOnTable.remove(at: matchedIndex)
-                        }
+//                        if let matchedIndex = cardsOnTable.firstIndex(of: matchedCard) {
+//                            cardsOnTable.remove(at: matchedIndex)
+//                        }
                     }
-                    do{
+                    do {
                         try subtitute(cards: Array<Card?>(oldSelection))
                     }
-                    catch{
+                    catch {
                         print(error)
                     }
                 }
-                else{
-                    for cardToDeselect in cardsSelected{
+                else {
+                    for cardToDeselect in cardsSelected {
                         cardsSelected.remove(cardToDeselect)
                     }
                     cardsSelected.insert(card)
                 }
             }
-            else{
+            else {
                 cardsSelected.insert(card)
-                if cardsSelected.count == 3{
+                if cardsSelected.count == 3, cardsSelected.isSet() {
                     selectedIsMatch = cardsSelected.isSet()
+                    cardsMatched = cardsMatched.union(cardsSelected)
                 }
             }
         }
-        return selectedIsMatch
     }
 }
 
@@ -129,17 +181,17 @@ struct Game {
  - author:
  Lukas Lizal
  */
-class Score{
+class Score {
     var playerScore: Int
     private static var instance = {
         return Score()
     }()
-    
+
     private init() {
         playerScore = 0
     }
-    
-    static func shared() -> Score{
+
+    static func shared() -> Score {
         return instance
     }
 }
@@ -150,7 +202,7 @@ class Score{
  - author:
  Lukas Lizal
  */
-enum CardGameError: Error{
+enum CardGameError: Error {
     case noSpaceOnTable
     case noCardsInPack
 }
