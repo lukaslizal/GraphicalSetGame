@@ -18,11 +18,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="left" alignment="center" spacing="120" translatesAutoresizingMaskIntoConstraints="NO" id="ZOv-SY-HRS">
-                                <rect key="frame" x="51" y="49" width="312" height="50"/>
+                            <stackView opaque="NO" contentMode="left" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ZOv-SY-HRS">
+                                <rect key="frame" x="16" y="49" width="382" height="50"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XPK-lq-0Yc">
-                                        <rect key="frame" x="0.0" y="6" width="142" height="38.5"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x3g-Sp-JKk">
+                                        <rect key="frame" x="0.0" y="6" width="120.5" height="38.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
@@ -35,17 +35,31 @@
                                             </attributedString>
                                         </state>
                                         <connections>
-                                            <action selector="newGamePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kGX-ov-nQZ"/>
+                                            <action selector="newGamePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="g17-BL-z4k"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XPK-lq-0Yc" userLabel="Deal More">
+                                        <rect key="frame" x="130.5" y="6" width="121" height="38.5"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Deal Cards">
+                                                    <attributes>
+                                                        <font key="NSFont" size="22" name=".AppleSystemUIFont"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="dealCardsPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YGP-Q9-sJz"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pgy-7J-nJb">
-                                        <rect key="frame" x="262" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="261.5" y="0.0" width="120.5" height="50"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dIL-Am-EW7">
-                                                <rect key="frame" x="-61" y="0.0" width="108" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="U3g-0Y-OVF"/>
-                                                </constraints>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dIL-Am-EW7">
+                                                <rect key="frame" x="17" y="12" width="85.5" height="26.5"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="Score: --">
                                                         <attributes>
@@ -59,9 +73,8 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="dIL-Am-EW7" firstAttribute="top" secondItem="Pgy-7J-nJb" secondAttribute="top" id="4fb-3q-v0V"/>
-                                            <constraint firstItem="dIL-Am-EW7" firstAttribute="leading" secondItem="Pgy-7J-nJb" secondAttribute="leadingMargin" id="Pl7-Li-oeq"/>
-                                            <constraint firstAttribute="bottom" secondItem="dIL-Am-EW7" secondAttribute="bottom" id="lAb-4Q-9Oe"/>
+                                            <constraint firstItem="dIL-Am-EW7" firstAttribute="leading" secondItem="Pgy-7J-nJb" secondAttribute="leading" constant="17" id="RQI-qv-GLr"/>
+                                            <constraint firstItem="dIL-Am-EW7" firstAttribute="centerY" secondItem="Pgy-7J-nJb" secondAttribute="centerY" id="rac-bM-BRL"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -360,12 +373,12 @@
                             <constraint firstItem="ZOv-SY-HRS" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="5" id="eoi-Os-ibp"/>
                             <constraint firstItem="ZOv-SY-HRS" firstAttribute="centerX" secondItem="7bL-sS-p88" secondAttribute="centerX" id="mHa-3l-E14"/>
                             <constraint firstItem="7bL-sS-p88" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="xDc-F6-mNT"/>
-                            <constraint firstItem="ZOv-SY-HRS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="51" id="xFa-Q1-yd4"/>
+                            <constraint firstItem="ZOv-SY-HRS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="xFa-Q1-yd4"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="newGameButton" destination="XPK-lq-0Yc" id="PDb-T0-BBu"/>
+                        <outlet property="dealCardsButton" destination="XPK-lq-0Yc" id="tcV-uC-bGf"/>
                         <outlet property="scoreLabel" destination="dIL-Am-EW7" id="Qs9-Zj-0lT"/>
                         <outletCollection property="cardButtons" destination="saA-zb-chm" collectionClass="NSMutableArray" id="JQU-r2-Nyu"/>
                         <outletCollection property="cardButtons" destination="izq-ld-tcj" collectionClass="NSMutableArray" id="ltV-B4-ji8"/>
