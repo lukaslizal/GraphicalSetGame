@@ -15,6 +15,7 @@
 		3D0DDFAD228ED2B200EF5FAE /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0DDFAC228ED2B200EF5FAE /* Game.swift */; };
 		3D0DDFAF228ED2F400EF5FAE /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0DDFAE228ED2F400EF5FAE /* Card.swift */; };
 		3D0DDFB22294059800EF5FAE /* ExtensionMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0DDFB12294059800EF5FAE /* ExtensionMethods.swift */; };
+		3DB1ECEE22B69D6500B70EB9 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1ECED22B69D6500B70EB9 /* Grid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		3D0DDFAC228ED2B200EF5FAE /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		3D0DDFAE228ED2F400EF5FAE /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		3D0DDFB12294059800EF5FAE /* ExtensionMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionMethods.swift; sourceTree = "<group>"; };
+		3DB1ECED22B69D6500B70EB9 /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				3D0DDFA3228EBAE600EF5FAE /* LaunchScreen.storyboard */,
 				3D0DDFA6228EBAE600EF5FAE /* Info.plist */,
 				3D0DDFB02293F26B00EF5FAE /* Model */,
+				3DB1ECED22B69D6500B70EB9 /* Grid.swift */,
 			);
 			path = SetGame;
 			sourceTree = "<group>";
@@ -157,6 +160,7 @@
 				3D0DDFAD228ED2B200EF5FAE /* Game.swift in Sources */,
 				3D0DDF9B228EBAE400EF5FAE /* AppDelegate.swift in Sources */,
 				3D0DDFAF228ED2F400EF5FAE /* Card.swift in Sources */,
+				3DB1ECEE22B69D6500B70EB9 /* Grid.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

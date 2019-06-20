@@ -22,8 +22,8 @@ class ViewController: UIViewController {
     ]
     @IBOutlet var cardButtons: [UIButton]!
     @IBAction func cardPressed(_ sender: UIButton) {
-        if let buttonIndex = cardButtons.firstIndex(of: sender),
-            let selectedCard = game.cardsOnTable[buttonIndex] {
+        if let buttonIndex = cardButtons.firstIndex(of: sender) {
+            let selectedCard = game.cardsOnTable[buttonIndex]
             game.select(selectedCard)
             updateUI()
         }
@@ -39,13 +39,8 @@ class ViewController: UIViewController {
             // By selecting one of matching cards, cards are replaced with new
             game.select(oneOfMatched)
         }
-        else{
-            do{
-                try game.dealCards(quantity: 3)
-            }
-            catch{
-                print(error)
-            }
+        else {
+            game.dealCards(quantity: 3)
         }
         updateUI()
     }
@@ -65,19 +60,21 @@ class ViewController: UIViewController {
         game = Game()
         Score.reset()
         updateUI()
-        
+
     }
 
     func updateUI() {
         for buttonIndex in 0..<cardButtons.count {
-            if let cardFromTable = game.cardsOnTable[buttonIndex] {
-                // Reveals card.
-                cardButtons[buttonIndex].layer.opacity = 1
-                setupUIButton(at: buttonIndex, with: cardFromTable)
+            if buttonIndex < game.cardsOnTable.count {
+                let card = game.cardsOnTable[buttonIndex]
+                _ = adjustButton(of: card) {
+                    $0.layer.opacity = 1
+                    setupUIButton(with: card)
+                }
             }
             else {
-                // Hides card.
-                cardButtons[buttonIndex].layer.opacity = 0
+                print("Hidding "+String(buttonIndex))
+                hideButton(at: buttonIndex)
             }
         }
         hideMatchedCards()
@@ -88,21 +85,22 @@ class ViewController: UIViewController {
     }
 
     func highlightSelection() {
-        for buttonIndex in 0..<cardButtons.count {
-            cardButtons[buttonIndex].layer.borderWidth = 0
-            if let cardOnTable = game.cardsOnTable[buttonIndex], game.cardsSelected.contains(cardOnTable) {
-                cardButtons[buttonIndex].layer.borderColor = buttonHightlightColor.cgColor
-                cardButtons[buttonIndex].layer.borderWidth = 3
+        for card in game.cardsOnTable {
+            _ = adjustButton(of: card) { $0.layer.borderWidth = 0 }
+            if game.cardsSelected.contains(card) {
+                _ = adjustButton(of: card) {
+                    $0.layer.borderColor = buttonHightlightColor.cgColor
+                    $0.layer.borderWidth = 3
+                }
             }
         }
     }
-    
+
     func markSuccessfulMatch() {
-        for matchCard in game.cardsMatched{
-            if let matchedCardIndex = game.cardsOnTable.firstIndex(of: matchCard){
-        
-                cardButtons[matchedCardIndex].layer.borderColor = buttonSuccessColor.cgColor
-                cardButtons[matchedCardIndex].layer.borderWidth = 5
+        for matchCard in game.cardsMatched {
+            _ = adjustButton(of: matchCard) {
+                $0.layer.borderColor = buttonSuccessColor.cgColor
+                $0.layer.borderWidth = 5
             }
         }
     }
@@ -112,7 +110,10 @@ class ViewController: UIViewController {
         scoreLabel.text = "Score: " + String(Score.shared().playerScore)
     }
 
-    func setupUIButton(at index: Int, with card: Card) {
+    func setupUIButton(with card: Card) {
+        guard let index = game.cardsOnTable.firstIndex(of: card) else {
+            return
+        }
         let button = cardButtons[index]
         var iconAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 30)]
         var colorAttributes: [[NSAttributedString.Key: Any]] =
@@ -136,15 +137,26 @@ class ViewController: UIViewController {
     }
 
     func hideMatchedCards() {
-        for cardIndex in 0..<game.cardsOnTable.count {
-            if let card = game.cardsOnTable[cardIndex], game.cardsMatched.contains(card) && !game.cardsOnTable.contains(card) {
-                cardButtons[cardIndex].layer.opacity = 0
-            }
+        for card in game.cardsMatched where !game.cardsOnTable.contains(card){
+            _ = adjustButton(of: card) { $0.layer.opacity = 0 }
         }
     }
-    
-    func manageDealButton(){
-        dealCardsButton.isEnabled = !game.freeTableIndices.isEmpty && !game.cardsInPack.isEmpty
+
+    // TODO: find button by card
+    func adjustButton(of card: Card, with action: (UIButton) -> ()) -> UIButton? {
+        if let buttonIndex = game.cardsOnTable.firstIndex(of: card) {
+            action(cardButtons[buttonIndex])
+            return cardButtons[buttonIndex]
+        }
+        return nil
+    }
+
+    func hideButton(at index: Int) {
+        cardButtons[index].layer.opacity = 0
+    }
+
+    func manageDealButton() {
+        dealCardsButton.isEnabled = !game.cardsInPack.isEmpty && !(game.cardsOnTable.count + 3 > cardButtons.count)
     }
 }
 
