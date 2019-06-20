@@ -1,8 +1,8 @@
 //
 //  Game.swift
-//  SetGame
+//  Graphical SetGame
 //
-//  Created by Lukas on 17/05/2019.
+//  Created by Lukas on 20/06/2019.
 //  Copyright © 2019 Lukas Lizal. All rights reserved.
 //
 
@@ -18,9 +18,10 @@ import Foundation
  Lukas Lizal
  */
 struct Game {
-    var cardsOnTable: Array<Card>
-    var cardsSelected = Set<Card>()
-    var cardsInPack: Set<Card>
+    var cheatMode: Bool = true
+    private(set) var cardsOnTable: Array<Card>
+    private(set) var cardsSelected = Set<Card>()
+    private(set) var cardsInPack: Set<Card>
     {
         didSet {
             print(self.cardsInPack.count)
@@ -29,12 +30,12 @@ struct Game {
     var cardsMatched: Set<Card>
     {
         var matched = Set<Card>()
-        if cardsSelected.isSet() {
+        if cardsSelected.isSet() || (cardsSelected.count == 3 && cheatMode) {
             matched = cardsSelected
         }
         return matched
     }
-    var selectedIsMatch = false {
+    private(set) var selectedIsMatch = false {
         didSet {
             if selectedIsMatch {
                 Score.shared().playerScore += 3
@@ -53,16 +54,24 @@ struct Game {
     }
 
     // Deal cards in places specified by [Card?] array (cards on table). When toReplace are nil, procedure finds blank spots on table and deals card over those in quantity of elements in toReplace array. When toReplace cards are not nil, new cards are dealt over cards on table specified in toReplace array.
-    mutating func subtitute(cards toReplace: [Card?]) {
+    private mutating func subtitute(cards toReplace: [Card]) {
         let numberOfCards = toReplace.count
         for index in 0..<numberOfCards {
-            if let cardToReplace = toReplace[index], let randomCardFromPack = cardsInPack.randomElement(), let dealCard = cardsInPack.remove(randomCardFromPack) {
+            let cardToReplace = toReplace[index]
+            if let randomCardFromPack = cardsInPack.randomElement(), let dealCard = cardsInPack.remove(randomCardFromPack) {
                 if let indexOnTable = cardsOnTable.firstIndex(of: cardToReplace) {
                     cardsOnTable[indexOnTable] = dealCard
                 }
                 else {
                     cardsOnTable.append(dealCard)
                 }
+            }
+            // When there is no more cards in th deck, just remove the card from table
+            else{
+                guard let indexToRemove = cardsOnTable.firstIndex(of: cardToReplace) else {
+                    return
+                }
+                cardsOnTable.remove(at: indexToRemove)
             }
         }
     }
@@ -87,7 +96,7 @@ struct Game {
                 let oldSelection = cardsSelected
                 cardsSelected = Set<Card>()
                 if selectedIsMatch {
-                    subtitute(cards: Array<Card?>(oldSelection))
+                    subtitute(cards: Array<Card>(oldSelection))
                 }
             }
             // Select card
@@ -95,7 +104,12 @@ struct Game {
                 cardsSelected.insert(card)
             }
         }
-        selectedIsMatch = cardsSelected.isSet()
+        if cheatMode && cardsSelected.count == 3 {
+            selectedIsMatch = true
+        }
+        else {
+            selectedIsMatch = cardsSelected.isSet()
+        }
     }
 }
 

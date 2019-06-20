@@ -1,8 +1,8 @@
 //
 //  Card.swift
-//  SetGame
+//  Graphical SetGame
 //
-//  Created by Lukas on 17/05/2019.
+//  Created by Lukas on 20/06/2019.
 //  Copyright © 2019 Lukas Lizal. All rights reserved.
 //
 

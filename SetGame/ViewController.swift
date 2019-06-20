@@ -1,8 +1,8 @@
 //
 //  ViewController.swift
-//  SetGame
+//  Graphical SetGame
 //
-//  Created by Lukas on 17/05/2019.
+//  Created by Lukas on 20/06/2019.
 //  Copyright © 2019 Lukas Lizal. All rights reserved.
 //
 
@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     private let buttonBackgroundColor = #colorLiteral(red: 1, green: 0.9663769181, blue: 0.8609685167, alpha: 1)
     private let buttonHightlightColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
     private let buttonSuccessColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
-    let colors = [#colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1), #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)]
+    private let colors = [#colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1), #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)]
     private let attributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 35),
             .foregroundColor: UIColor.green
@@ -56,14 +56,14 @@ class ViewController: UIViewController {
         }
     }
 
-    func newGame() {
+    private func newGame() {
         game = Game()
         Score.reset()
         updateUI()
 
     }
 
-    func updateUI() {
+    private func updateUI() {
         for buttonIndex in 0..<cardButtons.count {
             if buttonIndex < game.cardsOnTable.count {
                 let card = game.cardsOnTable[buttonIndex]
@@ -84,7 +84,7 @@ class ViewController: UIViewController {
         manageDealButton()
     }
 
-    func highlightSelection() {
+    private func highlightSelection() {
         for card in game.cardsOnTable {
             _ = adjustButton(of: card) { $0.layer.borderWidth = 0 }
             if game.cardsSelected.contains(card) {
@@ -96,7 +96,7 @@ class ViewController: UIViewController {
         }
     }
 
-    func markSuccessfulMatch() {
+    private func markSuccessfulMatch() {
         for matchCard in game.cardsMatched {
             _ = adjustButton(of: matchCard) {
                 $0.layer.borderColor = buttonSuccessColor.cgColor
@@ -105,12 +105,12 @@ class ViewController: UIViewController {
         }
     }
 
-    func updateScoreLabel() {
+    private func updateScoreLabel() {
         print("refreshed score")
         scoreLabel.text = "Score: " + String(Score.shared().playerScore)
     }
 
-    func setupUIButton(with card: Card) {
+    private func setupUIButton(with card: Card) {
         guard let index = game.cardsOnTable.firstIndex(of: card) else {
             return
         }
@@ -136,14 +136,14 @@ class ViewController: UIViewController {
         button.setAttributedTitle(icon, for: UIControl.State.normal)
     }
 
-    func hideMatchedCards() {
-        for card in game.cardsMatched where !game.cardsOnTable.contains(card){
+    private func hideMatchedCards() {
+        for card in Card.allCombinations() where !game.cardsOnTable.contains(card){
             _ = adjustButton(of: card) { $0.layer.opacity = 0 }
         }
     }
 
     // TODO: find button by card
-    func adjustButton(of card: Card, with action: (UIButton) -> ()) -> UIButton? {
+    private func adjustButton(of card: Card, with action: (UIButton) -> ()) -> UIButton? {
         if let buttonIndex = game.cardsOnTable.firstIndex(of: card) {
             action(cardButtons[buttonIndex])
             return cardButtons[buttonIndex]
@@ -151,11 +151,11 @@ class ViewController: UIViewController {
         return nil
     }
 
-    func hideButton(at index: Int) {
+    private func hideButton(at index: Int) {
         cardButtons[index].layer.opacity = 0
     }
 
-    func manageDealButton() {
+    private func manageDealButton() {
         dealCardsButton.isEnabled = !game.cardsInPack.isEmpty && !(game.cardsOnTable.count + 3 > cardButtons.count)
     }
 }
