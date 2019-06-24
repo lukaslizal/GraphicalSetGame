@@ -60,7 +60,7 @@ class ViewController: UIViewController {
         game = Game()
         Score.reset()
         updateUI()
-
+        
     }
 
     private func updateUI() {
@@ -156,7 +156,7 @@ class ViewController: UIViewController {
     }
 
     private func manageDealButton() {
-        dealCardsButton.isEnabled = !game.cardsInPack.isEmpty && !(game.cardsOnTable.count + 3 > cardButtons.count)
+        dealCardsButton.isEnabled = !game.cardsInPack.isEmpty
     }
 }
 
