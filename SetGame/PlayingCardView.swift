@@ -22,52 +22,49 @@ class PlayingCardView: UIView {
     }
 
     required init?(coder aDecoder: NSCoder) {
-        
         super.init(coder: aDecoder)
-        
-        addSubview(symbolGridView)
-        for index in 0..<quantity{
-            self.shapeViews.append(ShapeView())
-            addSubview(shapeViews[index])
-        }
-        layer.backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        layer.backgroundColor = Constants.cardColor
+        layer.isOpaque = false
+        layer.cornerRadius = layer.bounds.width * Constants.cornerRadiusToWidthRatio
+        initSubviews(quantity)
     }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(symbolGridView)
-        for index in 0..<quantity{
-            self.shapeViews.append(ShapeView())
-            addSubview(shapeViews[index])
-        }
-        addSubview(symbolGridView)
-        layer.backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        layer.backgroundColor = Constants.cardColor
+        layer.isOpaque = false
+        layer.cornerRadius = layer.bounds.width * Constants.cornerRadiusToWidthRatio
+        initSubviews(quantity)
     }
 
     convenience init(frame: CGRect, shapeView: ShapeView, quantity: Int, colorOption: Int) {
         self.init(frame: frame)
         self.quantity = quantity
         self.colorOption = colorOption
-        for index in 0..<quantity{
+        layer.backgroundColor = Constants.cardColor
+        layer.isOpaque = false
+        layer.cornerRadius = layer.bounds.width * Constants.cornerRadiusToWidthRatio
+        initSubviews(quantity)
+    }
+    
+    private func initSubviews(_ count: Int){
+        for index in 0..<count{
             self.shapeViews.append(ShapeView())
             addSubview(shapeViews[index])
         }
-        addSubview(symbolGridView)
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
         let symbolInsets = layer.bounds.width * Constants.symbolInsetsRatio
         let symbolsAreaRect = layer.bounds.insetBy(dx: symbolInsets, dy: symbolInsets)
-//        symbolGridView.frame = symbolsAreaRect
-//        symbolGridView.backgroundColor = UIColor.blue
         var gridOfShapes = Grid(layout: Grid.Layout.aspectRatio(Constants.symbolAspectRatio), frame: symbolsAreaRect)
         gridOfShapes.cellCount = quantity
         for index in 0..<quantity{
             let spacingX = shapeViews[index].frame.width * Constants.symbolSpacingToCardRatio
             let spacingY = shapeViews[index].frame.height * Constants.symbolSpacingToCardRatio
             shapeViews[index].frame = (gridOfShapes[index]?.insetBy(dx: spacingX, dy: spacingY))!
-            shapeViews[index].backgroundColor = UIColor.red
+            shapeViews[index].isOpaque = false
         }
     }
 }
@@ -158,6 +155,8 @@ extension PlayingCardView {
         static let symbolWidthToBoundsRatio: CGFloat = 4 / 5
         static let symbolHeightToBoundsRatio: CGFloat = 4 / 5
         static let symbolSpacingToCardRatio: CGFloat = 1 / 20
+        static let cardColor: CGColor = #colorLiteral(red: 0.9409078817, green: 0.9409078817, blue: 0.9409078817, alpha: 1)
+        static let cornerRadiusToWidthRatio: CGFloat = 1/10
     }
 }
 extension ShapeView {
