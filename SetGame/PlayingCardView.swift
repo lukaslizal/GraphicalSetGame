@@ -83,6 +83,7 @@ class ShapeView: UIView {
         self.shapeColor = UIColor.purple
         self.pattern = .stroke
         super.init(coder: aDecoder)
+        self.contentMode = .redraw
     }
 
     override init(frame: CGRect) {
@@ -90,6 +91,7 @@ class ShapeView: UIView {
         self.shapeColor = UIColor.purple
         self.pattern = .hatch
         super.init(frame: frame)
+        self.contentMode = .redraw
     }
 
     override func draw(_ rect: CGRect) {
