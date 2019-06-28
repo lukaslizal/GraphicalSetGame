@@ -75,8 +75,12 @@ struct Game {
             }
         }
     }
+    // Shuffle cards on table
+    internal mutating func shuffle(){
+        cardsOnTable.shuffle()
+    }
     // Deal new cards by number of cards to deal.
-    mutating func dealCards(quantity count: Int) {
+    internal mutating func dealCards(quantity count: Int) {
         for _ in 0..<count {
             guard let randomCardInPack = cardsInPack.randomElement(), let dealCard = cardsInPack.remove(randomCardInPack) else {
                 return
@@ -85,7 +89,7 @@ struct Game {
         }
     }
     // Select or deselect card depending on conditions. Returns true only when new card selection is a Set.
-    mutating func select(_ card: Card) {
+    internal mutating func select(_ card: Card) {
         // When less then three cards are slected and you tap already selected card. Deselect given card.
         if cardsSelected.count < 3, cardsSelected.contains(card) {
             cardsSelected.remove(card)

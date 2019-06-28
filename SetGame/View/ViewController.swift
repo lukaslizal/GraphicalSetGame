@@ -55,7 +55,7 @@ class ViewController: UIViewController {
             cardButton.backgroundColor = buttonBackgroundColor
         }
     }
-
+     
     private func newGame() {
         game = Game()
         Score.reset()

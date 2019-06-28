@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 /**
- Extension methods helping core gameplay mechanic to be checked. That is finding (non) matching card features.
+ Extension methods helping core gameplay mechanic to be executed. That is finding (non) matching card features.
  
  - author:
  Lukas Lizal

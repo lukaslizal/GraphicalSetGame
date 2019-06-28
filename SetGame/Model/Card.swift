@@ -46,11 +46,6 @@ struct Card : Equatable, Hashable{
         }
         return packOfAllCards
     }
-    
-//    func matchingFeatures(with otherCard: Card) -> (Bool,Bool,Bool,Bool){
-//        return (shape == otherCard.shape, color == otherCard.color, pattern == otherCard.pattern, quantity == otherCard.quantity)
-//    }
-    
     // Card's generic feature (May be used for shape, color...).
     enum Feature : Int, CaseIterable {
         case type1 = 0, type2, type3
