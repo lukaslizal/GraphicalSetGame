@@ -48,7 +48,7 @@ struct Card : Equatable, Hashable{
     }
     // Card's generic feature (May be used for shape, color...).
     enum Feature : Int, CaseIterable {
-        case type1 = 0, type2, type3
+        case type1 = 0, type2 = 1, type3 = 2
     }
 }
 

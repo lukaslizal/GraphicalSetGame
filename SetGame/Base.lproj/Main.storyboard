@@ -27,8 +27,10 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="nqC-vx-cmn" secondAttribute="height" multiplier="1:1" priority="750" id="Zb0-LL-gwM"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="50"/>
-                                        <state key="normal" title="🔄"/>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="14"/>
+                                        <state key="normal" title="Restart">
+                                            <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
                                         <connections>
                                             <action selector="newGamePressed:" destination="am1-Mp-clk" eventType="touchUpInside" id="kxV-Tr-zAh"/>
                                         </connections>
@@ -48,8 +50,9 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Oiw-wt-fX9" secondAttribute="height" multiplier="1:1" priority="750" id="ASu-uV-fqV"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="60"/>
-                                        <state key="normal" title="🎴">
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="15"/>
+                                        <state key="normal" title="Deal">
+                                            <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
@@ -151,6 +154,7 @@
                     </view>
                     <connections>
                         <outlet property="dealCardsButton" destination="Oiw-wt-fX9" id="dxV-iH-eVB"/>
+                        <outlet property="newGameButton" destination="nqC-vx-cmn" id="Bgu-qK-17f"/>
                         <outlet property="playingView" destination="n62-Gi-eRm" id="1AO-mw-2Kd"/>
                         <outlet property="scoreLabel" destination="Yac-uz-UVd" id="vIF-LF-rea"/>
                     </connections>

@@ -9,26 +9,20 @@
 import UIKit
 
 class ShapeView: UIView {
-    var shape: ShapeType { didSet { setNeedsDisplay() } }
-    var shapeColor: UIColor { didSet { setNeedsDisplay() } }
-    var fill: FillType { didSet { setNeedsDisplay() } }
+    var shape: ShapeType = ShapeType(rawValue: 0)! { didSet { setNeedsDisplay() } }
+    var shapeColor: UIColor = UIColor.ColorPalette.color(of: 0) { didSet { setNeedsDisplay() } }
+    var fill: FillType = FillType(rawValue: 0)! { didSet { setNeedsDisplay() } }
     lazy var drawingArea: CGRect = {
         let insets = layer.bounds.width * Constants.symbolInsetsRatio
         return self.frame.insetBy(dx: insets, dy: insets)
     }()
 
     required init?(coder aDecoder: NSCoder) {
-        self.shape = .squiggle
-        self.shapeColor = UIColor.purple
-        self.fill = .hatch
         super.init(coder: aDecoder)
         self.contentMode = .redraw
     }
 
     override init(frame: CGRect) {
-        self.shape = .squiggle
-        self.shapeColor = UIColor.purple
-        self.fill = .hatch
         super.init(frame: frame)
         self.contentMode = .redraw
     }
