@@ -132,14 +132,14 @@ extension ShapeView {
 
 enum FillType: Int {
     case stroke = 0
-    case fill
-    case hatch
+    case fill = 1
+    case hatch = 2
 }
 
 enum ShapeType: Int {
     case rhombus = 0
-    case oval
-    case squiggle
+    case oval = 1
+    case squiggle = 2
 }
 extension UIColor {
     struct ColorPalette {

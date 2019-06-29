@@ -9,18 +9,18 @@
 import UIKit
 
 class PlayingCardView: UIView {
-    var shapeViews: [ShapeView] = Array(repeating: ShapeView(), count: 3)
+    var shapeViews: [ShapeView] = [ShapeView(), ShapeView(), ShapeView()]
     var symbolGridView: UIView = UIView() { didSet { setNeedsLayout() } }
-    var shapeType: Int = 3 {
+    var shapeType: Int = 0 {
         didSet {
-            for shape in shapeViews {
-                shape.shape = ShapeType(rawValue: shapeType)!
+            for view in shapeViews {
+                view.shape = ShapeType(rawValue: shapeType)!
             }
             setNeedsLayout() } }
-    var quantity: Int = 3 {
+    var quantity: Int = 0 {
         didSet {
             setNeedsLayout() } }
-    var fillType: Int = 3 {
+    var fillType: Int = 0 {
         didSet {
             for view in shapeViews {
                 view.fill = FillType(rawValue: fillType)!
@@ -43,22 +43,23 @@ class PlayingCardView: UIView {
         super.init(frame: frame)
     }
 
-    convenience init(frame: CGRect, shapeType: Int, quantityType: Int, fillType: Int, colorType: Int) {
-        self.init(frame: frame)
+    init(frame: CGRect, shapeType: Int, quantityType: Int, fillType: Int, colorType: Int) {
+        super.init(frame: frame)
         layer.cornerRadius = layer.bounds.width * Constants.cornerRadiusToWidthRatio
         layer.backgroundColor = Constants.cardColor
         layer.isOpaque = false
-        initSubviews(quantity: quantityType + 1)
-        self.shapeType = shapeType
-        self.quantity = quantityType+1
-        self.colorType = colorType
-        self.fillType = fillType
+        initSubviews(quantity: quantityType + 1, shapeType: shapeType, fillType: fillType, colorType: colorType)
+        
     }
 
-    private func initSubviews(quantity: Int) {
+    private func initSubviews(quantity: Int, shapeType: Int, fillType: Int, colorType: Int) {
         for index in 0..<quantity {
             addSubview(shapeViews[index])
         }
+        self.shapeType = shapeType
+        self.quantity = quantity
+        self.colorType = colorType
+        self.fillType = fillType
     }
 
     override func layoutSubviews() {
@@ -70,14 +71,10 @@ class PlayingCardView: UIView {
         gridOfShapes.cellCount = quantity
         for index in 0..<shapeViews.count {
             if index < quantity{
-                shapeViews[index].isHidden = false
                 let spacingX = shapeViews[index].frame.width * Constants.symbolSpacingToCardRatio
                 let spacingY = shapeViews[index].frame.height * Constants.symbolSpacingToCardRatio
                 shapeViews[index].frame = (gridOfShapes[index]?.insetBy(dx: spacingX, dy: spacingY))!
                 shapeViews[index].isOpaque = false
-            }
-            else{
-                shapeViews[index].isHidden = true
             }
         }
     }
