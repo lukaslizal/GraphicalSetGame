@@ -142,7 +142,6 @@ class ViewController: UIViewController {
         }
     }
 
-    // TODO: find button by card
     private func adjustButton(of card: Card, with action: (UIButton) -> ()) -> UIButton? {
         if let buttonIndex = game.cardsOnTable.firstIndex(of: card) {
             action(cardButtons[buttonIndex])

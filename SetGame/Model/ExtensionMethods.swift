@@ -28,7 +28,7 @@ extension Collection where Element == Card {
         var featureMatchesCounter = (0,0,0,0)
         for cardOne in self{
             // Link card with each other except itself, then compare features of these pairs.
-            print("iteration")
+//            print("iteration")
             for cardTwo in self{
                 if cardTwo != cardOne {
                     let pair = Set<Card>(arrayLiteral: cardOne, cardTwo)
