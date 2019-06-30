@@ -15,7 +15,7 @@
 		3D0DDFAD228ED2B200EF5FAE /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0DDFAC228ED2B200EF5FAE /* Game.swift */; };
 		3D0DDFAF228ED2F400EF5FAE /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0DDFAE228ED2F400EF5FAE /* Card.swift */; };
 		3D0DDFB22294059800EF5FAE /* ExtensionMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0DDFB12294059800EF5FAE /* ExtensionMethods.swift */; };
-		3D4FA58C22C3E11C00034DF5 /* GraphicalSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4FA58B22C3E11C00034DF5 /* GraphicalSetViewController.swift */; };
+		3DA5517B22C935CD00437A14 /* GraphicalSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA5517A22C935CD00437A14 /* GraphicalSetViewController.swift */; };
 		3DB1ECEE22B69D6500B70EB9 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1ECED22B69D6500B70EB9 /* Grid.swift */; };
 		3DB1ECF522BCD92000B70EB9 /* PlayingCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1ECF422BCD92000B70EB9 /* PlayingCardView.swift */; };
 		3DECE75D22C4FB7F00DF4624 /* ShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DECE75C22C4FB7F00DF4624 /* ShapeView.swift */; };
@@ -32,7 +32,7 @@
 		3D0DDFAC228ED2B200EF5FAE /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		3D0DDFAE228ED2F400EF5FAE /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		3D0DDFB12294059800EF5FAE /* ExtensionMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionMethods.swift; sourceTree = "<group>"; };
-		3D4FA58B22C3E11C00034DF5 /* GraphicalSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphicalSetViewController.swift; sourceTree = "<group>"; };
+		3DA5517A22C935CD00437A14 /* GraphicalSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphicalSetViewController.swift; sourceTree = "<group>"; };
 		3DB1ECED22B69D6500B70EB9 /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		3DB1ECF422BCD92000B70EB9 /* PlayingCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingCardView.swift; sourceTree = "<group>"; };
 		3DECE75C22C4FB7F00DF4624 /* ShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeView.swift; sourceTree = "<group>"; };
@@ -69,8 +69,8 @@
 			isa = PBXGroup;
 			children = (
 				3D0DDF9C228EBAE400EF5FAE /* ViewController.swift */,
+				3DA5517A22C935CD00437A14 /* GraphicalSetViewController.swift */,
 				3DECE75C22C4FB7F00DF4624 /* ShapeView.swift */,
-				3D4FA58B22C3E11C00034DF5 /* GraphicalSetViewController.swift */,
 				3DB1ECF422BCD92000B70EB9 /* PlayingCardView.swift */,
 				3DB1ECED22B69D6500B70EB9 /* Grid.swift */,
 				3D0DDF9A228EBAE400EF5FAE /* AppDelegate.swift */,
@@ -169,8 +169,8 @@
 				3DB1ECF522BCD92000B70EB9 /* PlayingCardView.swift in Sources */,
 				3D0DDF9D228EBAE400EF5FAE /* ViewController.swift in Sources */,
 				3D0DDFAD228ED2B200EF5FAE /* Game.swift in Sources */,
+				3DA5517B22C935CD00437A14 /* GraphicalSetViewController.swift in Sources */,
 				3D0DDF9B228EBAE400EF5FAE /* AppDelegate.swift in Sources */,
-				3D4FA58C22C3E11C00034DF5 /* GraphicalSetViewController.swift in Sources */,
 				3D0DDFAF228ED2F400EF5FAE /* Card.swift in Sources */,
 				3DB1ECEE22B69D6500B70EB9 /* Grid.swift in Sources */,
 			);
