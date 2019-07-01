@@ -11,35 +11,88 @@ import UIKit
 class GraphicalSetViewController: UIViewController {
 
     var game: Game = Game()
-    var playingBoardView =
-    @IBOutlet var cardButtons: [UIButton]!
-    @IBAction func cardPressed(_ sender: UIButton) {
-        if let buttonIndex = cardButtons.firstIndex(of: sender) {
-            let selectedCard = game.cardsOnTable[buttonIndex]
-            game.select(selectedCard)
-            updateUI()
-        }
-    }
+    var playingCardButtons: [PlayingCardView] = []
+    @IBOutlet weak var playingBoardView: UIView!
+    @IBOutlet weak var newGameButton: UIButton!
     @IBAction func newGamePressed(_ sender: UIButton) {
         newGame()
     }
     @IBOutlet weak var dealCardsButton: UIButton!
     @IBAction func dealCardsPressed(_ sender: UIButton) {
-        if game.selectedIsMatch, let oneOfMatched = game.cardsSelected.first {
-            // By selecting one of matching cards, cards are replaced with new
-            game.select(oneOfMatched)
-        }
-        else {
-            game.dealCards(quantity: 3)
-        }
-        updateUI()
+        dealThreeCards()
     }
     @IBOutlet weak var scoreLabel: UILabel!
+    
+    @objc func tappedCard(_ sender: UITapGestureRecognizer){
+        switch sender.state {
+        case .ended:
+            // Find PlayingCard view on sender.view object.
+            var playingCardView = sender.view as? PlayingCardView
+            if playingCardView == nil {
+                for subview in sender.view?.subviews ?? []{
+                    if let playingCardSubview = subview as? PlayingCardView{
+                        playingCardView = playingCardSubview
+                    }
+                }
+            }
+            // Select card in model.
+            if let card = playingCardView, let buttonIndex = playingCardButtons.firstIndex(of: card) {
+                let selectedCard = game.cardsOnTable[buttonIndex]
+                game.select(selectedCard)
+                updateUI()
+            }
+        default:
+            return
+        }
+    }
+    @objc func swipeToDealCards(_ sender: UISwipeGestureRecognizer){
+        switch sender.state {
+        case .ended:
+            dealThreeCards()
+            updateUI()
+        default:
+            return
+        }
+    }
+    @objc func rotateToShuffle(_ sender: UIRotationGestureRecognizer){
+        switch sender.state {
+        case .began:
+            game.shuffle()
+            updateUI()
+        default:
+            return
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        self.newGameButton.backgroundColor = UIColor.white
+        self.dealCardsButton.backgroundColor = UIColor.white
         newGame()
+        setupGestrues()
+    }
+    
+    func setupGestrues(){
+        for button in playingCardButtons{
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedCard))
+            tapGesture.numberOfTapsRequired = 1
+            tapGesture.numberOfTouchesRequired = 1
+            button.addGestureRecognizer(tapGesture)
+        }
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeToDealCards))
+        swipeGesture.direction = .down
+        view.addGestureRecognizer(swipeGesture)
+        let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(rotateToShuffle(_:)))
+        view.addGestureRecognizer(rotateGesture)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        DispatchQueue.main.asyncAfter(deadline: .now()){
+            self.newGameButton.layer.cornerRadius = self.newGameButton.frame.height/2.0
+            self.dealCardsButton.layer.cornerRadius = self.dealCardsButton.frame.height/2.0
+            self.updateUI()
+        }
     }
     
     private func newGame() {
@@ -50,20 +103,7 @@ class GraphicalSetViewController: UIViewController {
     }
     
     private func updateUI() {
-        for buttonIndex in 0..<cardButtons.count {
-            if buttonIndex < game.cardsOnTable.count {
-                let card = game.cardsOnTable[buttonIndex]
-                _ = adjustButton(of: card) {
-                    $0.layer.opacity = 1
-                    setupUIButton(with: card)
-                }
-            }
-            else {
-                hideButton(at: buttonIndex)
-            }
-        }
         layoutTableCards()
-        hideMatchedCards()
         highlightSelection()
         updateScoreLabel()
         markSuccessfulMatch()
@@ -71,80 +111,65 @@ class GraphicalSetViewController: UIViewController {
     }
     
     func layoutTableCards(){
-        
+        var cardGrid = Grid(layout: .aspectRatio(PlayingCardView.Constants.cardFrameAspectRatio), frame: playingBoardView.layer.bounds)
+        cardGrid.cellCount = game.cardsOnTable.count
+        playingCardButtons = []
+        for view in playingBoardView.subviews{
+            view.removeFromSuperview()
+        }
+        for index in 0..<game.cardsOnTable.count{
+            let cardModel = game.cardsOnTable[index]
+            if let cardRect = cardGrid[index] {
+                let cardButton = PlayingCardView(frame: cardRect, shapeType: cardModel.shape.rawValue, quantityType: cardModel.quantity.rawValue, fillType: cardModel.pattern.rawValue, colorType: cardModel.color.rawValue)
+                playingCardButtons.append(cardButton)
+                playingBoardView.addSubview(cardButton)
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedCard))
+                tapGesture.numberOfTapsRequired = 1
+                tapGesture.numberOfTouchesRequired = 1
+                cardButton.addGestureRecognizer(tapGesture)
+            }
+        }
     }
     
     private func highlightSelection() {
-        for card in game.cardsOnTable {
-            _ = adjustButton(of: card) { $0.layer.borderWidth = 0 }
-            if game.cardsSelected.contains(card) {
-                _ = adjustButton(of: card) {
-                    $0.layer.borderColor = buttonHightlightColor.cgColor
-                    $0.layer.borderWidth = 3
-                }
+        for index in 0..<game.cardsOnTable.count{
+            playingCardButtons[index].unhighlight()
+            if game.cardsSelected.contains(game.cardsOnTable[index]){
+                playingCardButtons[index].selectedHighlight()
             }
         }
     }
     
     private func markSuccessfulMatch() {
-        for matchCard in game.cardsMatched {
-            _ = adjustButton(of: matchCard) {
-                $0.layer.borderColor = buttonSuccessColor.cgColor
-                $0.layer.borderWidth = 5
+        for index in 0..<game.cardsOnTable.count{            if game.cardsMatched.contains(game.cardsOnTable[index]){
+                playingCardButtons[index].successHighlight()
             }
         }
     }
     
     private func updateScoreLabel() {
-        print("refreshed score")
-        scoreLabel.text = "Score: " + String(Score.shared().playerScore)
-    }
-    
-    private func setupUIButton(with card: Card) {
-        guard let index = game.cardsOnTable.firstIndex(of: card) else {
-            return
-        }
-        let button = cardButtons[index]
-        var iconAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 30)]
-        var colorAttributes: [[NSAttributedString.Key: Any]] =
-            [[.foregroundColor: colors[0]],
-             [.foregroundColor: colors[1]],
-             [.foregroundColor: colors[2]]]
-        var patternAttributes: [[NSAttributedString.Key: Any]] =
-            [[.strokeWidth: -7],
-             [.strokeWidth: -7, .foregroundColor: colors[card.color.rawValue].withAlphaComponent(0.5)],
-             [.strokeWidth: 7]]
-        var iconString = ""
-        for _ in 0...card.quantity.rawValue {
-            let shapeIndex = shapes.index(shapes.startIndex, offsetBy: card.shape.rawValue)
-            iconString.append(shapes[shapeIndex])
-        }
-        iconAttributes.merge(dict: colorAttributes[card.color.rawValue])
-        iconAttributes.merge(dict: patternAttributes[card.pattern.rawValue])
-        
-        let icon = NSAttributedString(string: iconString, attributes: iconAttributes)
-        button.setAttributedTitle(icon, for: UIControl.State.normal)
-    }
-    
-    private func hideMatchedCards() {
-        for card in Card.allCombinations() where !game.cardsOnTable.contains(card){
-            _ = adjustButton(of: card) { $0.layer.opacity = 0 }
-        }
-    }
-    
-    private func adjustButton(of card: Card, with action: (UIButton) -> ()) -> UIButton? {
-        if let buttonIndex = game.cardsOnTable.firstIndex(of: card) {
-            action(cardButtons[buttonIndex])
-            return cardButtons[buttonIndex]
-        }
-        return nil
-    }
-    
-    private func hideButton(at index: Int) {
-        cardButtons[index].layer.opacity = 0
+        let suffix = " 🎖"
+        scoreLabel.text = String(Score.shared().playerScore)+suffix
     }
     
     private func manageDealButton() {
         dealCardsButton.isEnabled = !game.cardsInPack.isEmpty
+    }
+    
+    private func dealThreeCards(){
+        if game.selectedIsMatch, let oneOfMatched = game.cardsSelected.first {
+            // By selecting one of matching cards, cards are replaced with new
+            game.select(oneOfMatched)
+        }
+        else {
+            game.dealCards(quantity: 3)
+        }
+        updateUI()
+    }
+}
+
+extension GraphicalSetViewController {
+    struct Constants {
+        static let playingCardsSpacing: CGFloat = 4
     }
 }

@@ -22,11 +22,6 @@ struct Game {
     private(set) var cardsOnTable: Array<Card>
     private(set) var cardsSelected = Set<Card>()
     private(set) var cardsInPack: Set<Card>
-    {
-        didSet {
-            print(self.cardsInPack.count)
-        }
-    }
     var cardsMatched: Set<Card>
     {
         var matched = Set<Card>()
