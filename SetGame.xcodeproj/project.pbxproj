@@ -68,6 +68,7 @@
 		3D0DDF99228EBAE400EF5FAE /* SetGame */ = {
 			isa = PBXGroup;
 			children = (
+				3D0DDFB02293F26B00EF5FAE /* Model */,
 				3D0DDF9C228EBAE400EF5FAE /* ViewController.swift */,
 				3DA5517A22C935CD00437A14 /* GraphicalSetViewController.swift */,
 				3DECE75C22C4FB7F00DF4624 /* ShapeView.swift */,
@@ -78,7 +79,6 @@
 				3D0DDFA1228EBAE600EF5FAE /* Assets.xcassets */,
 				3D0DDFA3228EBAE600EF5FAE /* LaunchScreen.storyboard */,
 				3D0DDFA6228EBAE600EF5FAE /* Info.plist */,
-				3D0DDFB02293F26B00EF5FAE /* Model */,
 			);
 			path = SetGame;
 			sourceTree = "<group>";
@@ -317,7 +317,7 @@
 		3D0DDFAA228EBAE600EF5FAE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6LQ8E9FE96;
 				INFOPLIST_FILE = SetGame/Info.plist;
@@ -335,7 +335,7 @@
 		3D0DDFAB228EBAE600EF5FAE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6LQ8E9FE96;
 				INFOPLIST_FILE = SetGame/Info.plist;

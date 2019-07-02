@@ -44,7 +44,7 @@ class PlayingCardView: UIView {
     }
 
     init(frame: CGRect, shapeType: Int, quantityType: Int, fillType: Int, colorType: Int) {
-        super.init(frame: frame.insetBy(dx: GraphicalSetViewController.Constants.playingCardsSpacing, dy: GraphicalSetViewController.Constants.playingCardsSpacing))
+        super.init(frame: frame)
         layer.cornerRadius = layer.bounds.width * Constants.cornerRadiusToWidthRatio
         layer.backgroundColor = Constants.cardColor
         layer.isOpaque = false

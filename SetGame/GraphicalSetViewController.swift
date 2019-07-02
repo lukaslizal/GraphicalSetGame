@@ -8,10 +8,14 @@
 
 import UIKit
 
+// TODO: maximalise card button area, add animated cards - deal, sucess, add info screen, add winner screen (Lottie animation)
+
 class GraphicalSetViewController: UIViewController {
 
     var game: Game = Game()
-    var playingCardButtons: [PlayingCardView] = []
+    var playingCardViews: [PlayingCardView] = []
+    var playingCardButtonsDictionary: [UIView:PlayingCardView] = [:]
+    
     @IBOutlet weak var playingBoardView: UIView!
     @IBOutlet weak var newGameButton: UIButton!
     @IBAction func newGamePressed(_ sender: UIButton) {
@@ -26,17 +30,8 @@ class GraphicalSetViewController: UIViewController {
     @objc func tappedCard(_ sender: UITapGestureRecognizer){
         switch sender.state {
         case .ended:
-            // Find PlayingCard view on sender.view object.
-            var playingCardView = sender.view as? PlayingCardView
-            if playingCardView == nil {
-                for subview in sender.view?.subviews ?? []{
-                    if let playingCardSubview = subview as? PlayingCardView{
-                        playingCardView = playingCardSubview
-                    }
-                }
-            }
             // Select card in model.
-            if let card = playingCardView, let buttonIndex = playingCardButtons.firstIndex(of: card) {
+            if let button = sender.view, let card = playingCardButtonsDictionary[button], let buttonIndex = playingCardViews.firstIndex(of: card) {
                 let selectedCard = game.cardsOnTable[buttonIndex]
                 game.select(selectedCard)
                 updateUI()
@@ -74,7 +69,7 @@ class GraphicalSetViewController: UIViewController {
     }
     
     func setupGestrues(){
-        for button in playingCardButtons{
+        for button in playingCardViews{
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedCard))
             tapGesture.numberOfTapsRequired = 1
             tapGesture.numberOfTouchesRequired = 1
@@ -113,16 +108,20 @@ class GraphicalSetViewController: UIViewController {
     func layoutTableCards(){
         var cardGrid = Grid(layout: .aspectRatio(PlayingCardView.Constants.cardFrameAspectRatio), frame: playingBoardView.layer.bounds)
         cardGrid.cellCount = game.cardsOnTable.count
-        playingCardButtons = []
+        playingCardViews = []
+        playingCardButtonsDictionary = [:]
         for view in playingBoardView.subviews{
             view.removeFromSuperview()
         }
         for index in 0..<game.cardsOnTable.count{
             let cardModel = game.cardsOnTable[index]
             if let cardRect = cardGrid[index] {
-                let cardButton = PlayingCardView(frame: cardRect, shapeType: cardModel.shape.rawValue, quantityType: cardModel.quantity.rawValue, fillType: cardModel.pattern.rawValue, colorType: cardModel.color.rawValue)
-                playingCardButtons.append(cardButton)
+                let cardButton = UIView(frame: cardRect)
+                let cardView = PlayingCardView(frame: cardButton.layer.bounds.insetBy(dx: Constants.playingCardsSpacing, dy: Constants.playingCardsSpacing), shapeType: cardModel.shape.rawValue, quantityType: cardModel.quantity.rawValue, fillType: cardModel.pattern.rawValue, colorType: cardModel.color.rawValue)
+                cardButton.addSubview(cardView)
+                playingCardViews.append(cardView)
                 playingBoardView.addSubview(cardButton)
+                playingCardButtonsDictionary[cardButton] = cardView
                 let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedCard))
                 tapGesture.numberOfTapsRequired = 1
                 tapGesture.numberOfTouchesRequired = 1
@@ -133,16 +132,16 @@ class GraphicalSetViewController: UIViewController {
     
     private func highlightSelection() {
         for index in 0..<game.cardsOnTable.count{
-            playingCardButtons[index].unhighlight()
+            playingCardViews[index].unhighlight()
             if game.cardsSelected.contains(game.cardsOnTable[index]){
-                playingCardButtons[index].selectedHighlight()
+                playingCardViews[index].selectedHighlight()
             }
         }
     }
     
     private func markSuccessfulMatch() {
         for index in 0..<game.cardsOnTable.count{            if game.cardsMatched.contains(game.cardsOnTable[index]){
-                playingCardButtons[index].successHighlight()
+                playingCardViews[index].successHighlight()
             }
         }
     }
