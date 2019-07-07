@@ -48,8 +48,8 @@ class PlayingCardView: UIView {
         layer.cornerRadius = layer.bounds.width * Constants.cornerRadiusToWidthRatio
         layer.backgroundColor = Constants.cardColor
         layer.isOpaque = false
+        clipsToBounds = true
         initSubviews(quantity: quantityType + 1, shapeType: shapeType, fillType: fillType, colorType: colorType)
-        
     }
 
     private func initSubviews(quantity: Int, shapeType: Int, fillType: Int, colorType: Int) {
@@ -60,6 +60,13 @@ class PlayingCardView: UIView {
         self.quantity = quantity
         self.colorType = colorType
         self.fillType = fillType
+    }
+    
+    override func isEqual(_ object: Any?) -> Bool {
+        guard let other = object as? PlayingCardView else {
+            return false
+        }
+        return self.shapeType == other.shapeType && self.quantity == other.quantity && self.fillType == other.fillType && self.colorType == other.colorType
     }
 
     override func layoutSubviews() {
@@ -100,7 +107,7 @@ extension PlayingCardView {
         static let symbolWidthToBoundsRatio: CGFloat = 4 / 5
         static let symbolHeightToBoundsRatio: CGFloat = 4 / 5
         static let symbolSpacingToCardRatio: CGFloat = 1 / 20
-        static let cardColor: CGColor = #colorLiteral(red: 0.9683051419, green: 0.9683051419, blue: 0.9683051419, alpha: 1)
+        static let cardColor: CGColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         static let selectedHighlightColor: CGColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         static let selectedSuccessColor: CGColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
         static let cornerRadiusToWidthRatio: CGFloat = 1 / 10

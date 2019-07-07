@@ -22,6 +22,7 @@ struct Game {
     private(set) var cardsOnTable: Array<Card>
     private(set) var cardsSelected = Set<Card>()
     private(set) var cardsInPack: Set<Card>
+    var cardsToDeal = Set<Card>()
     var cardsMatched: Set<Card>
     {
         var matched = Set<Card>()
@@ -41,6 +42,7 @@ struct Game {
     init(with startingCardCount: Int) {
         cardsInPack = Card.allCombinations()
         cardsOnTable = [Card]()
+        cardsToDeal = Set<Card>()
         dealCards(quantity: startingCardCount)
     }
 
@@ -54,6 +56,7 @@ struct Game {
         for index in 0..<numberOfCards {
             let cardToReplace = toReplace[index]
             if let randomCardFromPack = cardsInPack.randomElement(), let dealCard = cardsInPack.remove(randomCardFromPack) {
+                cardsToDeal.insert(dealCard)
                 if let indexOnTable = cardsOnTable.firstIndex(of: cardToReplace) {
                     cardsOnTable[indexOnTable] = dealCard
                 }
@@ -76,15 +79,18 @@ struct Game {
     }
     // Deal new cards by number of cards to deal.
     internal mutating func dealCards(quantity count: Int) {
+        cardsToDeal = []
         for _ in 0..<count {
             guard let randomCardInPack = cardsInPack.randomElement(), let dealCard = cardsInPack.remove(randomCardInPack) else {
                 return
             }
             cardsOnTable.append(dealCard)
+            cardsToDeal.insert(dealCard)
         }
     }
-    // Select or deselect card depending on conditions. Returns true only when new card selection is a Set.
+    // Select or deselect card depending on situation.
     internal mutating func select(_ card: Card) {
+        cardsToDeal = []
         // When less then three cards are slected and you tap already selected card. Deselect given card.
         if cardsSelected.count < 3, cardsSelected.contains(card) {
             cardsSelected.remove(card)

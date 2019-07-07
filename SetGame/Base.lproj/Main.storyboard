@@ -466,13 +466,13 @@
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UVp-Y6-lw6">
-                                                <rect key="frame" x="0.0" y="0.0" width="75" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="85.5" height="50"/>
                                                 <color key="backgroundColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="UVp-Y6-lw6" secondAttribute="height" multiplier="6:4" id="RK2-NR-bKA"/>
+                                                    <constraint firstAttribute="width" secondItem="UVp-Y6-lw6" secondAttribute="height" multiplier="12:7" id="RK2-NR-bKA"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="12"/>
-                                                <state key="normal" title="Restart">
+                                                <state key="normal" title="New Game">
                                                     <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
@@ -480,7 +480,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rRw-EG-xfc">
-                                                <rect key="frame" x="119" y="0.0" width="100" height="50"/>
+                                                <rect key="frame" x="121.5" y="0.0" width="100" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="rRw-EG-xfc" secondAttribute="height" multiplier="2:1" priority="750" id="ZDc-77-Hzn"/>
                                                 </constraints>
