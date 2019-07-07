@@ -40,18 +40,18 @@ class GraphicalSetViewController: UIViewController {
     @IBOutlet weak var playingBoardView: UIView!
     @IBOutlet weak var newGameButton: UIButton!
     @IBAction func newGamePressed(_ sender: UIButton) {
-        clearFlags()
+//        clearFlags()
         newGame()
     }
     @IBOutlet weak var dealCardsButton: UIButton!
     @IBAction func dealCardsPressed(_ sender: UIButton) {
-        clearFlags()
+//        clearFlags()
         dealThreeCards()
     }
     @IBOutlet weak var scoreLabel: UILabel!
 
     @objc func tappedCard(_ sender: UITapGestureRecognizer) {
-        clearFlags()
+//        clearFlags()
         switch sender.state {
         case .ended:
             // Select card in model.
@@ -66,7 +66,7 @@ class GraphicalSetViewController: UIViewController {
     }
 
     @objc func swipeToDealCards(_ sender: UISwipeGestureRecognizer) {
-        clearFlags()
+//        clearFlags()
         switch sender.state {
         case .ended:
             dealThreeCards()
@@ -76,7 +76,7 @@ class GraphicalSetViewController: UIViewController {
     }
 
     @objc func rotateToShuffle(_ sender: UIRotationGestureRecognizer) {
-        clearFlags()
+//        clearFlags()
         switch sender.state {
         case .began:
             game.shuffle()
@@ -143,6 +143,9 @@ class GraphicalSetViewController: UIViewController {
         animateNewGame()
         animateShuffledCards()
         animateSuccessMatch()
+        DispatchQueue.main.asyncAfter(deadline: .now()+Constants.clearFlagsDelay){
+            self.clearFlags()
+        }
     }
 
     private func clearFlags() {
@@ -232,7 +235,7 @@ class GraphicalSetViewController: UIViewController {
             setupGrid(cellCount: game.cardsOnTable.count)
 
             animateCards(cards: Array(game.cardsToDeal), duration: Constants.animationDealCardDuration, animationTimeSpacing: Constants.animationDealCardDelayIncrement, animationOptions: Constants.animationDealCardOptions)
-            flagDealMoreCards = false
+//            flagDealMoreCards = false
         }
     }
 
@@ -249,7 +252,7 @@ class GraphicalSetViewController: UIViewController {
             setupGrid(cellCount: game.cardsOnTable.count)
 
             animateCards(cards: game.cardsOnTable, duration: Constants.animationNewGameDuration, animationTimeSpacing: Constants.animationNewGameCardDelayIncrement, animationOptions: Constants.animationNewGameCardOptions)
-            flagNewGame = false
+//            flagNewGame = false
         }
     }
 
@@ -300,6 +303,7 @@ class GraphicalSetViewController: UIViewController {
 extension GraphicalSetViewController {
     struct Constants {
         static let playingCardsSpacing: CGFloat = 4
+        static let clearFlagsDelay: Double = 0.1
         static let animationDealCardDuration: TimeInterval = 0.6
         static let animationDealCardDelayIncrement: TimeInterval = 0.2
         static let animationDealCardOptions: UIView.AnimationOptions = [.curveEaseOut]
