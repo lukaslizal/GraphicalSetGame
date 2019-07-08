@@ -61,7 +61,7 @@ class PlayingCardView: UIView {
         self.colorType = colorType
         self.fillType = fillType
     }
-    
+
     override func isEqual(_ object: Any?) -> Bool {
         guard let other = object as? PlayingCardView else {
             return false
@@ -77,7 +77,7 @@ class PlayingCardView: UIView {
         var gridOfShapes = Grid(layout: Grid.Layout.aspectRatio(Constants.symbolAspectRatio), frame: symbolsAreaRect)
         gridOfShapes.cellCount = quantity
         for index in 0..<shapeViews.count {
-            if index < quantity{
+            if index < quantity {
                 let spacingX = shapeViews[index].frame.width * Constants.symbolSpacingToCardRatio
                 let spacingY = shapeViews[index].frame.height * Constants.symbolSpacingToCardRatio
                 shapeViews[index].frame = (gridOfShapes[index]?.insetBy(dx: spacingX, dy: spacingY))!
@@ -87,15 +87,27 @@ class PlayingCardView: UIView {
     }
 
     func selectedHighlight() {
-        layer.borderColor = Constants.selectedHighlightColor
-        layer.borderWidth = 3
+//        layer.borderColor = Constants.selectedHighlightColor
+//        layer.borderWidth = 3
+        UIView.animate(withDuration: 0.0, delay: 0, options: [.curveEaseIn], animations: {
+            self.backgroundColor = UIColor(cgColor: Constants.selectedHighlightColor)
+        },
+                       completion: nil)
     }
     func successHighlight() {
-        layer.borderColor = Constants.selectedSuccessColor
-        layer.borderWidth = 5
+//        layer.borderColor = Constants.selectedSuccessColor
+//        layer.borderWidth = 5
+        UIView.animate(withDuration: 0.0, delay: 0, options: [.curveEaseIn], animations: {
+                self.backgroundColor = UIColor(cgColor: Constants.selectedSuccessColor)
+            },
+            completion: nil)
     }
     func unhighlight() {
-        layer.borderWidth = 0
+//        layer.borderWidth = 0
+        UIView.animate(withDuration: 0.0, delay: 0, options: [.curveEaseIn], animations: {
+                self.backgroundColor = UIColor(cgColor: Constants.cardColor)
+            },
+            completion: nil)
     }
 }
 
@@ -108,7 +120,7 @@ extension PlayingCardView {
         static let symbolHeightToBoundsRatio: CGFloat = 4 / 5
         static let symbolSpacingToCardRatio: CGFloat = 1 / 20
         static let cardColor: CGColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        static let selectedHighlightColor: CGColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        static let selectedHighlightColor: CGColor = #colorLiteral(red: 0.8480308219, green: 0.9113513129, blue: 1, alpha: 1)
         static let selectedSuccessColor: CGColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
         static let cornerRadiusToWidthRatio: CGFloat = 1 / 10
     }
