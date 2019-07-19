@@ -18,7 +18,7 @@ import Foundation
  Lukas Lizal
  */
 struct Game {
-    var cheatMode: Bool = true
+    var cheatMode: Bool = false
     private(set) var cardsOnTable: Array<Card>
     private(set) var cardsSelected = Set<Card>()
     private(set) var cardsInPack: Set<Card>

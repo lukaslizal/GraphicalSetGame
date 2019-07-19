@@ -41,9 +41,9 @@ class ShapeView: UIView {
         case .oval:
             ovalPath(path)
         }
-        path.stroke()
+        strokeShape(path)
         if(fill == .fill) {
-            path.fill()
+            fillShape(path)
         }
         if(fill == .hatch) {
             hatchShape(path)
@@ -113,14 +113,14 @@ class ShapeView: UIView {
         }
         path.stroke()
     }
-}
-
-extension ShapeView {
-    struct Constants {
-        static let symbolInsetsRatio: CGFloat = 1 / 20
-        static let symbolStrokeWidthToSymbolHeight: CGFloat = 1 / 10
-        static let hatchStep: CGFloat = 6
-        static let hatchStrokeWidth: CGFloat = 3
+    
+    private func fillShape(_ path: UIBezierPath) {
+        path.stroke()
+        path.fill()
+    }
+    
+    private func strokeShape(_ path: UIBezierPath) {
+        path.stroke()
     }
 }
 
@@ -135,30 +135,4 @@ enum ShapeType: Int {
     case oval = 1
     case squiggle = 2
 }
-extension UIColor {
-    struct ColorPalette {
-        static var firstColor: UIColor { return #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1) }
-        static var secondColor: UIColor { return #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1) }
-        static var thirdColor: UIColor { return #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1) }
 
-        static func color(of type: Int) -> UIColor {
-            switch(type) {
-            case 0:
-                return firstColor
-            case 1:
-                return secondColor
-            case 2:
-                return thirdColor
-            default:
-                return #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-            }
-        }
-    }
-}
-extension CGRect {
-    func mappedPointFrom(normalized point: CGPoint) -> CGPoint {
-        let x = 0 + point.x * self.width
-        let y = 0 + point.y * self.height
-        return CGPoint(x: x, y: y)
-    }
-}

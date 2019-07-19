@@ -111,18 +111,3 @@ class PlayingCardView: UIView {
     }
 }
 
-extension PlayingCardView {
-    struct Constants {
-        static let symbolAspectRatio: CGFloat = 12 / 5
-        static let cardFrameAspectRatio: CGFloat = 5 / 7
-        static let symbolInsetsRatio: CGFloat = 1 / 20
-        static let symbolWidthToBoundsRatio: CGFloat = 4 / 5
-        static let symbolHeightToBoundsRatio: CGFloat = 4 / 5
-        static let symbolSpacingToCardRatio: CGFloat = 1 / 20
-        static let cardColor: CGColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        static let selectedHighlightColor: CGColor = #colorLiteral(red: 0.8480308219, green: 0.9113513129, blue: 1, alpha: 1)
-        static let selectedSuccessColor: CGColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
-        static let cornerRadiusToWidthRatio: CGFloat = 1 / 10
-    }
-}
-
