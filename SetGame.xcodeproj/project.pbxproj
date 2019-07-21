@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3D0DDF9B228EBAE400EF5FAE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0DDF9A228EBAE400EF5FAE /* AppDelegate.swift */; };
-		3D0DDF9D228EBAE400EF5FAE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0DDF9C228EBAE400EF5FAE /* ViewController.swift */; };
 		3D0DDFA0228EBAE400EF5FAE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D0DDF9E228EBAE400EF5FAE /* Main.storyboard */; };
 		3D0DDFA2228EBAE600EF5FAE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D0DDFA1228EBAE600EF5FAE /* Assets.xcassets */; };
 		3D0DDFA5228EBAE600EF5FAE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D0DDFA3228EBAE600EF5FAE /* LaunchScreen.storyboard */; };
@@ -25,7 +24,6 @@
 /* Begin PBXFileReference section */
 		3D0DDF97228EBAE400EF5FAE /* SetGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SetGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D0DDF9A228EBAE400EF5FAE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3D0DDF9C228EBAE400EF5FAE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = View/ViewController.swift; sourceTree = "<group>"; };
 		3D0DDF9F228EBAE400EF5FAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3D0DDFA1228EBAE600EF5FAE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3D0DDFA4228EBAE600EF5FAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -70,19 +68,14 @@
 		3D0DDF99228EBAE400EF5FAE /* SetGame */ = {
 			isa = PBXGroup;
 			children = (
+				3D4343BF22E4AFBE00D454FE /* View */,
 				3D0DDFB02293F26B00EF5FAE /* Model */,
-				3D0DDF9C228EBAE400EF5FAE /* ViewController.swift */,
-				3DA5517A22C935CD00437A14 /* GraphicalSetViewController.swift */,
-				3DECE75C22C4FB7F00DF4624 /* ShapeView.swift */,
-				3DB1ECF422BCD92000B70EB9 /* PlayingCardView.swift */,
-				3DB1ECED22B69D6500B70EB9 /* Grid.swift */,
+				3D4343C022E4B08000D454FE /* Controller */,
 				3D0DDF9A228EBAE400EF5FAE /* AppDelegate.swift */,
 				3D0DDF9E228EBAE400EF5FAE /* Main.storyboard */,
 				3D0DDFA1228EBAE600EF5FAE /* Assets.xcassets */,
 				3D0DDFA3228EBAE600EF5FAE /* LaunchScreen.storyboard */,
 				3D0DDFA6228EBAE600EF5FAE /* Info.plist */,
-				3D0DDFB12294059800EF5FAE /* ExtensionMethods.swift */,
-				3DE3A79222E1F1CB00717455 /* ExtensionConstants.swift */,
 			);
 			path = SetGame;
 			sourceTree = "<group>";
@@ -92,8 +85,28 @@
 			children = (
 				3D0DDFAC228ED2B200EF5FAE /* Game.swift */,
 				3D0DDFAE228ED2F400EF5FAE /* Card.swift */,
+				3D0DDFB12294059800EF5FAE /* ExtensionMethods.swift */,
+				3DE3A79222E1F1CB00717455 /* ExtensionConstants.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		3D4343BF22E4AFBE00D454FE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3DECE75C22C4FB7F00DF4624 /* ShapeView.swift */,
+				3DB1ECF422BCD92000B70EB9 /* PlayingCardView.swift */,
+				3DB1ECED22B69D6500B70EB9 /* Grid.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3D4343C022E4B08000D454FE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3DA5517A22C935CD00437A14 /* GraphicalSetViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -170,7 +183,6 @@
 				3DECE75D22C4FB7F00DF4624 /* ShapeView.swift in Sources */,
 				3D0DDFB22294059800EF5FAE /* ExtensionMethods.swift in Sources */,
 				3DB1ECF522BCD92000B70EB9 /* PlayingCardView.swift in Sources */,
-				3D0DDF9D228EBAE400EF5FAE /* ViewController.swift in Sources */,
 				3D0DDFAD228ED2B200EF5FAE /* Game.swift in Sources */,
 				3DE3A79322E1F1CB00717455 /* ExtensionConstants.swift in Sources */,
 				3DA5517B22C935CD00437A14 /* GraphicalSetViewController.swift in Sources */,

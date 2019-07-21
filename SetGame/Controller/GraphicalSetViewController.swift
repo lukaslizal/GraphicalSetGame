@@ -122,7 +122,7 @@ class GraphicalSetViewController: UIViewController {
         view.addGestureRecognizer(rotateGesture)
     }
 
-    // MARK: Controller Override Methods
+    // MARK: VIEWCONTROLLER OVERRIDE METHODS
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -164,6 +164,9 @@ class GraphicalSetViewController: UIViewController {
         animateDealCards()
         animateNewGame()
         animateSuccessMatch()
+//        animateHighlightSuccess()
+//        animateHighlightSelected()
+//        animateDehighlight()
 
         // Clear flags.
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.clearFlagsDelay) {
@@ -202,6 +205,8 @@ class GraphicalSetViewController: UIViewController {
                 cardButton.frame = cardRect
                 let cardView = PlayingCardView(frame: cardButton.layer.bounds.insetBy(dx: Constants.playingCardsSpacing, dy: Constants.playingCardsSpacing), shapeType: cardModel.shape.rawValue, quantityType: cardModel.quantity.rawValue, fillType: cardModel.pattern.rawValue, colorType: cardModel.color.rawValue)
                 cardButton.clipsToBounds = true
+                cardButton.isMultipleTouchEnabled = true
+                cardButton.isUserInteractionEnabled = true
                 cardButton.addSubview(cardView)
                 playingCardViews.append(cardView)
                 playingBoardView.addSubview(cardButton)

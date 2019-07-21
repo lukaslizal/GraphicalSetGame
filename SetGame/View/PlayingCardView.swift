@@ -87,27 +87,25 @@ class PlayingCardView: UIView {
     }
 
     func selectedHighlight() {
-//        layer.borderColor = Constants.selectedHighlightColor
-//        layer.borderWidth = 3
-        UIView.animate(withDuration: 0.0, delay: 0, options: [.curveEaseIn], animations: {
-            self.backgroundColor = UIColor(cgColor: Constants.selectedHighlightColor)
-        },
-                       completion: nil)
+        self.backgroundColor = UIColor(cgColor: Constants.selectedHighlightColor)
+//        UIView.animate(withDuration: 0.0, delay: 0, options: [.curveEaseIn], animations: {
+//            self.backgroundColor = UIColor(cgColor: Constants.selectedHighlightColor)
+//        },
+//                       completion: nil)
     }
     func successHighlight() {
-//        layer.borderColor = Constants.selectedSuccessColor
-//        layer.borderWidth = 5
-        UIView.animate(withDuration: 0.0, delay: 0, options: [.curveEaseIn], animations: {
-                self.backgroundColor = UIColor(cgColor: Constants.selectedSuccessColor)
-            },
-            completion: nil)
+        self.backgroundColor = UIColor(cgColor: Constants.selectedSuccessColor)
+//        UIView.animate(withDuration: 0.0, delay: 0, options: [.curveEaseIn], animations: {
+//                self.backgroundColor = UIColor(cgColor: Constants.selectedSuccessColor)
+//            },
+//            completion: nil)
     }
     func unhighlight() {
-//        layer.borderWidth = 0
-        UIView.animate(withDuration: 0.0, delay: 0, options: [.curveEaseIn], animations: {
-                self.backgroundColor = UIColor(cgColor: Constants.cardColor)
-            },
-            completion: nil)
+        self.backgroundColor = UIColor(cgColor: Constants.cardColor)
+//        UIView.animate(withDuration: 0.0, delay: 0, options: [.curveEaseIn], animations: {
+//                self.backgroundColor = UIColor(cgColor: Constants.cardColor)
+//            },
+//            completion: nil)
     }
 }
 

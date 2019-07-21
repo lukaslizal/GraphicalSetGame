@@ -13,14 +13,14 @@ extension UIView {
     
     func shake() {
         self.transform = CGAffineTransform(translationX: Constants.shakeViewAmplitude, y: 0)
-        UIView.animate(withDuration: Constants.shakeViewDuration, delay: 0, usingSpringWithDamping: Constants.shakeViewSpringDamping, initialSpringVelocity: Constants.shakeViewInitialSpringVelocity, options: .curveEaseInOut, animations: {
+        UIView.animate(withDuration: Constants.shakeViewDuration, delay: 0, usingSpringWithDamping: Constants.shakeViewSpringDamping, initialSpringVelocity: Constants.shakeViewInitialSpringVelocity, options: [.curveEaseInOut, .allowUserInteraction], animations: {
             self.transform = CGAffineTransform.identity
         }, completion: nil)
     }
     
     func nod() {
         self.transform = CGAffineTransform(translationX: 0, y: -Constants.shakeViewAmplitude / 2)
-        UIView.animate(withDuration: Constants.shakeViewDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: Constants.shakeViewInitialSpringVelocity, options: .curveEaseInOut, animations: {
+        UIView.animate(withDuration: Constants.shakeViewDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: Constants.shakeViewInitialSpringVelocity, options: [.curveEaseInOut, .allowUserInteraction], animations: {
             self.transform = CGAffineTransform.identity
         }, completion: nil)
     }
