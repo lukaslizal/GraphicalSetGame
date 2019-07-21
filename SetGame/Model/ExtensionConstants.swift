@@ -24,7 +24,7 @@ extension GraphicalSetViewController {
         static let animationNewGameDuration: TimeInterval = 0.8
         static let animationNewGameCardDelayIncrement: TimeInterval = 1 / 12 * 12
         static let animationNewGameCardOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction, .allowAnimatedContent]
-        static let animationSuccessMatchDuration: TimeInterval = 0.4
+        static let animationSuccessMatchDuration: TimeInterval = 0.3
         static let animationSuccessMatchDelayIncrement: TimeInterval = 0.1
         static let animationSuccessMatchOptions: UIView.AnimationOptions = [.curveEaseIn, .allowUserInteraction, .allowAnimatedContent]
     }
@@ -32,7 +32,7 @@ extension GraphicalSetViewController {
 
 extension UIView {
     struct Constants {
-        static let shakeViewAmplitude: CGFloat = 10
+        static let shakeViewAmplitude: CGFloat = 20
         static let shakeViewDuration: TimeInterval = 0.6
         static let shakeViewSpringDamping: CGFloat = 0.3
         static let shakeViewInitialSpringVelocity: CGFloat = 1
@@ -49,7 +49,7 @@ extension PlayingCardView {
         static let symbolSpacingToCardRatio: CGFloat = 1 / 20
         static let cardColor: CGColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         static let selectedHighlightColor: CGColor = #colorLiteral(red: 0.8480308219, green: 0.9113513129, blue: 1, alpha: 1)
-        static let selectedSuccessColor: CGColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+        static let selectedSuccessColor: CGColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
         static let cornerRadiusToWidthRatio: CGFloat = 1 / 10
     }
 }

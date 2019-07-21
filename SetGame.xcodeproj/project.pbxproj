@@ -68,8 +68,8 @@
 		3D0DDF99228EBAE400EF5FAE /* SetGame */ = {
 			isa = PBXGroup;
 			children = (
-				3D4343BF22E4AFBE00D454FE /* View */,
 				3D0DDFB02293F26B00EF5FAE /* Model */,
+				3D4343BF22E4AFBE00D454FE /* View */,
 				3D4343C022E4B08000D454FE /* Controller */,
 				3D0DDF9A228EBAE400EF5FAE /* AppDelegate.swift */,
 				3D0DDF9E228EBAE400EF5FAE /* Main.storyboard */,

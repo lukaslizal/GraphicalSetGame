@@ -88,24 +88,15 @@ class PlayingCardView: UIView {
 
     func selectedHighlight() {
         self.backgroundColor = UIColor(cgColor: Constants.selectedHighlightColor)
-//        UIView.animate(withDuration: 0.0, delay: 0, options: [.curveEaseIn], animations: {
-//            self.backgroundColor = UIColor(cgColor: Constants.selectedHighlightColor)
-//        },
-//                       completion: nil)
     }
     func successHighlight() {
         self.backgroundColor = UIColor(cgColor: Constants.selectedSuccessColor)
-//        UIView.animate(withDuration: 0.0, delay: 0, options: [.curveEaseIn], animations: {
-//                self.backgroundColor = UIColor(cgColor: Constants.selectedSuccessColor)
-//            },
-//            completion: nil)
+        for shapeView in self.shapeViews{
+            shapeView.shapeColor = UIColor.clear
+        }
     }
     func unhighlight() {
         self.backgroundColor = UIColor(cgColor: Constants.cardColor)
-//        UIView.animate(withDuration: 0.0, delay: 0, options: [.curveEaseIn], animations: {
-//                self.backgroundColor = UIColor(cgColor: Constants.cardColor)
-//            },
-//            completion: nil)
     }
 }
 

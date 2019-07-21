@@ -68,10 +68,10 @@ class GraphicalSetViewController: UIViewController {
                 if game.selectedIsMatch {
                     // Replace matched cards
                     animationFlagSuccessMatch = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + Constants.animationSuccessMatchDuration + 2 * Constants.animationSuccessMatchDelayIncrement) {
-                        self.dealThreeCards()
-                        self.updateUI()
-                    }
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + Constants.animationSuccessMatchDuration + 2 * Constants.animationSuccessMatchDelayIncrement) {
+//                        self.dealThreeCards()
+//                        self.updateUI()
+//                    }
                 }
                 else if game.cardsSelected.count == 3 {
                     view.shake()
@@ -156,6 +156,7 @@ class GraphicalSetViewController: UIViewController {
         // Rebuild UI from model.
         initTableCards()
         highlightSelection()
+        markSuccessfulMatch()
         updateScoreLabel()
         manageDealButton()
 
@@ -245,9 +246,11 @@ class GraphicalSetViewController: UIViewController {
     }
 
     private func markSuccessfulMatch() {
-        for index in 0..<game.cardsOnTable.count { if game.cardsMatched.contains(game.cardsOnTable[index]) {
-            playingCardViews[index].successHighlight()
-        }
+        for index in 0..<game.cardsOnTable.count {
+            if game.cardsMatched.contains(game.cardsOnTable[index]) {
+                playingCardViews[index].successHighlight()
+//            playingCardViews[index].superview?.backgroundColor = UIColor(cgColor: PlayingCardView.Constants.selectedSuccessColor)
+            }
         }
     }
 
@@ -267,15 +270,19 @@ class GraphicalSetViewController: UIViewController {
         for card in cards {
             if let cardIndex = game.cardsOnTable.firstIndex(of: card), let cardButton = playingCardViews[cardIndex].superview, let animationTargetView = targetViewBy(cardIndex) {
                 cardButton.cornerRadiusAnimationWithDuration(duration: CFTimeInterval(duration), to: animationTargetView.layer.cornerRadius, delay: Double(delay) / TimeInterval(cards.count))
+                playingCardViews[cardIndex].cornerRadiusAnimationWithDuration(duration: CFTimeInterval(duration), to: animationTargetView.layer.cornerRadius, delay: Double(delay) / TimeInterval(cards.count))
                 UIView.animate(withDuration: duration, delay: delay / TimeInterval(cards.count), options: animationOptions, animations: {
                         if !animateCardsAway {
                             self.playingCardViews[cardIndex].frame = animationTargetView.layer.bounds.insetBy(dx: targetElementSpacing, dy: targetElementSpacing)
+                        }
+                        else{
+                            self.playingCardViews[cardIndex].frame = animationTargetView.layer.bounds
                         }
                         cardButton.frame = animationTargetView.frame
                     },
 
                     completion: { (finished: Bool) -> (Void) in onComplete(finished)
-                        
+
                         cardButton.layer.cornerRadius = 0
                     })
             }
@@ -315,7 +322,13 @@ class GraphicalSetViewController: UIViewController {
         if animationFlagSuccessMatch {
             prepareForSuccessMatchAnimation()
 
-            animate(cards: Array(game.cardsMatched), onto: targetViewScoreLabel, duration: Constants.animationSuccessMatchDuration, animationTimeSpacing: Constants.animationSuccessMatchDelayIncrement, animationOptions: Constants.animationSuccessMatchOptions, targetElementSpacing: 0, animateCardsAway: true, onComplete: { (finished: Bool) -> Void in if finished { self.view.nod() } })
+            animate(cards: Array(game.cardsMatched), onto: targetViewScoreLabel, duration: Constants.animationSuccessMatchDuration, animationTimeSpacing: Constants.animationSuccessMatchDelayIncrement, animationOptions: Constants.animationSuccessMatchOptions, targetElementSpacing: 0, animateCardsAway: true, onComplete: { (finished: Bool) -> Void in
+                if finished {
+                    self.view.nod()
+                    self.dealThreeCards()
+                    self.updateUI()
+                }
+            })
         }
     }
 
@@ -368,7 +381,7 @@ class GraphicalSetViewController: UIViewController {
     private func targetViewScoreLabel(index: Int) -> UIView? {
         let view = UIView()
         view.layer.cornerRadius = scoreLabel.layer.cornerRadius
-        view.frame = scoreLabel.convert(scoreLabel.layer.bounds, to: self.playingBoardView).insetBy(dx: scoreLabel.layer.cornerRadius / 2, dy: scoreLabel.layer.cornerRadius / 2)
+        view.frame = scoreLabel.convert(scoreLabel.layer.bounds, to: self.playingBoardView).insetBy(dx: scoreLabel.layer.cornerRadius / 2, dy: 0)
         return view }
 
 }
