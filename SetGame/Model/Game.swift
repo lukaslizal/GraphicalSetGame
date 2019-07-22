@@ -47,7 +47,7 @@ struct Game {
     }
 
     init() {
-        self.init(with: 12)
+        self.init(with: Constants.initialCardCountOnTable)
     }
 
     // Deal cards in places specified by [Card?] array (cards on table). When toReplace are nil, procedure finds blank spots on table and deals card over those in quantity of elements in toReplace array. When toReplace cards are not nil, new cards are dealt over cards on table specified in toReplace array.

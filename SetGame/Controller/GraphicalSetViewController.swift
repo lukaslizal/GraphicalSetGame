@@ -18,6 +18,7 @@ import UIKit
 // new game v
 // shuffle v
 // rearrange v
+// push insets to cardButtonView x
 // didlayoutsubviews initial animation v
 // refactor animation clutter v
 // add info/tutorial screen + first opening tutorial x
@@ -31,7 +32,7 @@ import UIKit
 // add winner screen (Lottie animation)
 // add local persistant high score
 
-class GraphicalSetViewController: UIViewController {
+class GraphicalSetViewController: UIViewController, CardTap {
 
     // MARK: STORED PROPERTIES
 
@@ -56,33 +57,25 @@ class GraphicalSetViewController: UIViewController {
     }
     @IBOutlet weak var scoreLabel: UILabel!
 
-    // MARK: TOUCH GESTURES
+    // MARK: TOUCH CONTROLS
 
-    @objc func tappedCard(_ sender: UITapGestureRecognizer) {
-        switch sender.state {
-        case .ended:
-            // Select card in model. Card is a subview of tap gesture recognising UIView "button"
-            if let playingCard = sender.view?.subviews.first as? PlayingCardView, let buttonIndex = playingCardViews.firstIndex(of: playingCard) {
-                let selectedCard = game.cardsOnTable[buttonIndex]
-                game.select(selectedCard)
-                if game.selectedIsMatch {
-                    // Replace matched cards
-                    animationFlagSuccessMatch = true
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + Constants.animationSuccessMatchDuration + 2 * Constants.animationSuccessMatchDelayIncrement) {
-//                        self.dealThreeCards()
-//                        self.updateUI()
-//                    }
-                }
-                else if game.cardsSelected.count == 3 {
-                    view.shake()
-                }
-                updateUI()
+    func tapped(playingCard: PlayingCardView) {
+        // Select card in model. Card is a subview of tap gesture recognising UIView "button"
+        if let buttonIndex = playingCardViews.firstIndex(of: playingCard) {
+            let selectedCard = game.cardsOnTable[buttonIndex]
+            game.select(selectedCard)
+            if game.selectedIsMatch {
+                // Replace matched cards
+                animationFlagSuccessMatch = true
             }
-        default:
-            return
+            else if game.cardsSelected.count == 3 {
+                // Indicate invalid set selection.
+                view.shake()
+            }
+            updateUI()
         }
     }
-
+    
     @objc func swipeToDealCards(_ sender: UISwipeGestureRecognizer) {
         switch sender.state {
         case .ended:
@@ -102,19 +95,8 @@ class GraphicalSetViewController: UIViewController {
             return
         }
     }
-
+    
     func setupGestures() {
-        // Remove Swipe and Rotate gesture recognizers if any attached before seting up new ones.
-        if let recognizers = view.gestureRecognizers {
-            for recognizer in recognizers {
-                view.removeGestureRecognizer(recognizer as UIGestureRecognizer)
-            }
-        }
-        for button in playingCardViews {
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedCard))
-            button.superview?.addGestureRecognizer(tapGesture)
-            button.superview?.isMultipleTouchEnabled = true
-        }
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeToDealCards))
         swipeGesture.direction = .down
         view.addGestureRecognizer(swipeGesture)
@@ -151,7 +133,9 @@ class GraphicalSetViewController: UIViewController {
             self.updateUI()
         }
     }
-
+    
+    // MARK: CONTROLLER
+    
     private func updateUI() {
         // Rebuild UI from model.
         initTableCards()
@@ -159,33 +143,37 @@ class GraphicalSetViewController: UIViewController {
         markSuccessfulMatch()
         updateScoreLabel()
         manageDealButton()
-
+        
         // Animate UI.
         animateRearrangeCards()
         animateDealCards()
         animateNewGame()
         animateSuccessMatch()
-//        animateHighlightSuccess()
-//        animateHighlightSelected()
-//        animateDehighlight()
-
+        
         // Clear flags.
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.clearFlagsDelay) {
             self.clearAnimationFlags()
         }
     }
-
+    
     private func clearAnimationFlags() {
         animationFlagNewGame = false
         animationFlagDealMoreCards = false
     }
-
+    
     private func setupGrid(cellCount: Int) {
         targetGrid = Grid(layout: .aspectRatio(PlayingCardView.Constants.cardFrameAspectRatio), frame: playingBoardView.layer.bounds)
         targetGrid.cellCount = cellCount
     }
-
+    
+    func setupPlayingCardsDelegate() {
+        for playingCardView in playingCardViews {
+            playingCardView.delegate = self
+        }
+    }
+    
     func initTableCards() {
+        // Save positions of cards from previous UI card layout.
         var previousCardLayout: [Card: CGRect] = [:]
         for playingCard in playingCardViews {
             if let model = game.cardsOnTable.first(where: { playingCard.shapeType == $0.shape.rawValue && playingCard.colorType == $0.color.rawValue && playingCard.fillType == $0.pattern.rawValue && playingCard.quantity == $0.quantity.rawValue + 1 }) {
@@ -197,12 +185,12 @@ class GraphicalSetViewController: UIViewController {
         for view in playingBoardView.subviews {
             view.removeFromSuperview()
         }
+        // Create new UI cards.
         for cardModel in game.cardsOnTable {
             if game.cardsOnTable.firstIndex(of: cardModel) != nil {
                 let cardRect = previousCardLayout[cardModel]
                     ?? dealCardsButton.convert(dealCardsButton.bounds, to: playingBoardView)
                 let cardButton = UIView()
-                // Cards already on the table
                 cardButton.frame = cardRect
                 let cardView = PlayingCardView(frame: cardButton.layer.bounds.insetBy(dx: Constants.playingCardsSpacing, dy: Constants.playingCardsSpacing), shapeType: cardModel.shape.rawValue, quantityType: cardModel.quantity.rawValue, fillType: cardModel.pattern.rawValue, colorType: cardModel.color.rawValue)
                 cardButton.clipsToBounds = true
@@ -211,7 +199,7 @@ class GraphicalSetViewController: UIViewController {
                 cardButton.addSubview(cardView)
                 playingCardViews.append(cardView)
                 playingBoardView.addSubview(cardButton)
-                setupGestures()
+                setupPlayingCardsDelegate()
             }
         }
     }
@@ -249,7 +237,6 @@ class GraphicalSetViewController: UIViewController {
         for index in 0..<game.cardsOnTable.count {
             if game.cardsMatched.contains(game.cardsOnTable[index]) {
                 playingCardViews[index].successHighlight()
-//            playingCardViews[index].superview?.backgroundColor = UIColor(cgColor: PlayingCardView.Constants.selectedSuccessColor)
             }
         }
     }
@@ -275,10 +262,11 @@ class GraphicalSetViewController: UIViewController {
                         if !animateCardsAway {
                             self.playingCardViews[cardIndex].frame = animationTargetView.layer.bounds.insetBy(dx: targetElementSpacing, dy: targetElementSpacing)
                         }
-                        else{
+                        else {
                             self.playingCardViews[cardIndex].frame = animationTargetView.layer.bounds
                         }
                         cardButton.frame = animationTargetView.frame
+                        self.playingCardViews[cardIndex].setNeedsLayout()
                     },
 
                     completion: { (finished: Bool) -> (Void) in onComplete(finished)
@@ -323,12 +311,12 @@ class GraphicalSetViewController: UIViewController {
             prepareForSuccessMatchAnimation()
 
             animate(cards: Array(game.cardsMatched), onto: targetViewScoreLabel, duration: Constants.animationSuccessMatchDuration, animationTimeSpacing: Constants.animationSuccessMatchDelayIncrement, animationOptions: Constants.animationSuccessMatchOptions, targetElementSpacing: 0, animateCardsAway: true, onComplete: { (finished: Bool) -> Void in
-                if finished {
-                    self.view.nod()
-                    self.dealThreeCards()
-                    self.updateUI()
-                }
-            })
+                    if finished {
+                        self.view.nod()
+                        self.dealThreeCards()
+                        self.updateUI()
+                    }
+                })
         }
     }
 

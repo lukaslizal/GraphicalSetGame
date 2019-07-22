@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol CardTap: class{
+    func tapped(playingCard: PlayingCardView)
+}
+
 class PlayingCardView: UIView {
     var shapeViews: [ShapeView] = [ShapeView(), ShapeView(), ShapeView()]
     var symbolGridView: UIView = UIView() { didSet { setNeedsLayout() } }
@@ -34,7 +38,9 @@ class PlayingCardView: UIView {
             setNeedsLayout()
         }
     }
-
+    var blurView = UIView()
+    weak var delegate: CardTap?
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -46,13 +52,13 @@ class PlayingCardView: UIView {
     init(frame: CGRect, shapeType: Int, quantityType: Int, fillType: Int, colorType: Int) {
         super.init(frame: frame)
         layer.cornerRadius = layer.bounds.width * Constants.cornerRadiusToWidthRatio
-        layer.backgroundColor = Constants.cardColor
-        layer.isOpaque = false
+        layer.backgroundColor = UIColor.clear.cgColor
         clipsToBounds = true
-        initSubviews(quantity: quantityType + 1, shapeType: shapeType, fillType: fillType, colorType: colorType)
+        setupSubviews(quantity: quantityType + 1, shapeType: shapeType, fillType: fillType, colorType: colorType)
+        setupGestures()
     }
 
-    private func initSubviews(quantity: Int, shapeType: Int, fillType: Int, colorType: Int) {
+    private func setupSubviews(quantity: Int, shapeType: Int, fillType: Int, colorType: Int) {
         for index in 0..<quantity {
             addSubview(shapeViews[index])
         }
@@ -60,8 +66,28 @@ class PlayingCardView: UIView {
         self.quantity = quantity
         self.colorType = colorType
         self.fillType = fillType
+        let blurEffect = UIBlurEffect(style: .regular)
+        self.blurView = UIVisualEffectView(effect: blurEffect)
+        self.blurView.translatesAutoresizingMaskIntoConstraints = false
+        self.insertSubview(blurView, at: 0)
+        self.blurView.backgroundColor = UIColor(cgColor: Constants.cardColor)
+        blurView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
     }
-
+    
+    func setupGestures(){
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.tapHandler))
+        self.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc func tapHandler(sender: UITapGestureRecognizer){
+        print("gg")
+        switch sender.state {
+        case .ended:
+            self.delegate?.tapped(playingCard: self)
+        default:
+            return
+        }
+    }
     override func isEqual(_ object: Any?) -> Bool {
         guard let other = object as? PlayingCardView else {
             return false
@@ -84,19 +110,23 @@ class PlayingCardView: UIView {
                 shapeViews[index].isOpaque = false
             }
         }
+        blurView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
     }
 
     func selectedHighlight() {
-        self.backgroundColor = UIColor(cgColor: Constants.selectedHighlightColor)
+        self.blurView.backgroundColor = UIColor(cgColor: Constants.selectedHighlightColor)
+//        self.backgroundColor = UIColor(cgColor: Constants.selectedHighlightColor)
     }
     func successHighlight() {
-        self.backgroundColor = UIColor(cgColor: Constants.selectedSuccessColor)
+        self.blurView.backgroundColor = UIColor(cgColor: Constants.selectedSuccessColor)
+//        self.backgroundColor = UIColor(cgColor: Constants.selectedSuccessColor)
         for shapeView in self.shapeViews{
             shapeView.shapeColor = UIColor.clear
         }
     }
     func unhighlight() {
-        self.backgroundColor = UIColor(cgColor: Constants.cardColor)
+        self.blurView.backgroundColor = UIColor(cgColor: Constants.cardColor)
+//        self.backgroundColor = UIColor(cgColor: Constants.cardColor)
     }
 }
 

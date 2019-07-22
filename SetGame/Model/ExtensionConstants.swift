@@ -62,3 +62,9 @@ extension ShapeView {
         static let hatchStrokeWidth: CGFloat = 3
     }
 }
+
+extension Game {
+    struct Constants {
+        static let initialCardCountOnTable: Int = 21 // 20 cards is a maximum amount of card that can not create any set.
+    }
+}
