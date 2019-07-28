@@ -24,7 +24,8 @@ extension GraphicalSetViewController {
         static let animationNewGameDuration: TimeInterval = 0.8
         static let animationNewGameCardDelayIncrement: TimeInterval = 1 / 12 * 12
         static let animationNewGameCardOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction, .allowAnimatedContent]
-        static let animationSuccessMatchDuration: TimeInterval = 0.4
+        static let animationSuccessMatchDuration: TimeInterval = 0.5
+        static let animationSuccessMatchWaitFor: TimeInterval = 0.1
         static let animationSuccessMatchDelayIncrement: TimeInterval = 0.1
         static let animationSuccessMatchOptions: UIView.AnimationOptions = [.curveEaseIn, .allowUserInteraction, .allowAnimatedContent]
     }

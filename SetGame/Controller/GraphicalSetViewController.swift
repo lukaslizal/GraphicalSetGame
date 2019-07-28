@@ -251,13 +251,13 @@ class GraphicalSetViewController: UIViewController, CardTap {
 
     // MARK: ANIMATIONS
 
-    private func animate(cards: [Card], onto targetViewBy: (_ index: Int) -> (UIView?), duration: TimeInterval, animationTimeSpacing: TimeInterval, animationOptions: UIView.AnimationOptions, targetElementSpacing: CGFloat, animateCardsAway: Bool, onComplete: @escaping (_ finished: Bool) -> (Void)) {
+    private func animate(cards: [Card], onto targetViewBy: (_ index: Int) -> (UIView?), duration: TimeInterval, waitFor: TimeInterval ,animationTimeSpacing: TimeInterval, animationOptions: UIView.AnimationOptions, targetElementSpacing: CGFloat, onComplete: @escaping (_ finished: Bool) -> (Void)) {
         var delay = 0.0
         for card in cards {
             if let cardIndex = game.cardsOnTable.firstIndex(of: card), let animationTargetView = targetViewBy(cardIndex) {
-                playingCardButtons[cardIndex].cornerRadiusAnimationWithDuration(duration: CFTimeInterval(duration), to: animationTargetView.layer.cornerRadius, delay: Double(delay) / TimeInterval(cards.count))
-                playingCardButtons[cardIndex].playingCardView.cornerRadiusAnimationWithDuration(duration: CFTimeInterval(duration), to: animationTargetView.layer.cornerRadius, delay: Double(delay) / TimeInterval(cards.count))
-                UIView.animate(withDuration: duration, delay: delay / TimeInterval(cards.count), options: animationOptions, animations: {
+                playingCardButtons[cardIndex].cornerRadiusAnimationWithDuration(duration: CFTimeInterval(duration), to: animationTargetView.layer.cornerRadius, delay: waitFor + (Double(delay) / TimeInterval(cards.count)))
+                playingCardButtons[cardIndex].playingCardView.cornerRadiusAnimationWithDuration(duration: CFTimeInterval(duration), to: animationTargetView.layer.cornerRadius, delay: waitFor + (Double(delay) / TimeInterval(cards.count)))
+                UIView.animate(withDuration: duration, delay: waitFor + (delay / TimeInterval(cards.count)), options: animationOptions, animations: {
                         self.playingCardButtons[cardIndex].frame = animationTargetView.frame
                     },
 
@@ -272,7 +272,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
         let cardsToRearrange = game.cardsOnTable.filter() { !game.cardsToDeal.contains($0) && !game.cardsMatched.contains($0) }
         setupGrid(cellCount: game.cardsOnTable.count)
 
-        animate(cards: cardsToRearrange, onto: targetGridViews, duration: Constants.animationOldCardDuration, animationTimeSpacing: Constants.animationOldCardDelayIncrement, animationOptions: Constants.animationOldCardOptions, targetElementSpacing: PlayingCardButton.Constants.playingCardsSpacing, animateCardsAway: false, onComplete: { (finished: Bool) -> (Void) in
+        animate(cards: cardsToRearrange, onto: targetGridViews, duration: Constants.animationOldCardDuration, waitFor: 0, animationTimeSpacing: Constants.animationOldCardDelayIncrement, animationOptions: Constants.animationOldCardOptions, targetElementSpacing: PlayingCardButton.Constants.playingCardsSpacing, onComplete: { (finished: Bool) -> (Void) in
                 self.game.cardsToDeal = Set<Card>() })
 
     }
@@ -281,7 +281,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
         if animationFlagDealMoreCards {
             prepareForDealCardsAnimation()
 
-            animate(cards: Array(game.cardsToDeal), onto: targetGridViews, duration: Constants.animationDealCardDuration, animationTimeSpacing: Constants.animationDealCardDelayIncrement, animationOptions: Constants.animationDealCardOptions, targetElementSpacing: PlayingCardButton.Constants.playingCardsSpacing, animateCardsAway: false, onComplete: { (finished: Bool) -> (Void) in
+            animate(cards: Array(game.cardsToDeal), onto: targetGridViews, duration: Constants.animationDealCardDuration, waitFor: 0, animationTimeSpacing: Constants.animationDealCardDelayIncrement, animationOptions: Constants.animationDealCardOptions, targetElementSpacing: PlayingCardButton.Constants.playingCardsSpacing, onComplete: { (finished: Bool) -> (Void) in
                     self.game.cardsToDeal = Set<Card>()
                 })
         }
@@ -293,7 +293,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
 
             setupGrid(cellCount: game.cardsOnTable.count)
 
-            animate(cards: Array(game.cardsOnTable), onto: targetGridViews, duration: Constants.animationNewGameDuration, animationTimeSpacing: Constants.animationNewGameCardDelayIncrement, animationOptions: Constants.animationNewGameCardOptions, targetElementSpacing: PlayingCardButton.Constants.playingCardsSpacing, animateCardsAway: false, onComplete: { (finished: Bool) -> (Void) in self.game.cardsToDeal = Set<Card>()
+            animate(cards: Array(game.cardsOnTable), onto: targetGridViews, duration: Constants.animationNewGameDuration, waitFor: 0, animationTimeSpacing: Constants.animationNewGameCardDelayIncrement, animationOptions: Constants.animationNewGameCardOptions, targetElementSpacing: PlayingCardButton.Constants.playingCardsSpacing, onComplete: { (finished: Bool) -> (Void) in self.game.cardsToDeal = Set<Card>()
             })
         }
     }
@@ -301,8 +301,8 @@ class GraphicalSetViewController: UIViewController, CardTap {
     private func animateSuccessMatch() {
         if animationFlagSuccessMatch {
             prepareForSuccessMatchAnimation()
-
-            animate(cards: Array(game.cardsMatched), onto: targetViewScoreLabel, duration: Constants.animationSuccessMatchDuration, animationTimeSpacing: Constants.animationSuccessMatchDelayIncrement, animationOptions: Constants.animationSuccessMatchOptions, targetElementSpacing: 0, animateCardsAway: true, onComplete: { (finished: Bool) -> Void in
+            
+            animate(cards: Array(game.cardsMatched), onto: targetViewScoreLabel, duration: Constants.animationSuccessMatchDuration, waitFor: Constants.animationSuccessMatchWaitFor, animationTimeSpacing: Constants.animationSuccessMatchDelayIncrement, animationOptions: Constants.animationSuccessMatchOptions, targetElementSpacing: 0, onComplete: { (finished: Bool) -> Void in
                     if finished {
                         self.view.nod()
                         self.dealThreeCards()
@@ -337,6 +337,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
                 playingCardButtons[indexOnTable].layer.zPosition = 2
                 playingCardButtons[indexOnTable].frame = rect
                 playingCardButtons[indexOnTable].layer.cornerRadius = PlayingCardView.Constants.cornerRadiusToWidthRatio * rect.width
+                playingCardButtons[indexOnTable].playingCardView.layer.cornerRadius = PlayingCardView.Constants.cornerRadiusToWidthRatio * rect.width
                 playingCardButtons[indexOnTable].setNeedsLayout()
             }
         }
