@@ -19,8 +19,8 @@ extension UIView {
     }
     
     func nod() {
-        self.transform = CGAffineTransform(translationX: 0, y: -Constants.shakeViewAmplitude / 2)
-        UIView.animate(withDuration: Constants.shakeViewDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: Constants.shakeViewInitialSpringVelocity, options: [.curveEaseInOut, .allowUserInteraction], animations: {
+        self.transform = CGAffineTransform(translationX: 0, y: -Constants.nodViewAmplitude)
+        UIView.animate(withDuration: Constants.nodViewDuration, delay: 0, usingSpringWithDamping: Constants.nodViewSpringDamping, initialSpringVelocity: Constants.nodViewInitialSpringVelocity, options: [.curveEaseInOut, .allowUserInteraction], animations: {
             self.transform = CGAffineTransform.identity
         }, completion: nil)
     }

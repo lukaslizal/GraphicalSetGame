@@ -37,6 +37,10 @@ extension UIView {
         static let shakeViewDuration: TimeInterval = 0.6
         static let shakeViewSpringDamping: CGFloat = 0.3
         static let shakeViewInitialSpringVelocity: CGFloat = 1
+        static let nodViewAmplitude: CGFloat = 11
+        static let nodViewDuration: TimeInterval = 0.6
+        static let nodViewSpringDamping: CGFloat = 1
+        static let nodViewInitialSpringVelocity: CGFloat = 1
     }
 }
 
