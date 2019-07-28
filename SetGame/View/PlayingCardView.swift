@@ -34,7 +34,7 @@ class PlayingCardView: UIView {
             setNeedsLayout()
         }
     }
-    var blurView = UIView()
+//    var blurView = UIView()
     
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,9 +45,10 @@ class PlayingCardView: UIView {
         super.init(frame: frame)
     }
 
-    init(frame: CGRect, shapeType: Int, quantityType: Int, fillType: Int, colorType: Int) {
+    init(frame: CGRect, cornerRadius: CGFloat, shapeType: Int, quantityType: Int, fillType: Int, colorType: Int) {
         super.init(frame: frame)
-        layer.cornerRadius = layer.bounds.width * Constants.cornerRadiusToWidthRatio
+        layer.cornerRadius = cornerRadius
+//        layer.cornerRadius = layer.bounds.width*(Constants.cornerRadiusToWidthRatio/superview!.layer.bounds.width)
         layer.backgroundColor = UIColor.white.cgColor
         clipsToBounds = true
         setupSubviews(quantity: quantityType + 1, shapeType: shapeType, fillType: fillType, colorType: colorType)
@@ -62,9 +63,9 @@ class PlayingCardView: UIView {
         self.colorType = colorType
         self.fillType = fillType
         
-        self.blurView.backgroundColor = UIColor.white
-        self.blurView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
-        self.insertSubview(blurView, at: 0)
+//        self.blurView.backgroundColor = UIColor.white
+//        self.blurView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
+//        self.insertSubview(blurView, at: 0)
         self.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 //        let blurEffect = UIBlurEffect(style: .regular)
 //        self.blurView = UIVisualEffectView(effect: blurEffect)
@@ -84,35 +85,38 @@ class PlayingCardView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        let symbolInsets = layer.bounds.width * Constants.symbolInsetsRatio
-        let symbolsAreaRect = layer.bounds.insetBy(dx: symbolInsets, dy: symbolInsets)
-        var gridOfShapes = Grid(layout: Grid.Layout.aspectRatio(Constants.symbolAspectRatio), frame: symbolsAreaRect)
-        gridOfShapes.cellCount = quantity
-        for index in 0..<shapeViews.count {
-            if index < quantity {
-                let spacingX = shapeViews[index].frame.width * Constants.symbolSpacingToCardRatio
-                let spacingY = shapeViews[index].frame.height * Constants.symbolSpacingToCardRatio
-                shapeViews[index].frame = (gridOfShapes[index]?.insetBy(dx: spacingX, dy: spacingY))!
-                shapeViews[index].isOpaque = false
+        if let parentButtonView = superview {
+            layer.cornerRadius = layer.bounds.width*(parentButtonView.layer.cornerRadius/parentButtonView.layer.bounds.width)
+            let symbolInsets = layer.bounds.width * Constants.symbolInsetsRatio
+            let symbolsAreaRect = layer.bounds.insetBy(dx: symbolInsets, dy: symbolInsets)
+            var gridOfShapes = Grid(layout: Grid.Layout.aspectRatio(Constants.symbolAspectRatio), frame: symbolsAreaRect)
+            gridOfShapes.cellCount = quantity
+            for index in 0..<shapeViews.count {
+                if index < quantity {
+                    let spacingX = shapeViews[index].frame.width * Constants.symbolSpacingToCardRatio
+                    let spacingY = shapeViews[index].frame.height * Constants.symbolSpacingToCardRatio
+                    shapeViews[index].frame = (gridOfShapes[index]?.insetBy(dx: spacingX, dy: spacingY))!
+                    shapeViews[index].isOpaque = false
+                }
             }
+            //        blurView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
         }
-//        blurView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
     }
 
     func selectedHighlight() {
-        self.blurView.backgroundColor = UIColor(cgColor: Constants.selectedHighlightColor)
-//        self.backgroundColor = UIColor(cgColor: Constants.selectedHighlightColor)
+//        self.blurView.backgroundColor = UIColor(cgColor: Constants.selectedHighlightColor)
+        self.backgroundColor = UIColor(cgColor: Constants.selectedHighlightColor)
     }
     func successHighlight() {
-        self.blurView.backgroundColor = UIColor(cgColor: Constants.selectedSuccessColor)
-//        self.backgroundColor = UIColor(cgColor: Constants.selectedSuccessColor)
+//        self.blurView.backgroundColor = UIColor(cgColor: Constants.selectedSuccessColor)
+        self.backgroundColor = UIColor(cgColor: Constants.selectedSuccessColor)
         for shapeView in self.shapeViews{
             shapeView.shapeColor = UIColor.clear
         }
     }
     func unhighlight() {
-        self.blurView.backgroundColor = UIColor(cgColor: Constants.cardColor)
-//        self.backgroundColor = UIColor(cgColor: Constants.cardColor)
+//        self.blurView.backgroundColor = UIColor(cgColor: Constants.cardColor)
+        self.backgroundColor = UIColor(cgColor: Constants.cardColor)
     }
 }
 

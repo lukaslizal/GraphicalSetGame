@@ -26,17 +26,19 @@ class PlayingCardButton: UIView {
         super.init(frame: frame)
     }
 
-    init(frame: CGRect, shapeType: Int, quantityType: Int, fillType: Int, colorType: Int) {
+    init(frame: CGRect, cornerRadius: CGFloat, shapeType: Int, quantityType: Int, fillType: Int, colorType: Int) {
         super.init(frame: frame)
-        layer.backgroundColor = UIColor.red.cgColor
+        layer.cornerRadius = cornerRadius
+        layer.backgroundColor = UIColor.clear.cgColor
         clipsToBounds = true
-        setupPlayingCardView(shapeType: shapeType, quantityType: quantityType, fillType: fillType, colorType: colorType)
+        setupPlayingCardView(cornerRadius: cornerRadius, shapeType: shapeType, quantityType: quantityType, fillType: fillType, colorType: colorType)
         setupGestures()
     }
 
-    private func setupPlayingCardView(shapeType: Int, quantityType: Int, fillType: Int, colorType: Int) {
+    private func setupPlayingCardView(cornerRadius: CGFloat, shapeType: Int, quantityType: Int, fillType: Int, colorType: Int) {
         let rect = self.layer.bounds.insetBy(dx: Constants.playingCardsSpacing, dy: Constants.playingCardsSpacing)
-        playingCardView = PlayingCardView(frame: rect, shapeType: shapeType, quantityType: quantityType, fillType: fillType, colorType: colorType)
+        let cardViewCornerRadius = rect.width*(cornerRadius/layer.bounds.width)
+        playingCardView = PlayingCardView(frame: rect, cornerRadius: cardViewCornerRadius, shapeType: shapeType, quantityType: quantityType, fillType: fillType, colorType: colorType)
         addSubview(playingCardView)
     }
 
@@ -46,7 +48,6 @@ class PlayingCardButton: UIView {
     }
 
     @objc func tapHandler(sender: UITapGestureRecognizer) {
-        print("gg")
         switch sender.state {
         case .ended:
             self.delegate?.tapped(playingCardButton: self)
@@ -63,10 +64,8 @@ class PlayingCardButton: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        playingCardView.setNeedsLayout()
         playingCardView.layer.cornerRadius = self.layer.bounds.width * Constants.cornerRadiusToWidthRatio
-        playingCardView.frame = self.layer.bounds.insetBy(dx: Constants.playingCardsSpacing, dy: Constants.playingCardsSpacing)
-        blurView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
+        playingCardView.setNeedsLayout()
     }
 
     func selectedHighlight() {

@@ -33,7 +33,8 @@ extension UIView {
         animation.toValue = to
         animation.duration = duration
         animation.beginTime = CACurrentMediaTime()+delay
-        animation.isRemovedOnCompletion = true
+        animation.fillMode = .forwards
+        animation.isRemovedOnCompletion = false
         layer.add(animation, forKey: "cornerRadius")
     }
 }
