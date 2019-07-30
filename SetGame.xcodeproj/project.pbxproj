@@ -18,6 +18,11 @@
 		3DA5517B22C935CD00437A14 /* GraphicalSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA5517A22C935CD00437A14 /* GraphicalSetViewController.swift */; };
 		3DB1ECEE22B69D6500B70EB9 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1ECED22B69D6500B70EB9 /* Grid.swift */; };
 		3DB1ECF522BCD92000B70EB9 /* PlayingCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1ECF422BCD92000B70EB9 /* PlayingCardView.swift */; };
+		3DDF4BE522EF1ABE00030AC6 /* CheGuevaraBarry-Brown.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3DDF4BE422EF1ABD00030AC6 /* CheGuevaraBarry-Brown.ttf */; };
+		3DDF4BEA22EF1AEE00030AC6 /* BPreplay.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3DDF4BE622EF1AEE00030AC6 /* BPreplay.otf */; };
+		3DDF4BEB22EF1AEE00030AC6 /* BPreplayBoldItalics.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3DDF4BE722EF1AEE00030AC6 /* BPreplayBoldItalics.otf */; };
+		3DDF4BEC22EF1AEE00030AC6 /* BPreplayBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3DDF4BE822EF1AEE00030AC6 /* BPreplayBold.otf */; };
+		3DDF4BED22EF1AEE00030AC6 /* BPreplayItalics.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3DDF4BE922EF1AEE00030AC6 /* BPreplayItalics.otf */; };
 		3DE3A79322E1F1CB00717455 /* ExtensionConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE3A79222E1F1CB00717455 /* ExtensionConstants.swift */; };
 		3DECE75D22C4FB7F00DF4624 /* ShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DECE75C22C4FB7F00DF4624 /* ShapeView.swift */; };
 /* End PBXBuildFile section */
@@ -36,6 +41,11 @@
 		3DA5517A22C935CD00437A14 /* GraphicalSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphicalSetViewController.swift; sourceTree = "<group>"; };
 		3DB1ECED22B69D6500B70EB9 /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		3DB1ECF422BCD92000B70EB9 /* PlayingCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingCardView.swift; sourceTree = "<group>"; };
+		3DDF4BE422EF1ABD00030AC6 /* CheGuevaraBarry-Brown.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CheGuevaraBarry-Brown.ttf"; sourceTree = "<group>"; };
+		3DDF4BE622EF1AEE00030AC6 /* BPreplay.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BPreplay.otf; sourceTree = "<group>"; };
+		3DDF4BE722EF1AEE00030AC6 /* BPreplayBoldItalics.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BPreplayBoldItalics.otf; sourceTree = "<group>"; };
+		3DDF4BE822EF1AEE00030AC6 /* BPreplayBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BPreplayBold.otf; sourceTree = "<group>"; };
+		3DDF4BE922EF1AEE00030AC6 /* BPreplayItalics.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BPreplayItalics.otf; sourceTree = "<group>"; };
 		3DE3A79222E1F1CB00717455 /* ExtensionConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionConstants.swift; sourceTree = "<group>"; };
 		3DECE75C22C4FB7F00DF4624 /* ShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,6 +84,7 @@
 				3D4343BF22E4AFBE00D454FE /* View */,
 				3D4343C022E4B08000D454FE /* Controller */,
 				3D0DDF9A228EBAE400EF5FAE /* AppDelegate.swift */,
+				3DDF4BD522EF050E00030AC6 /* Fonts */,
 				3D0DDF9E228EBAE400EF5FAE /* Main.storyboard */,
 				3D0DDFA1228EBAE600EF5FAE /* Assets.xcassets */,
 				3D0DDFA3228EBAE600EF5FAE /* LaunchScreen.storyboard */,
@@ -110,6 +121,18 @@
 				3DA5517A22C935CD00437A14 /* GraphicalSetViewController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		3DDF4BD522EF050E00030AC6 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				3DDF4BE622EF1AEE00030AC6 /* BPreplay.otf */,
+				3DDF4BE822EF1AEE00030AC6 /* BPreplayBold.otf */,
+				3DDF4BE722EF1AEE00030AC6 /* BPreplayBoldItalics.otf */,
+				3DDF4BE922EF1AEE00030AC6 /* BPreplayItalics.otf */,
+				3DDF4BE422EF1ABD00030AC6 /* CheGuevaraBarry-Brown.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,7 +194,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D0DDFA5228EBAE600EF5FAE /* LaunchScreen.storyboard in Resources */,
+				3DDF4BE522EF1ABE00030AC6 /* CheGuevaraBarry-Brown.ttf in Resources */,
+				3DDF4BED22EF1AEE00030AC6 /* BPreplayItalics.otf in Resources */,
+				3DDF4BEA22EF1AEE00030AC6 /* BPreplay.otf in Resources */,
+				3DDF4BEB22EF1AEE00030AC6 /* BPreplayBoldItalics.otf in Resources */,
 				3D0DDFA2228EBAE600EF5FAE /* Assets.xcassets in Resources */,
+				3DDF4BEC22EF1AEE00030AC6 /* BPreplayBold.otf in Resources */,
 				3D0DDFA0228EBAE400EF5FAE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

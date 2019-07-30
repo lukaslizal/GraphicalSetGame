@@ -119,7 +119,7 @@ struct Game {
 }
 
 /**
- Error states of Set! game
+ Player's score value
  
  - author:
  Lukas Lizal

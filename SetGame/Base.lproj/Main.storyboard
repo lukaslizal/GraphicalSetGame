@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hnf-tP-sSh">
-    <device id="retina3_5" orientation="portrait">
+    <device id="ipad11_0rounded" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -9,17 +9,25 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="BPreplayBold.otf">
+            <string>BPreplay-Bold</string>
+        </array>
+        <array key="CheGuevaraBarry-Brown.ttf">
+            <string>CheGuevaraBarry-Brown</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="s8v-cj-a8c">
             <objects>
                 <viewController id="RoC-sn-hJW" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Orz-i4-LTc">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J5Z-fr-W2o" customClass="PlayingCardView" customModule="SetGame" customModuleProvider="target">
-                                <rect key="frame" x="16" y="58" width="288" height="384"/>
+                                <rect key="frame" x="167" y="265.5" width="500" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="J5Z-fr-W2o" secondAttribute="height" multiplier="6:8" id="F5B-LB-RF1"/>
@@ -56,14 +64,14 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SetGame" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="left" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ZOv-SY-HRS">
-                                <rect key="frame" x="16" y="30" width="288" height="50"/>
+                                <rect key="frame" x="16" y="34" width="802" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x3g-Sp-JKk">
-                                        <rect key="frame" x="0.0" y="9.5" width="89.5" height="31"/>
+                                        <rect key="frame" x="0.0" y="9.5" width="260.5" height="31"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
@@ -80,7 +88,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XPK-lq-0Yc" userLabel="Deal More">
-                                        <rect key="frame" x="99.5" y="9.5" width="89" height="31"/>
+                                        <rect key="frame" x="270.5" y="9.5" width="261" height="31"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
@@ -97,7 +105,7 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pgy-7J-nJb">
-                                        <rect key="frame" x="198.5" y="0.0" width="89.5" height="50"/>
+                                        <rect key="frame" x="541.5" y="0.0" width="260.5" height="50"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dIL-Am-EW7">
                                                 <rect key="frame" x="17" y="15.5" width="65.5" height="19.5"/>
@@ -121,13 +129,13 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="7bL-sS-p88">
-                                <rect key="frame" x="16" y="83" width="288" height="381"/>
+                                <rect key="frame" x="16" y="87" width="802" height="1071"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="lnO-bR-BT3">
-                                        <rect key="frame" x="0.0" y="0.0" width="288" height="33"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="802" height="119"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="saA-zb-chm">
-                                                <rect key="frame" x="0.0" y="0.0" width="85.5" height="33"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="256.5" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -137,7 +145,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="izq-ld-tcj">
-                                                <rect key="frame" x="101.5" y="0.0" width="85" height="33"/>
+                                                <rect key="frame" x="272.5" y="0.0" width="257" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -147,7 +155,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hhZ-cJ-gmH">
-                                                <rect key="frame" x="202.5" y="0.0" width="85.5" height="33"/>
+                                                <rect key="frame" x="545.5" y="0.0" width="256.5" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -159,10 +167,10 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="hit-xq-oIe">
-                                        <rect key="frame" x="0.0" y="50" width="288" height="32.5"/>
+                                        <rect key="frame" x="0.0" y="136" width="802" height="119"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ISf-Oe-n3Q">
-                                                <rect key="frame" x="0.0" y="0.0" width="85.5" height="32.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="256.5" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -172,7 +180,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EZD-rT-IuN">
-                                                <rect key="frame" x="101.5" y="0.0" width="85" height="32.5"/>
+                                                <rect key="frame" x="272.5" y="0.0" width="257" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -182,7 +190,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eGJ-Ab-dme">
-                                                <rect key="frame" x="202.5" y="0.0" width="85.5" height="32.5"/>
+                                                <rect key="frame" x="545.5" y="0.0" width="256.5" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -194,10 +202,10 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="wpO-iG-Etx">
-                                        <rect key="frame" x="0.0" y="99.5" width="288" height="33"/>
+                                        <rect key="frame" x="0.0" y="272" width="802" height="119"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1r7-JB-mJN">
-                                                <rect key="frame" x="0.0" y="0.0" width="85.5" height="33"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="256.5" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -207,7 +215,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b9B-QL-fl0">
-                                                <rect key="frame" x="101.5" y="0.0" width="85" height="33"/>
+                                                <rect key="frame" x="272.5" y="0.0" width="257" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -217,7 +225,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y7n-LW-25I">
-                                                <rect key="frame" x="202.5" y="0.0" width="85.5" height="33"/>
+                                                <rect key="frame" x="545.5" y="0.0" width="256.5" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -229,10 +237,10 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="PMX-aF-ld9">
-                                        <rect key="frame" x="0.0" y="149.5" width="288" height="32.5"/>
+                                        <rect key="frame" x="0.0" y="408" width="802" height="119"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m7L-y5-wEU">
-                                                <rect key="frame" x="0.0" y="0.0" width="85.5" height="32.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="256.5" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -242,7 +250,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U4c-5G-FLz">
-                                                <rect key="frame" x="101.5" y="0.0" width="85" height="32.5"/>
+                                                <rect key="frame" x="272.5" y="0.0" width="257" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -252,7 +260,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZSg-AE-0gM">
-                                                <rect key="frame" x="202.5" y="0.0" width="85.5" height="32.5"/>
+                                                <rect key="frame" x="545.5" y="0.0" width="256.5" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -264,10 +272,10 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="RdT-ZL-kbs">
-                                        <rect key="frame" x="0.0" y="199" width="288" height="33"/>
+                                        <rect key="frame" x="0.0" y="544" width="802" height="119"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iSN-NA-Q1d">
-                                                <rect key="frame" x="0.0" y="0.0" width="85.5" height="33"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="256.5" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -277,7 +285,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rU9-29-zmR">
-                                                <rect key="frame" x="101.5" y="0.0" width="85" height="33"/>
+                                                <rect key="frame" x="272.5" y="0.0" width="257" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -287,7 +295,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="waV-1c-1Od">
-                                                <rect key="frame" x="202.5" y="0.0" width="85.5" height="33"/>
+                                                <rect key="frame" x="545.5" y="0.0" width="256.5" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -299,10 +307,10 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="bxb-a4-kqb">
-                                        <rect key="frame" x="0.0" y="249" width="288" height="32.5"/>
+                                        <rect key="frame" x="0.0" y="680" width="802" height="119"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1pm-0M-SSs">
-                                                <rect key="frame" x="0.0" y="0.0" width="85.5" height="32.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="256.5" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -312,7 +320,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7q3-jD-Wms">
-                                                <rect key="frame" x="101.5" y="0.0" width="85" height="32.5"/>
+                                                <rect key="frame" x="272.5" y="0.0" width="257" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -322,7 +330,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LoJ-ab-qhq">
-                                                <rect key="frame" x="202.5" y="0.0" width="85.5" height="32.5"/>
+                                                <rect key="frame" x="545.5" y="0.0" width="256.5" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -334,10 +342,10 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="oYd-ce-USY">
-                                        <rect key="frame" x="0.0" y="298.5" width="288" height="33"/>
+                                        <rect key="frame" x="0.0" y="816" width="802" height="119"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="khy-2I-iQu">
-                                                <rect key="frame" x="0.0" y="0.0" width="85.5" height="33"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="256.5" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -347,7 +355,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mv7-5h-UEU">
-                                                <rect key="frame" x="101.5" y="0.0" width="85" height="33"/>
+                                                <rect key="frame" x="272.5" y="0.0" width="257" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -357,7 +365,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Sp-6K-9f5">
-                                                <rect key="frame" x="202.5" y="0.0" width="85.5" height="33"/>
+                                                <rect key="frame" x="545.5" y="0.0" width="256.5" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -369,10 +377,10 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="t0k-YV-eNf">
-                                        <rect key="frame" x="0.0" y="348.5" width="288" height="32.5"/>
+                                        <rect key="frame" x="0.0" y="952" width="802" height="119"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JBr-U0-3PM">
-                                                <rect key="frame" x="0.0" y="0.0" width="85.5" height="32.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="256.5" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -382,7 +390,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s6f-yT-H0b">
-                                                <rect key="frame" x="101.5" y="0.0" width="85" height="32.5"/>
+                                                <rect key="frame" x="272.5" y="0.0" width="257" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -392,7 +400,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="szS-DH-5Ze">
-                                                <rect key="frame" x="202.5" y="0.0" width="85.5" height="32.5"/>
+                                                <rect key="frame" x="545.5" y="0.0" width="256.5" height="119"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal">
                                                     <attributedString key="attributedTitle"/>
@@ -456,47 +464,59 @@
             <objects>
                 <viewController id="hnf-tP-sSh" customClass="GraphicalSetViewController" customModule="SetGame" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fkX-mX-CAZ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="5ij-JK-bik">
-                                <rect key="frame" x="16" y="36" width="288" height="428"/>
+                                <rect key="frame" x="16" y="40" width="802" height="1118"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="40J-Me-888">
-                                        <rect key="frame" x="0.0" y="0.0" width="288" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="802" height="53.5"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UVp-Y6-lw6">
-                                                <rect key="frame" x="0.0" y="0.0" width="85.5" height="50"/>
+                                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UVp-Y6-lw6">
+                                                <rect key="frame" x="0.0" y="0.0" width="53.5" height="53.5"/>
                                                 <color key="backgroundColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="UVp-Y6-lw6" secondAttribute="height" multiplier="12:7" id="RK2-NR-bKA"/>
+                                                    <constraint firstAttribute="width" secondItem="UVp-Y6-lw6" secondAttribute="height" multiplier="1:1" id="RK2-NR-bKA"/>
+                                                    <constraint firstAttribute="width" secondItem="UVp-Y6-lw6" secondAttribute="height" multiplier="12:7" id="hnT-bE-rk2"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="12"/>
-                                                <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                                                <state key="normal" title="New Game">
+                                                <fontDescription key="fontDescription" name="CheGuevaraBarry-Brown" family="CheGuevara Barry" pointSize="40"/>
+                                                <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="15"/>
+                                                <state key="normal" title="...">
                                                     <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="hnT-bE-rk2"/>
+                                                    </mask>
+                                                </variation>
+                                                <variation key="heightClass=compact">
+                                                    <mask key="constraints">
+                                                        <exclude reference="RK2-NR-bKA"/>
+                                                        <include reference="hnT-bE-rk2"/>
+                                                    </mask>
+                                                </variation>
                                                 <connections>
                                                     <action selector="newGamePressed:" destination="hnf-tP-sSh" eventType="touchUpInside" id="Ttw-Gs-sme"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rRw-EG-xfc">
-                                                <rect key="frame" x="94" y="0.0" width="100" height="50"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2690" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rRw-EG-xfc">
+                                                <rect key="frame" x="338" y="0.0" width="107" height="53.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="rRw-EG-xfc" secondAttribute="height" multiplier="2:1" priority="750" id="ZDc-77-Hzn"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="28"/>
+                                                <fontDescription key="fontDescription" name="BPreplay-Bold" family="BPreplay" pointSize="30"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LGD-Uj-ccW">
-                                                <rect key="frame" x="202.5" y="0.0" width="85.5" height="50"/>
-                                                <color key="backgroundColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <button opaque="NO" contentMode="center" horizontalCompressionResistancePriority="749" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LGD-Uj-ccW">
+                                                <rect key="frame" x="710" y="0.0" width="92" height="53.5"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="LGD-Uj-ccW" secondAttribute="height" multiplier="12:7" priority="750" id="KN9-fN-M1s"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="12"/>
-                                                <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                                <fontDescription key="fontDescription" name="CheGuevaraBarry-Brown" family="CheGuevara Barry" pointSize="15"/>
+                                                <inset key="contentEdgeInsets" minX="10" minY="13" maxX="10" maxY="10"/>
                                                 <state key="normal" title="Deal Cards">
                                                     <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -527,7 +547,7 @@
                                         </variation>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rA1-B9-xva">
-                                        <rect key="frame" x="0.0" y="66" width="288" height="362"/>
+                                        <rect key="frame" x="0.0" y="69.5" width="802" height="1048.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <gestureRecognizers/>
                                         <connections>

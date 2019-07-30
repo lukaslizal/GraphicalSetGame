@@ -61,6 +61,7 @@ extension PlayingCardView {
 
 extension PlayingCardButton {
     struct Constants {
+        static let buttonColor: CGColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
         static let buttonFrameAspectRatio: CGFloat = 5 / 7
         static let playingCardsSpacing: CGFloat = 4
         static let cornerRadiusToWidthRatio: CGFloat = 1 / 10
@@ -79,5 +80,14 @@ extension ShapeView {
 extension Game {
     struct Constants {
         static let initialCardCountOnTable: Int = 21 // 20 cards is a maximum amount of card that can not create any set.
+    }
+}
+
+extension UIButton {
+    struct Constants {
+        static let menuButtonEnabledColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        static let menuButtonDisabledColor: UIColor = #colorLiteral(red: 0.9990593791, green: 0.9802948155, blue: 0.9218330224, alpha: 1)
+        static let menuButtonEnabledTitleColor: UIColor = #colorLiteral(red: 0.3332971931, green: 0.3333585858, blue: 0.3332890868, alpha: 1)
+        static let menuButtonDisabledTitleColor: UIColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
     }
 }

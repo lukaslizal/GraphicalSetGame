@@ -8,29 +8,29 @@
 
 import UIKit
 
-// TODO: add animated cards:
-// deal v
-// sucess match v
-// unsuccessful match v
-// sucess highlight crop circles animation x
-// unsuccessful highlight crop circles animation x
-// deal inplace v
-// new game v
-// shuffle v
-// rearrange v
+// TODO:
+// animated deal v
+// animated sucess match v
+// animated unsuccessful match v
+// animated sucess highlight crop circles x
+// animated unsuccessful highlight crop circles x
+// deal inplace of v
+// animated new game v
+// animated shuffle v
+// animated rearrange v
 // push insets to cardButtonView v
 // didlayoutsubviews initial animation v
 // refactor animation clutter v
 // add info/tutorial screen + first opening tutorial x
-// score updatewith animation completion x
+// score label custom view animated rework x
+// interuption succes animation no deal cards bug v
 // add menu button x
-// install bp replay font x
+// install bp replay font v
 // animate shadows on deal cards x
 //
 // new game confirmation screen
 // animate cards away before confirmation screen
-// animated buttons
-// detect no more combinations -> end the game
+// detect no more combinations -> end the game (other thread)
 // add winner screen (Lottie animation)
 // add local persistant high score
 
@@ -56,6 +56,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
     @IBAction func dealCardsPressed(_ sender: UIButton) {
         dealThreeCards()
         updateUI()
+//        updateScoreLabel()
     }
     @IBOutlet weak var scoreLabel: UILabel!
 
@@ -117,9 +118,17 @@ class GraphicalSetViewController: UIViewController, CardTap {
         self.dealCardsButton.layer.zPosition = 1
         self.newGameButton.layer.zPosition = 1
         self.scoreLabel.layer.zPosition = 3
+//        newGameButton.titleLabel?.minimumScaleFactor = 0.5
+//        newGameButton.titleLabel?.numberOfLines = 0
+//        newGameButton.titleLabel?.adjustsFontSizeToFitWidth = true
+//        newGameButton.titleLabel?.textAlignment = NSTextAlignment.center
         dealCardsButton.titleLabel?.minimumScaleFactor = 0.5
         dealCardsButton.titleLabel?.numberOfLines = 0
         dealCardsButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        dealCardsButton.titleLabel?.textAlignment = NSTextAlignment.center
+        dealCardsButton.setTitleColor(#colorLiteral(red: 0.3332971931, green: 0.3333585858, blue: 0.3332890868, alpha: 1) , for: .normal)
+        dealCardsButton.setTitleColor(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1) , for: .disabled)
+//        dealCardsButton.setTitleColor(#colorLiteral(red: 0.6682514115, green: 0.6682514115, blue: 0.6682514115, alpha: 1) , for: .disabled)
         newGame()
         setupGestures()
     }
@@ -143,7 +152,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
         initTableCards()
         highlightSelection()
         markSuccessfulMatch()
-        updateScoreLabel()
+//        updateScoreLabel()
         manageDealButton()
 
         // Animate UI.
@@ -210,8 +219,20 @@ class GraphicalSetViewController: UIViewController, CardTap {
         setupGrid(cellCount: game.cardsOnTable.count)
         animationFlagNewGame = true
         updateUI()
+//        updateScoreLabel()
     }
-
+    
+    private func replaceCards(cards: [Card]) {
+        animationFlagDealMoreCards = true
+        if game.selectedIsMatch, let oneOfMatched = game.cardsSelected.first {
+            // By selecting one of matching cards, matching cards are replaced with new ones from the deck
+            game.select(oneOfMatched)
+        }
+        else {
+            game.dealCards(quantity: 3)
+        }
+    }
+    
     private func dealThreeCards() {
         animationFlagDealMoreCards = true
         if game.selectedIsMatch, let oneOfMatched = game.cardsSelected.first {
@@ -241,8 +262,27 @@ class GraphicalSetViewController: UIViewController, CardTap {
     }
 
     private func updateScoreLabel() {
-        let suffix = " 🎖"
-        scoreLabel.text = String(Score.shared().playerScore) + suffix
+        var suffix = ""
+        switch playingCardButtons.count {
+        case 0...21:
+            suffix = " 🧠"
+        case 22...31:
+            suffix = " 🥇"
+        case 32...41:
+            suffix = " 🥈"
+        case 42...51:
+            suffix = " 🥉"
+        default:
+            suffix = " 👶"
+        }
+        var scoreText = ""
+        switch Score.shared().playerScore {
+            case 0:
+                scoreText = "💩"
+            default:
+                scoreText = String(Score.shared().playerScore)
+        }
+        self.scoreLabel.text = scoreText + suffix
     }
 
     private func manageDealButton() {
@@ -253,15 +293,17 @@ class GraphicalSetViewController: UIViewController, CardTap {
 
     private func animate(cards: [Card], onto targetViewBy: (_ index: Int) -> (UIView?), duration: TimeInterval, waitFor: TimeInterval ,animationTimeSpacing: TimeInterval, animationOptions: UIView.AnimationOptions, targetElementSpacing: CGFloat, onComplete: @escaping (_ finished: Bool) -> (Void)) {
         var delay = 0.0
-        for card in cards {
+        for (index, card) in cards.enumerated() {
             if let cardIndex = game.cardsOnTable.firstIndex(of: card), let animationTargetView = targetViewBy(cardIndex) {
                 playingCardButtons[cardIndex].cornerRadiusAnimationWithDuration(duration: CFTimeInterval(duration), to: animationTargetView.layer.cornerRadius, delay: waitFor + (Double(delay) / TimeInterval(cards.count)))
                 playingCardButtons[cardIndex].playingCardView.cornerRadiusAnimationWithDuration(duration: CFTimeInterval(duration), to: animationTargetView.layer.cornerRadius, delay: waitFor + (Double(delay) / TimeInterval(cards.count)))
                 UIView.animate(withDuration: duration, delay: waitFor + (delay / TimeInterval(cards.count)), options: animationOptions, animations: {
                         self.playingCardButtons[cardIndex].frame = animationTargetView.frame
                     },
-
-                    completion: { (finished: Bool) -> (Void) in onComplete(finished)
+                    completion: { (finished: Bool) -> (Void) in
+                        if index == cards.endIndex-1{
+                            onComplete(finished)
+                        }
                     })
             }
             delay += animationTimeSpacing
@@ -301,12 +343,18 @@ class GraphicalSetViewController: UIViewController, CardTap {
     private func animateSuccessMatch() {
         if animationFlagSuccessMatch {
             prepareForSuccessMatchAnimation()
-            
+            // Disable user interaction before successfully matched card disappear and UI gets refreshed.
+            view.isUserInteractionEnabled = false
+            print("many success animations?")
             animate(cards: Array(game.cardsMatched), onto: targetViewScoreLabel, duration: Constants.animationSuccessMatchDuration, waitFor: Constants.animationSuccessMatchWaitFor, animationTimeSpacing: Constants.animationSuccessMatchDelayIncrement, animationOptions: Constants.animationSuccessMatchOptions, targetElementSpacing: 0, onComplete: { (finished: Bool) -> Void in
                     if finished {
+                        print("xd")
                         self.view.nod()
                         self.dealThreeCards()
                         self.updateUI()
+//                        self.updateScoreLabel()
+                        // Enable user interaction again after UI is uptodate with model.
+                        self.view.isUserInteractionEnabled = true
                     }
                 })
         }

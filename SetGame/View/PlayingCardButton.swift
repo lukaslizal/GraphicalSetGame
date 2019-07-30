@@ -29,7 +29,7 @@ class PlayingCardButton: UIView {
     init(frame: CGRect, cornerRadius: CGFloat, shapeType: Int, quantityType: Int, fillType: Int, colorType: Int) {
         super.init(frame: frame)
         layer.cornerRadius = cornerRadius
-        layer.backgroundColor = UIColor.clear.cgColor
+        layer.backgroundColor = Constants.buttonColor
         clipsToBounds = true
         setupPlayingCardView(cornerRadius: cornerRadius, shapeType: shapeType, quantityType: quantityType, fillType: fillType, colorType: colorType)
         setupGestures()
