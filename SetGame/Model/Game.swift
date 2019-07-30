@@ -19,9 +19,10 @@ import Foundation
  */
 struct Game {
     var cheatMode: Bool = true
+    var score: Score = Score()
     private(set) var cardsOnTable: Array<Card>
     private(set) var cardsSelected = Set<Card>()
-    private(set) var cardsInPack: Set<Card>
+    private(set) var cardsInPack = Set<Card>()
     var cardsToDeal = Set<Card>()
     var cardsMatched: Set<Card>
     {
@@ -31,12 +32,13 @@ struct Game {
         }
         return matched
     }
-    private(set) var selectedIsMatch = false {
-        didSet {
-            if selectedIsMatch {
-                Score.shared().playerScore += 3
-            }
+    var selectedIsMatch: Bool {
+        var isMatch = false
+        if cardsSelected.count == 3 && (cardsSelected.isSet() || cheatMode) {
+            isMatch = true
+            score.increaseScore()
         }
+        return isMatch
     }
 
     init(with startingCardCount: Int) {
@@ -51,7 +53,7 @@ struct Game {
     }
 
     // Deal cards in places specified by [Card?] array (cards on table). When toReplace are nil, procedure finds blank spots on table and deals card over those in quantity of elements in toReplace array. When toReplace cards are not nil, new cards are dealt over cards on table specified in toReplace array.
-    private mutating func subtitute(cards toReplace: [Card]) {
+    internal mutating func subtitute(cards toReplace: [Card]) {
         let numberOfCards = toReplace.count
         for index in 0..<numberOfCards {
             let cardToReplace = toReplace[index]
@@ -65,16 +67,16 @@ struct Game {
                 }
             }
             // When there is no more cards in th deck, just remove the card from table
-            else{
-                guard let indexToRemove = cardsOnTable.firstIndex(of: cardToReplace) else {
-                    return
-                }
-                cardsOnTable.remove(at: indexToRemove)
+                else {
+                    guard let indexToRemove = cardsOnTable.firstIndex(of: cardToReplace) else {
+                        return
+                    }
+                    cardsOnTable.remove(at: indexToRemove)
             }
         }
     }
     // Shuffle cards on table
-    internal mutating func shuffle(){
+    internal mutating func shuffle() {
         cardsOnTable.shuffle()
     }
     // Deal new cards by number of cards to deal.
@@ -88,57 +90,22 @@ struct Game {
             cardsToDeal.insert(dealCard)
         }
     }
+
     // Select or deselect card depending on situation.
     internal mutating func select(_ card: Card) {
         cardsToDeal = []
         // When less then three cards are slected and you tap already selected card. Deselect given card.
         if cardsSelected.count < 3, cardsSelected.contains(card) {
             cardsSelected.remove(card)
+            return
         }
-        else {
-            // When selection are 3 cards (not including this card), deselect all and replace cards with new from deck if cards are a match.
-            if cardsSelected.count == 3 {
-                let oldSelection = cardsSelected
+        // Else deselect all.
+            else if cardsSelected.count == 3 {
                 cardsSelected = Set<Card>()
-                if selectedIsMatch {
-                    subtitute(cards: Array<Card>(oldSelection))
-                }
-            }
-            // Select card
-            if cardsOnTable.contains(card) {
-                cardsSelected.insert(card)
-            }
         }
-        if cheatMode && cardsSelected.count == 3 {
-            selectedIsMatch = true
+        // And add only only one card to selection.
+        if cardsOnTable.contains(card) {
+            cardsSelected.insert(card)
         }
-        else {
-            selectedIsMatch = cardsSelected.isSet()
-        }
-    }
-}
-
-/**
- Player's score value
- 
- - author:
- Lukas Lizal
- */
-class Score {
-    var playerScore: Int
-    private static var instance = {
-        return Score()
-    }()
-
-    private init() {
-        playerScore = 0
-    }
-
-    static func shared() -> Score {
-        return instance
-    }
-
-    static func reset() {
-        self.shared().playerScore = 0
     }
 }

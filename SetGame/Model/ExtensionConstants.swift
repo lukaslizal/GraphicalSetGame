@@ -12,6 +12,7 @@ import UIKit
 
 extension GraphicalSetViewController {
     struct Constants {
+        static let mainThemeColor: UIColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1) // #colorLiteral(red: 0.9990593791, green: 0.9387275577, blue: 0.7507612109, alpha: 1)
         static let insetHideBehindButton: CGFloat = -3
         static let clearFlagsDelay: Double = 0.1
         static let replaceCardsDelay: TimeInterval = 1.5
@@ -28,6 +29,12 @@ extension GraphicalSetViewController {
         static let animationSuccessMatchWaitFor: TimeInterval = 0.1
         static let animationSuccessMatchDelayIncrement: TimeInterval = 0.1
         static let animationSuccessMatchOptions: UIView.AnimationOptions = [.curveEaseIn, .allowUserInteraction, .allowAnimatedContent]
+        static let scoreGradeFirstSuffix: String = " 🧠"
+        static let scoreGradeSecondSuffix: String = " 🥇"
+        static let scoreGradeThirdSuffix: String = " 🥈"
+        static let scoreGradeFourthSuffix: String = " 🥉"
+        static let scoreGradeFifthSuffix: String = " 🥔"
+        static let scoreZeroValue: String = "💩"
     }
 }
 

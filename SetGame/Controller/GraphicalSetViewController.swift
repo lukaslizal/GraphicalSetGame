@@ -56,7 +56,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
     @IBAction func dealCardsPressed(_ sender: UIButton) {
         dealThreeCards()
         updateUI()
-//        updateScoreLabel()
+        updateScoreLabel()
     }
     @IBOutlet weak var scoreLabel: UILabel!
 
@@ -84,6 +84,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
         case .ended:
             dealThreeCards()
             updateUI()
+            updateScoreLabel()
         default:
             return
         }
@@ -112,6 +113,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        self.view.backgroundColor = Constants.mainThemeColor
         self.newGameButton.backgroundColor = UIColor.white
         self.dealCardsButton.backgroundColor = UIColor.white
         self.scoreLabel.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
@@ -126,8 +128,8 @@ class GraphicalSetViewController: UIViewController, CardTap {
         dealCardsButton.titleLabel?.numberOfLines = 0
         dealCardsButton.titleLabel?.adjustsFontSizeToFitWidth = true
         dealCardsButton.titleLabel?.textAlignment = NSTextAlignment.center
-        dealCardsButton.setTitleColor(#colorLiteral(red: 0.3332971931, green: 0.3333585858, blue: 0.3332890868, alpha: 1) , for: .normal)
-        dealCardsButton.setTitleColor(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1) , for: .disabled)
+        dealCardsButton.setTitleColor(#colorLiteral(red: 0.3332971931, green: 0.3333585858, blue: 0.3332890868, alpha: 1), for: .normal)
+        dealCardsButton.setTitleColor(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1), for: .disabled)
 //        dealCardsButton.setTitleColor(#colorLiteral(red: 0.6682514115, green: 0.6682514115, blue: 0.6682514115, alpha: 1) , for: .disabled)
         newGame()
         setupGestures()
@@ -202,7 +204,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
         for cardModel in game.cardsOnTable {
             if game.cardsOnTable.firstIndex(of: cardModel) != nil {
                 let cardRect = previousCardLayout[cardModel] ?? dealCardsButton.convert(dealCardsButton.bounds, to: playingBoardView)
-                let cardCornerRadius = cardRect.width*PlayingCardButton.Constants.cornerRadiusToWidthRatio
+                let cardCornerRadius = cardRect.width * PlayingCardButton.Constants.cornerRadiusToWidthRatio
                 let cardButton = PlayingCardButton(frame: cardRect, cornerRadius: cardCornerRadius, shapeType: cardModel.shape.rawValue, quantityType: cardModel.quantity.rawValue, fillType: cardModel.pattern.rawValue, colorType: cardModel.color.rawValue)
                 playingCardButtons.append(cardButton)
                 playingBoardView.addSubview(cardButton)
@@ -214,34 +216,20 @@ class GraphicalSetViewController: UIViewController, CardTap {
 
     private func newGame() {
         game = Game()
-        Score.reset()
         playingCardButtons = []
         setupGrid(cellCount: game.cardsOnTable.count)
         animationFlagNewGame = true
         updateUI()
-//        updateScoreLabel()
+        updateScoreLabel()
     }
-    
-    private func replaceCards(cards: [Card]) {
-        animationFlagDealMoreCards = true
-        if game.selectedIsMatch, let oneOfMatched = game.cardsSelected.first {
-            // By selecting one of matching cards, matching cards are replaced with new ones from the deck
-            game.select(oneOfMatched)
-        }
-        else {
-            game.dealCards(quantity: 3)
-        }
+
+    private func replaceMatchedCards() {
+        game.subtitute(cards: Array(game.cardsSelected))
     }
-    
+
     private func dealThreeCards() {
         animationFlagDealMoreCards = true
-        if game.selectedIsMatch, let oneOfMatched = game.cardsSelected.first {
-            // By selecting one of matching cards, matching cards are replaced with new ones from the deck
-            game.select(oneOfMatched)
-        }
-        else {
-            game.dealCards(quantity: 3)
-        }
+        game.dealCards(quantity: 3)
     }
 
     private func highlightSelection() {
@@ -262,25 +250,25 @@ class GraphicalSetViewController: UIViewController, CardTap {
     }
 
     private func updateScoreLabel() {
-        var suffix = ""
-        switch playingCardButtons.count {
-        case 0...21:
-            suffix = " 🧠"
-        case 22...31:
-            suffix = " 🥇"
-        case 32...41:
-            suffix = " 🥈"
-        case 42...51:
-            suffix = " 🥉"
-        default:
-            suffix = " 👶"
-        }
+        var suffix = Constants.scoreGradeFirstSuffix
+//        switch playingCardButtons.count {
+//        case 0...21:
+//            suffix = Constants.scoreGradeFirstSuffix
+//        case 22...31:
+//            suffix = Constants.scoreGradeSecondSuffix
+//        case 32...41:
+//            suffix = Constants.scoreGradeThirdSuffix
+//        case 42...51:
+//            suffix = Constants.scoreGradeFourthSuffix
+//        default:
+//            suffix = Constants.scoreGradeFifthSuffix
+//        }
         var scoreText = ""
-        switch Score.shared().playerScore {
-            case 0:
-                scoreText = "💩"
-            default:
-                scoreText = String(Score.shared().playerScore)
+        switch game.score.playerScore {
+        case 0:
+            scoreText = Constants.scoreZeroValue
+        default:
+            scoreText = String(game.score.playerScore)
         }
         self.scoreLabel.text = scoreText + suffix
     }
@@ -291,7 +279,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
 
     // MARK: ANIMATIONS
 
-    private func animate(cards: [Card], onto targetViewBy: (_ index: Int) -> (UIView?), duration: TimeInterval, waitFor: TimeInterval ,animationTimeSpacing: TimeInterval, animationOptions: UIView.AnimationOptions, targetElementSpacing: CGFloat, onComplete: @escaping (_ finished: Bool) -> (Void)) {
+    private func animate(cards: [Card], onto targetViewBy: (_ index: Int) -> (UIView?), duration: TimeInterval, waitFor: TimeInterval, animationTimeSpacing: TimeInterval, animationOptions: UIView.AnimationOptions, targetElementSpacing: CGFloat, onComplete: @escaping (_ finished: Bool) -> (Void)) {
         var delay = 0.0
         for (index, card) in cards.enumerated() {
             if let cardIndex = game.cardsOnTable.firstIndex(of: card), let animationTargetView = targetViewBy(cardIndex) {
@@ -301,7 +289,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
                         self.playingCardButtons[cardIndex].frame = animationTargetView.frame
                     },
                     completion: { (finished: Bool) -> (Void) in
-                        if index == cards.endIndex-1{
+                        if index == cards.endIndex - 1 {
                             onComplete(finished)
                         }
                     })
@@ -315,7 +303,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
         setupGrid(cellCount: game.cardsOnTable.count)
 
         animate(cards: cardsToRearrange, onto: targetGridViews, duration: Constants.animationOldCardDuration, waitFor: 0, animationTimeSpacing: Constants.animationOldCardDelayIncrement, animationOptions: Constants.animationOldCardOptions, targetElementSpacing: PlayingCardButton.Constants.playingCardsSpacing, onComplete: { (finished: Bool) -> (Void) in
-                self.game.cardsToDeal = Set<Card>() })
+            self.game.cardsToDeal = Set<Card>() })
 
     }
 
@@ -332,11 +320,21 @@ class GraphicalSetViewController: UIViewController, CardTap {
     private func animateNewGame() {
         if animationFlagNewGame {
             prepareForNewGameAnimation()
-
+            // Disable user interaction until new cards are animated to the table.
+            view.isUserInteractionEnabled = false
+            dealCardsButton.isUserInteractionEnabled = false
+            UIApplication.shared.beginIgnoringInteractionEvents()
+            
+            
             setupGrid(cellCount: game.cardsOnTable.count)
 
-            animate(cards: Array(game.cardsOnTable), onto: targetGridViews, duration: Constants.animationNewGameDuration, waitFor: 0, animationTimeSpacing: Constants.animationNewGameCardDelayIncrement, animationOptions: Constants.animationNewGameCardOptions, targetElementSpacing: PlayingCardButton.Constants.playingCardsSpacing, onComplete: { (finished: Bool) -> (Void) in self.game.cardsToDeal = Set<Card>()
-            })
+            animate(cards: Array(game.cardsOnTable), onto: targetGridViews, duration: Constants.animationNewGameDuration, waitFor: 0, animationTimeSpacing: Constants.animationNewGameCardDelayIncrement, animationOptions: Constants.animationNewGameCardOptions, targetElementSpacing: PlayingCardButton.Constants.playingCardsSpacing, onComplete: { (finished: Bool) -> (Void) in
+                    self.game.cardsToDeal = Set<Card>()
+                    // Enable user interaction again after cards are back on table.
+                    self.view.isUserInteractionEnabled = true
+                    self.dealCardsButton.isUserInteractionEnabled = true
+                    UIApplication.shared.endIgnoringInteractionEvents()
+                })
         }
     }
 
@@ -345,16 +343,29 @@ class GraphicalSetViewController: UIViewController, CardTap {
             prepareForSuccessMatchAnimation()
             // Disable user interaction before successfully matched card disappear and UI gets refreshed.
             view.isUserInteractionEnabled = false
+            UIApplication.shared.beginIgnoringInteractionEvents()
+            
             print("many success animations?")
             animate(cards: Array(game.cardsMatched), onto: targetViewScoreLabel, duration: Constants.animationSuccessMatchDuration, waitFor: Constants.animationSuccessMatchWaitFor, animationTimeSpacing: Constants.animationSuccessMatchDelayIncrement, animationOptions: Constants.animationSuccessMatchOptions, targetElementSpacing: 0, onComplete: { (finished: Bool) -> Void in
-                    if finished {
+                    if finished || !finished {
                         print("xd")
                         self.view.nod()
-                        self.dealThreeCards()
-                        self.updateUI()
-//                        self.updateScoreLabel()
+                        self.replaceMatchedCards()
+                        self.animationFlagDealMoreCards = true
+                        self.updateScoreLabel()
+                        // WEIRD
+                        // o.O score label update causes deal card animation to freak out.
+                        // Probably because fighting autolayout system but thats only hypothesis.
+                        // So I've tried to delay deal cards animation start after autolayout system
+                        // is done. But delay is set to 1 second - despite the fact actual
+                        // deal card animation is not delayed even a tiny bit AND the issue
+                        // is for unknow reason fixed. ¯\_(ツ)_/¯ #meh
+                        DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(1)) {
+                            self.updateUI()
+                        }
                         // Enable user interaction again after UI is uptodate with model.
                         self.view.isUserInteractionEnabled = true
+                        UIApplication.shared.endIgnoringInteractionEvents()
                     }
                 })
         }
