@@ -116,7 +116,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
         self.view.backgroundColor = Constants.mainThemeColor
         self.newGameButton.backgroundColor = UIColor.white
         self.dealCardsButton.backgroundColor = UIColor.white
-        self.scoreLabel.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+        self.scoreLabel.backgroundColor = Constants.scoreLabelThemeColor
         self.dealCardsButton.layer.zPosition = 1
         self.newGameButton.layer.zPosition = 1
         self.scoreLabel.layer.zPosition = 3
@@ -128,9 +128,8 @@ class GraphicalSetViewController: UIViewController, CardTap {
         dealCardsButton.titleLabel?.numberOfLines = 0
         dealCardsButton.titleLabel?.adjustsFontSizeToFitWidth = true
         dealCardsButton.titleLabel?.textAlignment = NSTextAlignment.center
-        dealCardsButton.setTitleColor(#colorLiteral(red: 0.3332971931, green: 0.3333585858, blue: 0.3332890868, alpha: 1), for: .normal)
-        dealCardsButton.setTitleColor(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1), for: .disabled)
-//        dealCardsButton.setTitleColor(#colorLiteral(red: 0.6682514115, green: 0.6682514115, blue: 0.6682514115, alpha: 1) , for: .disabled)
+        dealCardsButton.setTitleColor(Constants.buttonNormalTextColor, for: .normal)
+        dealCardsButton.setTitleColor(Constants.buttonDisabledTextColor, for: .disabled)
         newGame()
         setupGestures()
     }
@@ -320,20 +319,11 @@ class GraphicalSetViewController: UIViewController, CardTap {
     private func animateNewGame() {
         if animationFlagNewGame {
             prepareForNewGameAnimation()
-            // Disable user interaction until new cards are animated to the table.
-            view.isUserInteractionEnabled = false
-            dealCardsButton.isUserInteractionEnabled = false
-            UIApplication.shared.beginIgnoringInteractionEvents()
-            
             
             setupGrid(cellCount: game.cardsOnTable.count)
 
             animate(cards: Array(game.cardsOnTable), onto: targetGridViews, duration: Constants.animationNewGameDuration, waitFor: 0, animationTimeSpacing: Constants.animationNewGameCardDelayIncrement, animationOptions: Constants.animationNewGameCardOptions, targetElementSpacing: PlayingCardButton.Constants.playingCardsSpacing, onComplete: { (finished: Bool) -> (Void) in
                     self.game.cardsToDeal = Set<Card>()
-                    // Enable user interaction again after cards are back on table.
-                    self.view.isUserInteractionEnabled = true
-                    self.dealCardsButton.isUserInteractionEnabled = true
-                    UIApplication.shared.endIgnoringInteractionEvents()
                 })
         }
     }
@@ -341,14 +331,10 @@ class GraphicalSetViewController: UIViewController, CardTap {
     private func animateSuccessMatch() {
         if animationFlagSuccessMatch {
             prepareForSuccessMatchAnimation()
-            // Disable user interaction before successfully matched card disappear and UI gets refreshed.
-            view.isUserInteractionEnabled = false
-            UIApplication.shared.beginIgnoringInteractionEvents()
+            UIApplication.ignoreInteractionEvents(for: Constants.animationSuccessMatchWaitFor+Constants.animationSuccessMatchDuration)
             
-            print("many success animations?")
             animate(cards: Array(game.cardsMatched), onto: targetViewScoreLabel, duration: Constants.animationSuccessMatchDuration, waitFor: Constants.animationSuccessMatchWaitFor, animationTimeSpacing: Constants.animationSuccessMatchDelayIncrement, animationOptions: Constants.animationSuccessMatchOptions, targetElementSpacing: 0, onComplete: { (finished: Bool) -> Void in
-                    if finished || !finished {
-                        print("xd")
+                    if finished {
                         self.view.nod()
                         self.replaceMatchedCards()
                         self.animationFlagDealMoreCards = true
@@ -363,9 +349,6 @@ class GraphicalSetViewController: UIViewController, CardTap {
                         DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(1)) {
                             self.updateUI()
                         }
-                        // Enable user interaction again after UI is uptodate with model.
-                        self.view.isUserInteractionEnabled = true
-                        UIApplication.shared.endIgnoringInteractionEvents()
                     }
                 })
         }

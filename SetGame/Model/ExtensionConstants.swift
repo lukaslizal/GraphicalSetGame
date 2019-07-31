@@ -13,6 +13,9 @@ import UIKit
 extension GraphicalSetViewController {
     struct Constants {
         static let mainThemeColor: UIColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1) // #colorLiteral(red: 0.9990593791, green: 0.9387275577, blue: 0.7507612109, alpha: 1)
+        static let scoreLabelThemeColor: UIColor = #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1) // #colorLiteral(red: 0.4737035632, green: 0.8386717439, blue: 0.9746726155, alpha: 1)
+        static let buttonNormalTextColor: UIColor = #colorLiteral(red: 0.3332971931, green: 0.3333585858, blue: 0.3332890868, alpha: 1)
+        static let buttonDisabledTextColor: UIColor = #colorLiteral(red: 0.5136986301, green: 0.5136986301, blue: 0.5136986301, alpha: 1)
         static let insetHideBehindButton: CGFloat = -3
         static let clearFlagsDelay: Double = 0.1
         static let replaceCardsDelay: TimeInterval = 1.5
@@ -93,8 +96,8 @@ extension Game {
 extension UIButton {
     struct Constants {
         static let menuButtonEnabledColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        static let menuButtonDisabledColor: UIColor = #colorLiteral(red: 0.9990593791, green: 0.9802948155, blue: 0.9218330224, alpha: 1)
+        static let menuButtonDisabledColor: UIColor = #colorLiteral(red: 0.6839908859, green: 0.6711440114, blue: 0.6311190294, alpha: 1)
         static let menuButtonEnabledTitleColor: UIColor = #colorLiteral(red: 0.3332971931, green: 0.3333585858, blue: 0.3332890868, alpha: 1)
-        static let menuButtonDisabledTitleColor: UIColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        static let menuButtonDisabledTitleColor: UIColor = #colorLiteral(red: 0.595890411, green: 0.595890411, blue: 0.595890411, alpha: 1)
     }
 }

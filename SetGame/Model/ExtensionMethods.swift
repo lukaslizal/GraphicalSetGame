@@ -130,9 +130,17 @@ extension UIButton {
     open override var isEnabled: Bool{
         didSet {
             backgroundColor = isEnabled ? Constants.menuButtonEnabledColor : Constants.menuButtonDisabledColor
-            titleLabel?.textColor = isEnabled ? Constants.menuButtonEnabledTitleColor : Constants.menuButtonDisabledTitleColor
+//            titleLabel?.textColor = isEnabled ? Constants.menuButtonEnabledTitleColor : Constants.menuButtonDisabledTitleColor
         }
     }
     
 }
 
+extension UIApplication {
+    static func ignoreInteractionEvents(for time: TimeInterval){
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        DispatchQueue.main.asyncAfter(deadline: .now()+time) {
+            UIApplication.shared.endIgnoringInteractionEvents()
+        }
+    }
+}
