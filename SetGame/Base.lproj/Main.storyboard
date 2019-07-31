@@ -59,33 +59,43 @@
                                                     <action selector="newGamePressed:" destination="hnf-tP-sSh" eventType="touchUpInside" id="Ttw-Gs-sme"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2690" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rRw-EG-xfc">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QSL-rX-bRp" userLabel="ScoreContainer">
                                                 <rect key="frame" x="85" y="0.0" width="100" height="50"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2690" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rRw-EG-xfc">
+                                                        <rect key="frame" x="0.0" y="0.0" width="100" height="50"/>
+                                                        <fontDescription key="fontDescription" name="BPreplay-Bold" family="BPreplay" pointSize="30"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="90" id="QXZ-qA-QZ8"/>
-                                                    <constraint firstAttribute="width" constant="100" id="S8y-95-2XH"/>
-                                                    <constraint firstAttribute="width" secondItem="rRw-EG-xfc" secondAttribute="height" multiplier="2:1" priority="750" id="ZDc-77-Hzn"/>
+                                                    <constraint firstAttribute="trailing" secondItem="rRw-EG-xfc" secondAttribute="trailing" id="5oJ-8e-iP0"/>
+                                                    <constraint firstItem="rRw-EG-xfc" firstAttribute="leading" secondItem="QSL-rX-bRp" secondAttribute="leading" id="UKS-B1-jtu"/>
+                                                    <constraint firstItem="rRw-EG-xfc" firstAttribute="top" secondItem="QSL-rX-bRp" secondAttribute="top" id="Umt-LT-Wx3"/>
+                                                    <constraint firstAttribute="bottom" secondItem="rRw-EG-xfc" secondAttribute="bottom" id="Wcx-eJ-nml"/>
+                                                    <constraint firstAttribute="width" constant="100" id="bRx-YH-QSL"/>
+                                                    <constraint firstAttribute="width" secondItem="QSL-rX-bRp" secondAttribute="height" multiplier="2:1" priority="750" id="fiO-5o-Yqx"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="v7Y-gq-HHC"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="BPreplay-Bold" family="BPreplay" pointSize="30"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
                                                 <variation key="default">
                                                     <mask key="constraints">
-                                                        <exclude reference="QXZ-qA-QZ8"/>
-                                                        <exclude reference="S8y-95-2XH"/>
+                                                        <exclude reference="bRx-YH-QSL"/>
+                                                        <exclude reference="v7Y-gq-HHC"/>
                                                     </mask>
                                                 </variation>
                                                 <variation key="heightClass=compact-widthClass=regular">
                                                     <mask key="constraints">
-                                                        <include reference="QXZ-qA-QZ8"/>
+                                                        <include reference="v7Y-gq-HHC"/>
                                                     </mask>
                                                 </variation>
                                                 <variation key="heightClass=regular-widthClass=compact">
                                                     <mask key="constraints">
-                                                        <include reference="S8y-95-2XH"/>
+                                                        <include reference="bRx-YH-QSL"/>
                                                     </mask>
                                                 </variation>
-                                            </label>
+                                            </view>
                                             <button opaque="NO" contentMode="center" horizontalCompressionResistancePriority="749" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LGD-Uj-ccW">
                                                 <rect key="frame" x="202.5" y="0.0" width="85.5" height="50"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

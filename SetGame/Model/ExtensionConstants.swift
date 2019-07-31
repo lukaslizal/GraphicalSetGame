@@ -63,7 +63,7 @@ extension PlayingCardView {
         static let symbolHeightToBoundsRatio: CGFloat = 4 / 5
         static let symbolSpacingToCardRatio: CGFloat = 1 / 20
         static let cardColor: CGColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        static let selectedHighlightColor: CGColor = #colorLiteral(red: 0.8480308219, green: 0.9113513129, blue: 1, alpha: 1)
+        static let selectedHighlightColor: CGColor = #colorLiteral(red: 0.7085952207, green: 0.9032234228, blue: 0.9764705896, alpha: 1)
         static let selectedSuccessColor: CGColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
         static let cornerRadiusToWidthRatio: CGFloat = 1 / 10
     }
@@ -89,6 +89,7 @@ extension ShapeView {
 
 extension Game {
     struct Constants {
+        static let cheatModeIsActive = true
         static let initialCardCountOnTable: Int = 21 // 20 cards is a maximum amount of card that can not create any set.
     }
 }

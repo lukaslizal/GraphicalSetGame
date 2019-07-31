@@ -27,6 +27,10 @@ import UIKit
 // add menu button x
 // install bp replay font v
 // animate shadows on deal cards x
+// animation interupted by device rotation fix v
+// press down animation, press up animation x
+// tap circle animation x
+// selected, success, wrong highlight x
 //
 // new game confirmation screen
 // animate cards away before confirmation screen
@@ -44,6 +48,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
     var animationFlagNewGame = false
     var animationFlagDealMoreCards = false
     var animationFlagSuccessMatch = false
+    var freeRotationFlag = true
 
     // MARK: UI OUTLETS
 
@@ -119,11 +124,27 @@ class GraphicalSetViewController: UIViewController, CardTap {
         self.scoreLabel.backgroundColor = Constants.scoreLabelThemeColor
         self.dealCardsButton.layer.zPosition = 1
         self.newGameButton.layer.zPosition = 1
-        self.scoreLabel.layer.zPosition = 3
+        self.scoreLabel.superview?.layer.zPosition = 3
+        self.newGameButton.layer.cornerRadius = self.newGameButton.frame.height / 2.0
+        self.dealCardsButton.layer.cornerRadius = self.dealCardsButton.frame.height / 2.0
+        self.scoreLabel.layer.cornerRadius = self.scoreLabel.frame.height / 2.0
+        self.scoreLabel.clipsToBounds = true
+        
 //        newGameButton.titleLabel?.minimumScaleFactor = 0.5
 //        newGameButton.titleLabel?.numberOfLines = 0
 //        newGameButton.titleLabel?.adjustsFontSizeToFitWidth = true
 //        newGameButton.titleLabel?.textAlignment = NSTextAlignment.center
+        
+        self.scoreLabel.layer.shouldRasterize = true
+        self.scoreLabel.layer.rasterizationScale = UIScreen.main.scale
+//        self.scoreLabel.layer.masksToBounds = true
+        
+        self.newGameButton.layer.shouldRasterize = true
+        self.newGameButton.layer.rasterizationScale = UIScreen.main.scale
+
+        self.dealCardsButton.layer.shouldRasterize = true
+        self.dealCardsButton.layer.rasterizationScale = UIScreen.main.scale
+
         dealCardsButton.titleLabel?.minimumScaleFactor = 0.5
         dealCardsButton.titleLabel?.numberOfLines = 0
         dealCardsButton.titleLabel?.adjustsFontSizeToFitWidth = true
@@ -140,9 +161,64 @@ class GraphicalSetViewController: UIViewController, CardTap {
             self.newGameButton.layer.cornerRadius = self.newGameButton.frame.height / 2.0
             self.dealCardsButton.layer.cornerRadius = self.dealCardsButton.frame.height / 2.0
             self.scoreLabel.layer.cornerRadius = self.scoreLabel.frame.height / 2.0
-            self.scoreLabel.clipsToBounds = true
             self.setupGrid(cellCount: self.game.cardsOnTable.count)
             self.updateUI()
+
+
+
+            //        self.dealCardsButton.translatesAutoresizingMaskIntoConstraints = false
+            //        self.dealCardsButton.layer.masksToBounds = false
+            self.dealCardsButton.layer.shadowPath = UIBezierPath(rect: self.dealCardsButton.bounds.insetBy(dx: 2, dy: 20)).cgPath
+            self.dealCardsButton.layer.shadowColor = UIColor.black.cgColor
+            self.dealCardsButton.layer.shadowRadius = 15
+            self.dealCardsButton.layer.shadowOpacity = 0.6
+            self.dealCardsButton.layer.shadowOffset = CGSize(width: 0, height: 15)
+
+            //        self.newGameButton.translatesAutoresizingMaskIntoConstraints = false
+            //        self.newGameButton.layer.masksToBounds = false
+            self.newGameButton.layer.shadowPath = UIBezierPath(rect: self.newGameButton.bounds.insetBy(dx: 2, dy: 20)).cgPath
+            self.newGameButton.layer.shadowColor = UIColor.black.cgColor
+            self.newGameButton.layer.shadowRadius = 15
+            self.newGameButton.layer.shadowOpacity = 0.7
+            self.newGameButton.layer.shadowOffset = CGSize(width: 0, height: 15)
+
+//            score.layer.shadowColor = UIColor.black.cgColor
+//            label.layer.shadowRadius = 3.0
+//            label.layer.shadowOpacity = 1.0
+//            label.layer.shadowOffset = CGSize(width: 4, height: 4)
+//            label.layer.masksToBounds = false
+
+//            self.scoreLabel.translatesAutoresizingMaskIntoConstraints = false
+//            self.scoreLabel.layer.masksToBounds = false
+            self.scoreLabel.superview?.layer.shadowPath = UIBezierPath(roundedRect: self.scoreLabel.bounds.insetBy(dx: 2, dy: 20), cornerRadius: self.scoreLabel.layer.cornerRadius).cgPath
+            self.scoreLabel.superview?.layer.shadowColor = UIColor.black.cgColor
+            self.scoreLabel.superview?.layer.shadowRadius = 15
+            self.scoreLabel.superview?.layer.shadowOpacity = 0.7
+            self.scoreLabel.superview?.layer.shadowOffset = CGSize(width: 0, height: 15)
+        }
+//        self.scoreLabel.translatesAutoresizingMaskIntoConstraints = false
+//        self.scoreLabel.layer.masksToBounds = false
+//        self.scoreLabel.layer.shadowPath = UIBezierPath(rect: self.scoreLabel.bounds).cgPath
+//        self.scoreLabel.layer.shadowColor = UIColor.black.cgColor
+//        self.scoreLabel.layer.shadowRadius = 20
+//        self.scoreLabel.layer.shadowOpacity = 0.1
+//        self.scoreLabel.layer.shadowOffset = CGSize(width: 0,height: 10)
+//        self.scoreLabel.layer.shouldRasterize = true
+//        self.scoreLabel.layer.rasterizationScale = UIScreen.main.scale
+    }
+
+    // Support disabling device autorotation when cards are animated on table. Autoratation would cause
+    // cards to endup on wrong place - playce that would be only correct in previous orientation's layout
+    override var shouldAutorotate: Bool {
+        return freeRotationFlag
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if freeRotationFlag {
+            return .all
+        }
+        else {
+            return .portrait
         }
     }
 
@@ -284,8 +360,8 @@ class GraphicalSetViewController: UIViewController, CardTap {
             if let cardIndex = game.cardsOnTable.firstIndex(of: card), let animationTargetView = targetViewBy(cardIndex) {
                 playingCardButtons[cardIndex].cornerRadiusAnimationWithDuration(duration: CFTimeInterval(duration), to: animationTargetView.layer.cornerRadius, delay: waitFor + (Double(delay) / TimeInterval(cards.count)))
                 playingCardButtons[cardIndex].playingCardView.cornerRadiusAnimationWithDuration(duration: CFTimeInterval(duration), to: animationTargetView.layer.cornerRadius, delay: waitFor + (Double(delay) / TimeInterval(cards.count)))
-                UIView.animate(withDuration: duration, delay: waitFor + (delay / TimeInterval(cards.count)), options: animationOptions, animations: {
-                        self.playingCardButtons[cardIndex].frame = animationTargetView.frame
+                UIView.animate(withDuration: duration, delay: waitFor + (delay / TimeInterval(cards.count)), options: animationOptions, animations: { [weak self] in
+                        self?.playingCardButtons[cardIndex].frame = animationTargetView.frame
                     },
                     completion: { (finished: Bool) -> (Void) in
                         if index == cards.endIndex - 1 {
@@ -301,7 +377,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
         let cardsToRearrange = game.cardsOnTable.filter() { !game.cardsToDeal.contains($0) && !game.cardsMatched.contains($0) }
         setupGrid(cellCount: game.cardsOnTable.count)
 
-        animate(cards: cardsToRearrange, onto: targetGridViews, duration: Constants.animationOldCardDuration, waitFor: 0, animationTimeSpacing: Constants.animationOldCardDelayIncrement, animationOptions: Constants.animationOldCardOptions, targetElementSpacing: PlayingCardButton.Constants.playingCardsSpacing, onComplete: { (finished: Bool) -> (Void) in
+        animate(cards: cardsToRearrange, onto: targetGridViews, duration: Constants.animationOldCardDuration, waitFor: 0, animationTimeSpacing: Constants.animationOldCardDelayIncrement, animationOptions: Constants.animationOldCardOptions, targetElementSpacing: PlayingCardButton.Constants.playingCardsSpacing, onComplete: { [unowned self] (finished: Bool) -> (Void) in
             self.game.cardsToDeal = Set<Card>() })
 
     }
@@ -310,7 +386,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
         if animationFlagDealMoreCards {
             prepareForDealCardsAnimation()
 
-            animate(cards: Array(game.cardsToDeal), onto: targetGridViews, duration: Constants.animationDealCardDuration, waitFor: 0, animationTimeSpacing: Constants.animationDealCardDelayIncrement, animationOptions: Constants.animationDealCardOptions, targetElementSpacing: PlayingCardButton.Constants.playingCardsSpacing, onComplete: { (finished: Bool) -> (Void) in
+            animate(cards: Array(game.cardsToDeal), onto: targetGridViews, duration: Constants.animationDealCardDuration, waitFor: 0, animationTimeSpacing: Constants.animationDealCardDelayIncrement, animationOptions: Constants.animationDealCardOptions, targetElementSpacing: PlayingCardButton.Constants.playingCardsSpacing, onComplete: { [unowned self] (finished: Bool) -> (Void) in
                     self.game.cardsToDeal = Set<Card>()
                 })
         }
@@ -319,11 +395,12 @@ class GraphicalSetViewController: UIViewController, CardTap {
     private func animateNewGame() {
         if animationFlagNewGame {
             prepareForNewGameAnimation()
-            
+            freeRotationFlag = false
             setupGrid(cellCount: game.cardsOnTable.count)
 
-            animate(cards: Array(game.cardsOnTable), onto: targetGridViews, duration: Constants.animationNewGameDuration, waitFor: 0, animationTimeSpacing: Constants.animationNewGameCardDelayIncrement, animationOptions: Constants.animationNewGameCardOptions, targetElementSpacing: PlayingCardButton.Constants.playingCardsSpacing, onComplete: { (finished: Bool) -> (Void) in
+            animate(cards: Array(game.cardsOnTable), onto: targetGridViews, duration: Constants.animationNewGameDuration, waitFor: 0, animationTimeSpacing: Constants.animationNewGameCardDelayIncrement, animationOptions: Constants.animationNewGameCardOptions, targetElementSpacing: PlayingCardButton.Constants.playingCardsSpacing, onComplete: { [unowned self] (finished: Bool) -> (Void) in
                     self.game.cardsToDeal = Set<Card>()
+                    self.freeRotationFlag = true
                 })
         }
     }
@@ -331,24 +408,23 @@ class GraphicalSetViewController: UIViewController, CardTap {
     private func animateSuccessMatch() {
         if animationFlagSuccessMatch {
             prepareForSuccessMatchAnimation()
-            UIApplication.ignoreInteractionEvents(for: Constants.animationSuccessMatchWaitFor+Constants.animationSuccessMatchDuration)
-            
-            animate(cards: Array(game.cardsMatched), onto: targetViewScoreLabel, duration: Constants.animationSuccessMatchDuration, waitFor: Constants.animationSuccessMatchWaitFor, animationTimeSpacing: Constants.animationSuccessMatchDelayIncrement, animationOptions: Constants.animationSuccessMatchOptions, targetElementSpacing: 0, onComplete: { (finished: Bool) -> Void in
-                    if finished {
-                        self.view.nod()
-                        self.replaceMatchedCards()
-                        self.animationFlagDealMoreCards = true
-                        self.updateScoreLabel()
-                        // WEIRD
-                        // o.O score label update causes deal card animation to freak out.
-                        // Probably because fighting autolayout system but thats only hypothesis.
-                        // So I've tried to delay deal cards animation start after autolayout system
-                        // is done. But delay is set to 1 second - despite the fact actual
-                        // deal card animation is not delayed even a tiny bit AND the issue
-                        // is for unknow reason fixed. ¯\_(ツ)_/¯ #meh
-                        DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(1)) {
-                            self.updateUI()
-                        }
+            UIApplication.ignoreInteractionEvents(for: Constants.animationSuccessMatchWaitFor + Constants.animationSuccessMatchDuration)
+
+            animate(cards: Array(game.cardsMatched), onto: targetViewScoreLabel, duration: Constants.animationSuccessMatchDuration, waitFor: Constants.animationSuccessMatchWaitFor, animationTimeSpacing: Constants.animationSuccessMatchDelayIncrement, animationOptions: Constants.animationSuccessMatchOptions, targetElementSpacing: 0, onComplete: { [unowned self] (finished: Bool) -> Void in
+                    self.view.nod()
+                    self.replaceMatchedCards()
+                    self.animationFlagDealMoreCards = true
+                    self.updateScoreLabel()
+                    // WEIRD!
+                    // o.O score label update causes deal card animation to freak out.
+                    // Probably because fighting autolayout system but thats only hypothesis.
+                    // So I've tried to delay deal cards animation start after autolayout system
+                    // is done with uilabel. But this workaround only is effective when delay
+                    // is set to 1 second - despite the fact actual deal card animation is
+                    // not delayed even a tiny bit AND the issue is for unknow reason fixed.
+                    // ¯\_(ツ)_/¯ #meh
+                    DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(1)) {
+                        self.updateUI()
                     }
                 })
         }

@@ -18,7 +18,6 @@ import Foundation
  Lukas Lizal
  */
 struct Game {
-    var cheatMode: Bool = true
     var score: Score = Score()
     private(set) var cardsOnTable: Array<Card>
     private(set) var cardsSelected = Set<Card>()
@@ -27,14 +26,14 @@ struct Game {
     var cardsMatched: Set<Card>
     {
         var matched = Set<Card>()
-        if cardsSelected.isSet() || (cardsSelected.count == 3 && cheatMode) {
+        if cardsSelected.isSet() || (cardsSelected.count == 3 && Constants.cheatModeIsActive) {
             matched = cardsSelected
         }
         return matched
     }
     var selectedIsMatch: Bool {
         var isMatch = false
-        if cardsSelected.count == 3 && (cardsSelected.isSet() || cheatMode) {
+        if cardsSelected.count == 3 && (cardsSelected.isSet() || Constants.cheatModeIsActive) {
             isMatch = true
             score.increaseScore()
         }
