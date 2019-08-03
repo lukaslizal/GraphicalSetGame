@@ -37,7 +37,7 @@ class PlayingCardButton: UIView {
 
     private func setupPlayingCardView(cornerRadius: CGFloat, shapeType: Int, quantityType: Int, fillType: Int, colorType: Int) {
         let rect = self.layer.bounds.insetBy(dx: Constants.playingCardsSpacing, dy: Constants.playingCardsSpacing)
-        let cardViewCornerRadius = rect.width*(cornerRadius/layer.bounds.width)
+        let cardViewCornerRadius = rect.width * (cornerRadius / layer.bounds.width)
         playingCardView = PlayingCardView(frame: rect, cornerRadius: cardViewCornerRadius, shapeType: shapeType, quantityType: quantityType, fillType: fillType, colorType: colorType)
         addSubview(playingCardView)
     }
@@ -45,8 +45,33 @@ class PlayingCardButton: UIView {
     func setupGestures() {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.tapHandler))
         self.addGestureRecognizer(tapGestureRecognizer)
+//        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(self.panHandler))
+//        self.addGestureRecognizer(panGestureRecognizer)
     }
 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        UIView.animate(withDuration: 0.07, delay: 0, options: [.curveEaseOut], animations: {
+            self.transform = CGAffineTransform(scaleX: 0.98, y: 0.98)
+        }, completion: nil)
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        UIView.animate(withDuration: 0.0, delay: 0, options: [.curveEaseOut], animations: {
+            self.transform = CGAffineTransform(scaleX: 0.98, y: 0.98)
+        }, completion: nil)
+    }
+
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        UIView.animate(withDuration: 0.05, animations: {
+            self.transform = CGAffineTransform.identity
+        })
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        UIView.animate(withDuration: 0.05, animations: {
+            self.transform = CGAffineTransform.identity
+        })
+    }
     @objc func tapHandler(sender: UITapGestureRecognizer) {
         switch sender.state {
         case .ended:
@@ -55,6 +80,27 @@ class PlayingCardButton: UIView {
             return
         }
     }
+
+    @objc func panHandler(sender: UIPanGestureRecognizer) {
+//        switch sender.state {
+//        case .began:
+//            UIView.animate(withDuration: 0.1, animations: {
+//                self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+//            })
+//        case .cancelled:
+//            UIView.animate(withDuration: 0.1, animations: {
+//                self.transform = CGAffineTransform.identity
+//            })
+//        case .ended:
+//            UIView.animate(withDuration: 0.1, animations: {
+//                self.transform = CGAffineTransform.identity
+//            })
+//            self.delegate?.tapped(playingCardButton: self)
+//        default:
+//            return
+//        }
+    }
+
     override func isEqual(_ object: Any?) -> Bool {
         guard let otherButton = object as? PlayingCardButton else {
             return false

@@ -130,7 +130,6 @@ extension UIButton {
     open override var isEnabled: Bool{
         didSet {
             backgroundColor = isEnabled ? Constants.menuButtonEnabledColor : Constants.menuButtonDisabledColor
-//            titleLabel?.textColor = isEnabled ? Constants.menuButtonEnabledTitleColor : Constants.menuButtonDisabledTitleColor
         }
     }
     

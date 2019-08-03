@@ -16,10 +16,11 @@ extension GraphicalSetViewController {
         static let scoreLabelThemeColor: UIColor = #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1) // #colorLiteral(red: 0.4737035632, green: 0.8386717439, blue: 0.9746726155, alpha: 1)
         static let buttonNormalTextColor: UIColor = #colorLiteral(red: 0.3332971931, green: 0.3333585858, blue: 0.3332890868, alpha: 1)
         static let buttonDisabledTextColor: UIColor = #colorLiteral(red: 0.5136986301, green: 0.5136986301, blue: 0.5136986301, alpha: 1)
+        static let buttonBackgroundColor: UIColor = UIColor.white
         static let insetHideBehindButton: CGFloat = -3
         static let clearFlagsDelay: Double = 0.1
         static let replaceCardsDelay: TimeInterval = 1.5
-        static let animationDealCardDuration: TimeInterval = 0.5
+        static let animationDealCardDuration: TimeInterval = 0.45 //0.5
         static let animationDealCardDelayIncrement: TimeInterval = 0.2 * 3
         static let animationDealCardOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction, .allowAnimatedContent]
         static let animationOldCardDuration: TimeInterval = 0.25
@@ -28,7 +29,7 @@ extension GraphicalSetViewController {
         static let animationNewGameDuration: TimeInterval = 0.8
         static let animationNewGameCardDelayIncrement: TimeInterval = 1 / 12 * 12
         static let animationNewGameCardOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction, .allowAnimatedContent]
-        static let animationSuccessMatchDuration: TimeInterval = 0.5
+        static let animationSuccessMatchDuration: TimeInterval = 0.3 //0.5
         static let animationSuccessMatchWaitFor: TimeInterval = 0.1
         static let animationSuccessMatchDelayIncrement: TimeInterval = 0.1
         static let animationSuccessMatchOptions: UIView.AnimationOptions = [.curveEaseIn, .allowUserInteraction, .allowAnimatedContent]
