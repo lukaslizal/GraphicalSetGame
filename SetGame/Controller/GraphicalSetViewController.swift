@@ -395,18 +395,18 @@ class GraphicalSetViewController: UIViewController, CardTap {
 
     private func updateScoreLabel() {
         var suffix = Constants.scoreGradeFirstSuffix
-//        switch playingCardButtons.count {
-//        case 0...21:
-//            suffix = Constants.scoreGradeFirstSuffix
-//        case 22...31:
-//            suffix = Constants.scoreGradeSecondSuffix
-//        case 32...41:
-//            suffix = Constants.scoreGradeThirdSuffix
-//        case 42...51:
-//            suffix = Constants.scoreGradeFourthSuffix
-//        default:
-//            suffix = Constants.scoreGradeFifthSuffix
-//        }
+        switch playingCardButtons.count {
+        case 0...21:
+            suffix = Constants.scoreGradeFirstSuffix
+        case 22...31:
+            suffix = Constants.scoreGradeSecondSuffix
+        case 32...41:
+            suffix = Constants.scoreGradeThirdSuffix
+        case 42...51:
+            suffix = Constants.scoreGradeFourthSuffix
+        default:
+            suffix = Constants.scoreGradeFifthSuffix
+        }
         var scoreText = ""
         switch game.score.playerScore {
         case 0:
