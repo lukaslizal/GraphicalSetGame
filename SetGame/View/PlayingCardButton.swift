@@ -51,13 +51,13 @@ class PlayingCardButton: UIView {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         UIView.animate(withDuration: 0.07, delay: 0, options: [.curveEaseOut], animations: {
-            self.transform = CGAffineTransform(scaleX: 0.98, y: 0.98)
+            self.transform = CGAffineTransform(scaleX: Constants.buttonPressedScale, y: Constants.buttonPressedScale)
         }, completion: nil)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         UIView.animate(withDuration: 0.0, delay: 0, options: [.curveEaseOut], animations: {
-            self.transform = CGAffineTransform(scaleX: 0.98, y: 0.98)
+            self.transform = CGAffineTransform(scaleX: Constants.buttonPressedScale, y: Constants.buttonPressedScale)
         }, completion: nil)
     }
 
@@ -112,6 +112,7 @@ class PlayingCardButton: UIView {
         super.layoutSubviews()
         playingCardView.layer.cornerRadius = self.layer.bounds.width * Constants.cornerRadiusToWidthRatio
         playingCardView.setNeedsLayout()
+        playingCardView.layoutIfNeeded()
     }
 
     func selectedHighlight() {

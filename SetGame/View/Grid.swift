@@ -55,6 +55,10 @@ struct Grid
         return index < cellFrames.count ? cellFrames[index] : nil
     }
     
+    public func getCoordinates(at index: Int) -> (Int, Int) {
+        return (index % dimensions.columnCount, index / dimensions.columnCount)
+    }
+    
     var cellCount: Int {
         get {
             switch layout {

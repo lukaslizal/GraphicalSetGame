@@ -12,7 +12,7 @@ import UIKit
 
 extension GraphicalSetViewController {
     struct Constants {
-        static let mainThemeColor: UIColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1) // #colorLiteral(red: 0.9990593791, green: 0.9387275577, blue: 0.7507612109, alpha: 1)
+        static let mainThemeColor: UIColor = #colorLiteral(red: 0.3580985833, green: 0.3581614372, blue: 0.3580903332, alpha: 1) //#colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1) // #colorLiteral(red: 0.9990593791, green: 0.9387275577, blue: 0.7507612109, alpha: 1)
         static let scoreLabelThemeColor: UIColor = #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1) // #colorLiteral(red: 0.4737035632, green: 0.8386717439, blue: 0.9746726155, alpha: 1)
         static let buttonNormalTextColor: UIColor = #colorLiteral(red: 0.3332971931, green: 0.3333585858, blue: 0.3332890868, alpha: 1)
         static let buttonDisabledTextColor: UIColor = #colorLiteral(red: 0.5136986301, green: 0.5136986301, blue: 0.5136986301, alpha: 1)
@@ -62,7 +62,7 @@ extension PlayingCardView {
         static let symbolInsetsRatio: CGFloat = 1 / 20
         static let symbolWidthToBoundsRatio: CGFloat = 4 / 5
         static let symbolHeightToBoundsRatio: CGFloat = 4 / 5
-        static let symbolSpacingToCardRatio: CGFloat = 1 / 20
+//        static let symbolSpacingToCardHeightRatio: CGFloat = 0
         static let cardColor: CGColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         static let selectedHighlightColor: CGColor = #colorLiteral(red: 0.7085952207, green: 0.9032234228, blue: 0.9764705896, alpha: 1)
         static let selectedSuccessColor: CGColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
@@ -76,6 +76,7 @@ extension PlayingCardButton {
         static let buttonFrameAspectRatio: CGFloat = 5 / 7
         static let playingCardsSpacing: CGFloat = 4
         static let cornerRadiusToWidthRatio: CGFloat = 1 / 10
+        static let buttonPressedScale: CGFloat = 0.98
     }
 }
 

@@ -10,7 +10,6 @@ import UIKit
 
 class PlayingCardView: UIView {
     var shapeViews: [ShapeView] = [ShapeView(), ShapeView(), ShapeView()]
-    var symbolGridView: UIView = UIView() { didSet { setNeedsLayout() } }
     var shapeType: Int = 0 {
         didSet {
             for view in shapeViews {
@@ -34,7 +33,7 @@ class PlayingCardView: UIView {
             setNeedsLayout()
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -52,17 +51,18 @@ class PlayingCardView: UIView {
     }
 
     private func setupSubviews(quantity: Int, shapeType: Int, fillType: Int, colorType: Int) {
+        updateSymbolViewFrames()
         for index in 0..<quantity {
-            addSubview(shapeViews[index])
+            shapeViews[index].isOpaque = false
         }
         self.shapeType = shapeType
         self.quantity = quantity
         self.colorType = colorType
         self.fillType = fillType
-        self.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.autoresizingMask = [.flexibleWidth, .flexibleHeight] // we dont want autolayout
     }
-    
-    
+
+
     override func isEqual(_ object: Any?) -> Bool {
         guard let other = object as? PlayingCardView else {
             return false
@@ -72,20 +72,37 @@ class PlayingCardView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+
+        updateSymbolViewFrames()
         if let parentButtonView = superview {
-            layer.cornerRadius = layer.bounds.width*(parentButtonView.layer.cornerRadius/parentButtonView.layer.bounds.width)
-            let symbolInsets = layer.bounds.width * Constants.symbolInsetsRatio
-            let symbolsAreaRect = layer.bounds.insetBy(dx: symbolInsets, dy: symbolInsets)
-            var gridOfShapes = Grid(layout: Grid.Layout.aspectRatio(Constants.symbolAspectRatio), frame: symbolsAreaRect)
-            gridOfShapes.cellCount = quantity
-            for index in 0..<shapeViews.count {
-                if index < quantity {
-                    let spacingX = shapeViews[index].frame.width * Constants.symbolSpacingToCardRatio
-                    let spacingY = shapeViews[index].frame.height * Constants.symbolSpacingToCardRatio
-                    shapeViews[index].frame = (gridOfShapes[index]?.insetBy(dx: spacingX, dy: spacingY))!
-                    shapeViews[index].isOpaque = false
-                }
-            }
+            layer.cornerRadius = layer.bounds.width * (parentButtonView.layer.cornerRadius / parentButtonView.layer.bounds.width)
+//            let symbolInsets = layer.bounds.width * Constants.symbolInsetsRatio
+//            let symbolsAreaRect = layer.bounds.insetBy(dx: symbolInsets, dy: symbolInsets)
+//            var gridOfShapes = Grid(layout: Grid.Layout.aspectRatio(Constants.symbolAspectRatio), frame: symbolsAreaRect)
+//            gridOfShapes.cellCount = quantity
+//            for index in 0..<shapeViews.count {
+//                if index < quantity {
+//                    let spacingX = shapeViews[index].frame.width * Constants.symbolSpacingToCardRatio
+//                    let spacingY = shapeViews[index].frame.height * Constants.symbolSpacingToCardRatio
+//                    shapeViews[index].frame = (gridOfShapes[index]?.insetBy(dx: spacingX, dy: spacingY))!
+//                    shapeViews[index].isOpaque = false
+//                }
+//            }
+        }
+    }
+
+    private func updateSymbolViewFrames() {
+        
+        let symbolInsets = layer.bounds.width * Constants.symbolInsetsRatio
+        let symbolsAreaRect = layer.bounds.insetBy(dx: symbolInsets, dy: symbolInsets)
+        let symbolAreaVerticalCenter = symbolInsets + symbolsAreaRect.height/2
+        let symbolHeight = symbolsAreaRect.width / PlayingCardView.Constants.symbolAspectRatio
+        var symbolOffsetAccumulation: CGFloat = -((symbolHeight)*CGFloat(quantity))/2
+        for index in 0..<quantity {
+            shapeViews[index].frame = CGRect(x: symbolInsets, y: symbolAreaVerticalCenter + symbolOffsetAccumulation, width: symbolsAreaRect.width, height: symbolsAreaRect.width/PlayingCardView.Constants.symbolAspectRatio) // symbolsAreaRect.width*PlayingCardView.Constants
+            addSubview(shapeViews[index])
+            
+            symbolOffsetAccumulation += symbolHeight
         }
     }
 
@@ -94,7 +111,7 @@ class PlayingCardView: UIView {
     }
     func successHighlight() {
         self.backgroundColor = UIColor(cgColor: Constants.selectedSuccessColor)
-        for shapeView in self.shapeViews{
+        for shapeView in self.shapeViews {
             shapeView.shapeColor = UIColor.clear
         }
     }

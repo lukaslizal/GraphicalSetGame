@@ -27,15 +27,19 @@ extension UIView {
     
     func cornerRadiusAnimationWithDuration(duration: CFTimeInterval, to: CGFloat, delay: Double = 0)
     {
+        let from = layer.cornerRadius
+        self.layer.cornerRadius = to
+        
         let animation = CABasicAnimation(keyPath: "cornerRadius")
         animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
-        animation.fromValue = layer.cornerRadius
+        animation.fromValue = from
         animation.toValue = to
         animation.duration = duration
         animation.beginTime = CACurrentMediaTime()+delay
-        animation.fillMode = .forwards
+        animation.fillMode = .backwards
         animation.isRemovedOnCompletion = false
         layer.add(animation, forKey: "cornerRadius")
+//        CATransaction.commit()
     }
 }
 
