@@ -35,7 +35,7 @@ import UIKit
 //
 // make card draw subrects as vertical stackview v
 // device rotation sometimes stuck in disabled flag mode bug v
-// shuffle not working bug x
+// shuffle not working bug v
 //
 // new game confirmation screen
 // animate cards away before confirmation screen
@@ -48,7 +48,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
     // MARK: STORED PROPERTIES
 
     var game: Game = Game()
-    var playingCardButtons: Array<PlayingCardButton> = Array<PlayingCardButton>()
+    var playingCardButtons: [PlayingCardButton] = []
     lazy var targetGrid = Grid(layout: .aspectRatio(PlayingCardView.Constants.cardFrameAspectRatio), frame: playingBoardView.layer.bounds)
     var targetGridFlagLayoutChanged = true
     var previousCardsGridLayout: [Card: (Int, Int)] = [:]
@@ -266,104 +266,41 @@ class GraphicalSetViewController: UIViewController, CardTap {
     }
 
     func updatePlayingCardButtons() {
-        //
-
         // Save last View state's card's coordinates in a grid for later use.
         previousCardsGridLayout = [:]
-        // Collection contains newly added cards after we filter this collection using cards from last View state.
-        var newCardsOnTableModel = game.cardsOnTable
-        var buttonsToRemove: [PlayingCardButton] = []
-        var indicesToFill: [Int] = []
+        var newCardsOnTableButton: [PlayingCardButton] = []
 
-        for index in 0..<playingCardButtons.count {
-            let card = playingCardButtons[index].playingCardView
-            // If card is present in model.
-            if let model = game.cardsOnTable.first(where: { cardModelEqualsCardView(cardModel: $0, cardView: card) }) {
-                // Save last View state's card's coordinates in a grid for later use.
-                previousCardsGridLayout[model] = targetGrid.getCoordinates(at: index)
-                // Filter using cards from last View state.
-                newCardsOnTableModel.removeAll(where: { cardModelEqualsCardView(cardModel: $0, cardView: card) })
+        for indexModel in 0..<game.cardsOnTable.count {
+            let model = game.cardsOnTable[indexModel]
+            if let indexButton = playingCardButtons.firstIndex(where: { cardModelEqualsCardView(cardModel: model, cardView: $0.playingCardView) }) {
+                previousCardsGridLayout[model] = targetGrid.getCoordinates(at: indexButton)
+                newCardsOnTableButton.append(playingCardButtons[indexButton])
             }
             else {
-                // Collect card buttons not present in model anymore.
-                buttonsToRemove.append(playingCardButtons[index])
-                indicesToFill.append(index)
+                let cardRect = CGRect(x: -20, y: -20, width: 90, height: 90) // Debug purposes. Real position for new cards will be set in arrande deal cards.
+                let cardCornerRadius = cardRect.width * PlayingCardButton.Constants.cornerRadiusToWidthRatio
+                let cardButton = PlayingCardButton(frame: cardRect, cornerRadius: cardCornerRadius, shapeType: model.shape.rawValue, quantityType: model.quantity.rawValue, fillType: model.pattern.rawValue, colorType: model.color.rawValue)
+                newCardsOnTableButton.append(cardButton)
+                playingBoardView.addSubview(cardButton)
+
+                // Setup self as playing card buttons delegate to recieve tap events.
+                cardButton.delegate = self
             }
         }
+        
+        playingCardButtons = newCardsOnTableButton
 
-        // Remove card buttons not present in model anymore.
-        for button in buttonsToRemove {
-            if let indexToRemove = playingCardButtons.firstIndex(of: button) {
-                print("indexToRemove: " + String(indexToRemove))
-                playingCardButtons[indexToRemove].removeFromSuperview()
-                playingCardButtons.remove(at: indexToRemove)
-            }
-        }
-
-        // Create new UI card buttons.
-        for cardModel in newCardsOnTableModel {
-//            if game.cardsOnTable.firstIndex(of: cardModel) != nil {
-            let cardRect = CGRect(x: -20, y: -20, width: 90, height: 90) //dealCardsButton.convert(dealCardsButton.bounds, to: playingBoardView)
-//            let cardRect = CGRect(x: 1000,y: 0,width: 10,height: 10)
-
-            let cardCornerRadius = cardRect.width * PlayingCardButton.Constants.cornerRadiusToWidthRatio
-            let cardButton = PlayingCardButton(frame: cardRect, cornerRadius: cardCornerRadius, shapeType: cardModel.shape.rawValue, quantityType: cardModel.quantity.rawValue, fillType: cardModel.pattern.rawValue, colorType: cardModel.color.rawValue)
-            if let _ = indicesToFill.first {
-                playingCardButtons.insert(cardButton, at: indicesToFill.removeFirst())
-            }
-            else {
-                playingCardButtons.insert(cardButton, at: playingCardButtons.endIndex)
-            }
-            playingBoardView.addSubview(cardButton)
-
-            // Setup self as playing card buttons delegate to recieve tap events.
-            cardButton.delegate = self
-//            }
-        }
-
-//        setupPlayingCardsDelegate()
     }
 
     func cardModelEqualsCardView(cardModel: Card, cardView: PlayingCardView) -> Bool {
         return cardView.shapeType == cardModel.shape.rawValue && cardView.colorType == cardModel.color.rawValue && cardView.fillType == cardModel.pattern.rawValue && cardView.quantity == cardModel.quantity.rawValue + 1
     }
 
-    func initTableCards() {
-        // Save positions of cards from previous UI card layout.
-        var previousCardLayout: [Card: CGRect] = [:]
-        for playingCardButton in playingCardButtons {
-            let card = playingCardButton.playingCardView
-            if let model = game.cardsOnTable.first(where: { card.shapeType == $0.shape.rawValue && card.colorType == $0.color.rawValue && card.fillType == $0.pattern.rawValue && card.quantity == $0.quantity.rawValue + 1 }) {
-                previousCardLayout[model] = playingCardButton.frame
-            }
-        }
-        // Empty UI data structures before recreating them from ground up.
-        playingCardButtons = []
-        for view in playingBoardView.subviews {
-            view.removeFromSuperview()
-        }
-        // Create new UI card buttons.
-        for cardModel in game.cardsOnTable {
-            if game.cardsOnTable.firstIndex(of: cardModel) != nil {
-                let cardRect = previousCardLayout[cardModel] ?? dealCardsButton.convert(dealCardsButton.bounds, to: playingBoardView)
-                let cardCornerRadius = cardRect.width * PlayingCardButton.Constants.cornerRadiusToWidthRatio
-                let cardButton = PlayingCardButton(frame: cardRect, cornerRadius: cardCornerRadius, shapeType: cardModel.shape.rawValue, quantityType: cardModel.quantity.rawValue, fillType: cardModel.pattern.rawValue, colorType: cardModel.color.rawValue)
-                playingCardButtons.append(cardButton)
-                playingBoardView.addSubview(cardButton)
-            }
-        }
-        // Setup self as playing card buttons delegate to recieve tap events.
-        setupPlayingCardsDelegate()
-    }
-
     private func newGame() {
         resetUI()
         game = Game()
-//        playingCardButtons = []
-//        previousCardsGridLayout = [:]
         setupGrid(cellCount: game.cardsOnTable.count)
         animationFlagNewGame = true
-//        updateUI()
         updateScoreLabel()
     }
 
@@ -395,18 +332,18 @@ class GraphicalSetViewController: UIViewController, CardTap {
 
     private func updateScoreLabel() {
         var suffix = Constants.scoreGradeFirstSuffix
-        switch playingCardButtons.count {
-        case 0...21:
-            suffix = Constants.scoreGradeFirstSuffix
-        case 22...31:
-            suffix = Constants.scoreGradeSecondSuffix
-        case 32...41:
-            suffix = Constants.scoreGradeThirdSuffix
-        case 42...51:
-            suffix = Constants.scoreGradeFourthSuffix
-        default:
-            suffix = Constants.scoreGradeFifthSuffix
-        }
+//        switch playingCardButtons.count {
+//        case 0...21:
+//            suffix = Constants.scoreGradeFirstSuffix
+//        case 22...31:
+//            suffix = Constants.scoreGradeSecondSuffix
+//        case 32...41:
+//            suffix = Constants.scoreGradeThirdSuffix
+//        case 42...51:
+//            suffix = Constants.scoreGradeFourthSuffix
+//        default:
+//            suffix = Constants.scoreGradeFifthSuffix
+//        }
         var scoreText = ""
         switch game.score.playerScore {
         case 0:
@@ -425,7 +362,6 @@ class GraphicalSetViewController: UIViewController, CardTap {
 
     private func animate(cards: [Card], onto targetViewBy: (_ index: Int) -> (UIView?), duration: TimeInterval, waitFor: TimeInterval, animationTimeSpacing: TimeInterval, animationOptions: UIView.AnimationOptions, targetElementSpacing: CGFloat, onComplete: @escaping (_ finished: Bool) -> (Void)) {
         var delay = 0.0
-//        CATransaction.begin()
         for (index, card) in cards.enumerated() {
             if let cardIndex = game.cardsOnTable.firstIndex(of: card), let animationTargetView = targetViewBy(cardIndex) {
                 playingCardButtons[cardIndex].cornerRadiusAnimationWithDuration(duration: CFTimeInterval(duration), to: animationTargetView.layer.cornerRadius, delay: waitFor + (Double(delay) / TimeInterval(cards.count)))
@@ -438,7 +374,6 @@ class GraphicalSetViewController: UIViewController, CardTap {
             }
             delay += animationTimeSpacing
         }
-//        CATransaction.commit()
     }
 
     private func animateRearrangeCards() {
@@ -461,7 +396,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
                 self.freeRotationFlag = true
             })
         }
-        
+
     }
 
     private func animateDealCards() {

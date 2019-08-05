@@ -14,7 +14,6 @@ protocol CardTap: class {
 
 class PlayingCardButton: UIView {
     var playingCardView = PlayingCardView()
-
     var blurView = UIView()
     weak var delegate: CardTap?
 
