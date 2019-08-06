@@ -201,7 +201,6 @@ class GraphicalSetViewController: UIViewController, CardTap {
 
     private func updateUI() {
         // Rebuild UI from model.
-//        initTableCards()
         updatePlayingCardButtons()
         highlightSelection()
         markSuccessfulMatch()
@@ -271,7 +270,10 @@ class GraphicalSetViewController: UIViewController, CardTap {
                 cardButton.delegate = self
             }
         }
-        
+        // Remove old buttons.
+        for button in playingCardButtons.filter({!newCardsOnTableButton.contains($0)}){
+            button.removeFromSuperview()
+        }
         playingCardButtons = newCardsOnTableButton
 
     }
