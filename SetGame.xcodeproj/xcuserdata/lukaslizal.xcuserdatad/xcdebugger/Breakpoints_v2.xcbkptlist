@@ -106,13 +106,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetGame/Controller/GraphicalSetViewController.swift"
-            timestampString = "586728245.6963691"
+            timestampString = "586777573.027308"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "203"
+            endingLineNumber = "203"
+            landmarkName = "updateUI()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -122,13 +122,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetGame/Controller/GraphicalSetViewController.swift"
-            timestampString = "586728245.696962"
+            timestampString = "586777573.027406"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "373"
-            endingLineNumber = "373"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "357"
+            endingLineNumber = "357"
+            landmarkName = "animate(cards:onto:duration:waitFor:animationTimeSpacing:animationOptions:targetElementSpacing:onComplete:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -138,13 +138,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetGame/Controller/GraphicalSetViewController.swift"
-            timestampString = "586728245.697335"
+            timestampString = "586777573.027473"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "372"
-            endingLineNumber = "372"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "356"
+            endingLineNumber = "356"
+            landmarkName = "animate(cards:onto:duration:waitFor:animationTimeSpacing:animationOptions:targetElementSpacing:onComplete:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -154,13 +154,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetGame/Controller/GraphicalSetViewController.swift"
-            timestampString = "586728245.697693"
+            timestampString = "586777573.027532"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "409"
-            endingLineNumber = "409"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "393"
+            endingLineNumber = "393"
+            landmarkName = "animateDealCards()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -170,13 +170,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetGame/Controller/GraphicalSetViewController.swift"
-            timestampString = "586728245.6980439"
+            timestampString = "586777573.02759"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "410"
-            endingLineNumber = "410"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "394"
+            endingLineNumber = "394"
+            landmarkName = "animateDealCards()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -186,13 +186,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetGame/Controller/GraphicalSetViewController.swift"
-            timestampString = "586728245.698395"
+            timestampString = "586777573.0276459"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "432"
-            endingLineNumber = "432"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "416"
+            endingLineNumber = "416"
+            landmarkName = "GraphicalSetViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -202,13 +202,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetGame/Controller/GraphicalSetViewController.swift"
-            timestampString = "586728245.698756"
+            timestampString = "586777573.027702"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "270"
-            endingLineNumber = "270"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "253"
+            endingLineNumber = "253"
+            landmarkName = "updatePlayingCardButtons()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

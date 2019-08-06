@@ -127,41 +127,40 @@ class GraphicalSetViewController: UIViewController, CardTap {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.view.backgroundColor = Constants.mainThemeColor
-        self.newGameButton.backgroundColor = Constants.buttonBackgroundColor
-        self.dealCardsButton.backgroundColor = Constants.buttonBackgroundColor
-        self.scoreLabel.backgroundColor = Constants.scoreLabelThemeColor
-        self.dealCardsButton.layer.zPosition = 1
-        self.newGameButton.layer.zPosition = 1
-        self.scoreLabel.superview?.layer.zPosition = 3
-        self.newGameButton.layer.cornerRadius = self.newGameButton.frame.height / 2.0
-        self.dealCardsButton.layer.cornerRadius = self.dealCardsButton.frame.height / 2.0
-        self.scoreLabel.layer.cornerRadius = self.scoreLabel.frame.height / 2.0
-        self.scoreLabel.clipsToBounds = true
-
-//        newGameButton.titleLabel?.minimumScaleFactor = 0.5
-//        newGameButton.titleLabel?.numberOfLines = 0
-//        newGameButton.titleLabel?.adjustsFontSizeToFitWidth = true
-//        newGameButton.titleLabel?.textAlignment = NSTextAlignment.center
-
-        self.scoreLabel.layer.shouldRasterize = true
-        self.scoreLabel.layer.rasterizationScale = UIScreen.main.scale
-//        self.scoreLabel.layer.masksToBounds = true
-
-        self.newGameButton.layer.shouldRasterize = true
-        self.newGameButton.layer.rasterizationScale = UIScreen.main.scale
-
-        self.dealCardsButton.layer.shouldRasterize = true
-        self.dealCardsButton.layer.rasterizationScale = UIScreen.main.scale
-
-        dealCardsButton.titleLabel?.minimumScaleFactor = 0.5
-        dealCardsButton.titleLabel?.numberOfLines = 0
-        dealCardsButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        dealCardsButton.titleLabel?.textAlignment = NSTextAlignment.center
-        dealCardsButton.setTitleColor(Constants.buttonNormalTextColor, for: .normal)
-        dealCardsButton.setTitleColor(Constants.buttonDisabledTextColor, for: .disabled)
-
+        setupNewGameButton()
+        setupDealCardsButton()
+        setupScoreLabel()
         newGame()
         setupGestures()
+    }
+    
+    func setupNewGameButton(){
+        self.newGameButton.backgroundColor = Constants.buttonBackgroundColor
+        self.newGameButton.layer.zPosition = 1
+        self.newGameButton.layer.cornerRadius = self.newGameButton.frame.height / 2.0
+        self.newGameButton.layer.shouldRasterize = true
+        self.newGameButton.layer.rasterizationScale = UIScreen.main.scale
+    }
+    func setupDealCardsButton(){
+        self.dealCardsButton.backgroundColor = Constants.buttonBackgroundColor
+        self.dealCardsButton.layer.zPosition = 1
+        self.dealCardsButton.layer.cornerRadius = self.dealCardsButton.frame.height / 2.0
+        self.dealCardsButton.layer.shouldRasterize = true
+        self.dealCardsButton.layer.rasterizationScale = UIScreen.main.scale
+        self.dealCardsButton.titleLabel?.minimumScaleFactor = 0.5
+        self.dealCardsButton.titleLabel?.numberOfLines = 0
+        self.dealCardsButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        self.dealCardsButton.titleLabel?.textAlignment = NSTextAlignment.center
+        self.dealCardsButton.setTitleColor(Constants.buttonNormalTextColor, for: .normal)
+        self.dealCardsButton.setTitleColor(Constants.buttonDisabledTextColor, for: .disabled)
+    }
+    func setupScoreLabel(){
+        self.scoreLabel.backgroundColor = Constants.scoreLabelThemeColor
+        self.scoreLabel.superview?.layer.zPosition = 3
+        self.scoreLabel.layer.cornerRadius = self.scoreLabel.frame.height / 2.0
+        self.scoreLabel.clipsToBounds = true
+        self.scoreLabel.layer.shouldRasterize = true
+        self.scoreLabel.layer.rasterizationScale = UIScreen.main.scale
     }
 
     override func viewDidLayoutSubviews() {
@@ -169,29 +168,17 @@ class GraphicalSetViewController: UIViewController, CardTap {
         // When orientation changes targetGrid layout changes
         self.targetGridFlagLayoutChanged = true
         DispatchQueue.main.asyncAfter(deadline: .now()) {
+            
+            self.setupGrid(cellCount: self.game.cardsOnTable.count)
+            self.updateUI()
+            // Button as round as it gets.
             self.newGameButton.layer.cornerRadius = self.newGameButton.frame.height / 2.0
             self.dealCardsButton.layer.cornerRadius = self.dealCardsButton.frame.height / 2.0
             self.scoreLabel.layer.cornerRadius = self.scoreLabel.frame.height / 2.0
-            self.setupGrid(cellCount: self.game.cardsOnTable.count)
-            self.updateUI()
-
-            self.dealCardsButton.layer.shadowPath = UIBezierPath(rect: self.dealCardsButton.bounds.insetBy(dx: 2, dy: 20)).cgPath
-            self.dealCardsButton.layer.shadowColor = UIColor.black.cgColor
-            self.dealCardsButton.layer.shadowRadius = 15
-            self.dealCardsButton.layer.shadowOpacity = 0.6
-            self.dealCardsButton.layer.shadowOffset = CGSize(width: 0, height: 15)
-
-            self.newGameButton.layer.shadowPath = UIBezierPath(rect: self.newGameButton.bounds.insetBy(dx: 2, dy: 20)).cgPath
-            self.newGameButton.layer.shadowColor = UIColor.black.cgColor
-            self.newGameButton.layer.shadowRadius = 15
-            self.newGameButton.layer.shadowOpacity = 0.7
-            self.newGameButton.layer.shadowOffset = CGSize(width: 0, height: 15)
-
-            self.scoreLabel.superview?.layer.shadowPath = UIBezierPath(roundedRect: self.scoreLabel.bounds.insetBy(dx: 2, dy: 20), cornerRadius: self.scoreLabel.layer.cornerRadius).cgPath
-            self.scoreLabel.superview?.layer.shadowColor = UIColor.black.cgColor
-            self.scoreLabel.superview?.layer.shadowRadius = 15
-            self.scoreLabel.superview?.layer.shadowOpacity = 0.7
-            self.scoreLabel.superview?.layer.shadowOffset = CGSize(width: 0, height: 15)
+            // Recalculate soft shadows.
+            self.dealCardsButton.setupCustomShadow()
+            self.newGameButton.setupCustomShadow()
+            self.scoreLabel.superview?.setupCustomShadow()
         }
     }
 
@@ -200,10 +187,10 @@ class GraphicalSetViewController: UIViewController, CardTap {
     override var shouldAutorotate: Bool {
         return freeRotationFlag
     }
-
+    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if freeRotationFlag {
-            return .all
+            return .allButUpsideDown
         }
         else {
             return .portrait
@@ -251,12 +238,8 @@ class GraphicalSetViewController: UIViewController, CardTap {
         targetGrid = Grid(layout: .aspectRatio(PlayingCardView.Constants.cardFrameAspectRatio), frame: playingBoardView.layer.bounds)
         targetGrid.cellCount = cellCount
         let newDimensions = targetGrid.dimensions
-
-//         case where grid changes!
-
+        // Flag signaling that all cards should be rearranged no matter wheter they haven't been changed, added or other.
         targetGridFlagLayoutChanged = targetGridFlagLayoutChanged || (oldDimensions != newDimensions)
-
-//        !((oldDimensions.columnCount-newDimensions.columnCount) == 0 && (oldDimensions.rowCount-newDimensions.rowCount) == 0)
     }
 
     func setupPlayingCardsDelegate() {
@@ -268,6 +251,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
     func updatePlayingCardButtons() {
         // Save last View state's card's coordinates in a grid for later use.
         previousCardsGridLayout = [:]
+        // Helper array for rearranging all buttons according to card order in model.
         var newCardsOnTableButton: [PlayingCardButton] = []
 
         for indexModel in 0..<game.cardsOnTable.count {

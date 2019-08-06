@@ -52,6 +52,11 @@ extension UIView {
         static let nodViewDuration: TimeInterval = 0.6
         static let nodViewSpringDamping: CGFloat = 1
         static let nodViewInitialSpringVelocity: CGFloat = 1
+        static let shadowRadius: CGFloat = 15
+        static let shadowOpacity: Float = 0.7
+        static let shadowOffset: CGSize = CGSize(width: 0, height: 15)
+        static let shadowInsets: CGSize = CGSize(width: 2, height: 20)
+        static let shadowColor: CGColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
     }
 }
 
@@ -62,7 +67,6 @@ extension PlayingCardView {
         static let symbolInsetsRatio: CGFloat = 1 / 20
         static let symbolWidthToBoundsRatio: CGFloat = 4 / 5
         static let symbolHeightToBoundsRatio: CGFloat = 4 / 5
-//        static let symbolSpacingToCardHeightRatio: CGFloat = 0
         static let cardColor: CGColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         static let selectedHighlightColor: CGColor = #colorLiteral(red: 0.7085952207, green: 0.9032234228, blue: 0.9764705896, alpha: 1)
         static let selectedSuccessColor: CGColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
@@ -91,7 +95,7 @@ extension ShapeView {
 
 extension Game {
     struct Constants {
-        static let cheatModeIsActive = false
+        static let cheatModeIsActive = true
         static let initialCardCountOnTable: Int = 21 // 20 cards is a maximum amount of card that can not create any set.
     }
 }
