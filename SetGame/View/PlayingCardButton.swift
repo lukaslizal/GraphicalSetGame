@@ -15,7 +15,10 @@ protocol CardTap: class {
 class PlayingCardButton: UIView {
     var playingCardView = PlayingCardView()
     var blurView = UIView()
-    var animator = UIViewPropertyAnimator()
+    lazy var newGameAnimator: UIViewPropertyAnimator = UIViewPropertyAnimator(duration: GraphicalSetViewController.Constants.animationNewGameDuration, curve: GraphicalSetViewController.Constants.animationNewGameCardTimingCurve)
+    lazy var dealCardAnimator: UIViewPropertyAnimator = UIViewPropertyAnimator(duration: GraphicalSetViewController.Constants.animationDealCardDuration, curve: GraphicalSetViewController.Constants.animationDealCardTimingCurve)
+    lazy var successAnimator: UIViewPropertyAnimator = UIViewPropertyAnimator(duration: GraphicalSetViewController.Constants.animationSuccessMatchDuration, curve: GraphicalSetViewController.Constants.animationSuccessMatchTimingCurve)
+    lazy var rearrangeAnimator: UIViewPropertyAnimator = UIViewPropertyAnimator(duration: GraphicalSetViewController.Constants.animationRearrangeCardDuration, curve: GraphicalSetViewController.Constants.animationRearrangeCardTimingCurve)
     weak var delegate: CardTap?
 
     required init?(coder aDecoder: NSCoder) {
