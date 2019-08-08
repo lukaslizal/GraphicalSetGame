@@ -13,10 +13,6 @@ import UIKit
 extension GraphicalSetViewController {
     struct Constants {
         static let mainThemeColor: UIColor = #colorLiteral(red: 0.3580985833, green: 0.3581614372, blue: 0.3580903332, alpha: 1) //#colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1) // #colorLiteral(red: 0.9990593791, green: 0.9387275577, blue: 0.7507612109, alpha: 1)
-        static let scoreLabelThemeColor: UIColor = #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1) // #colorLiteral(red: 0.4737035632, green: 0.8386717439, blue: 0.9746726155, alpha: 1)
-        static let buttonNormalTextColor: UIColor = #colorLiteral(red: 0.3332971931, green: 0.3333585858, blue: 0.3332890868, alpha: 1)
-        static let buttonDisabledTextColor: UIColor = #colorLiteral(red: 0.5136986301, green: 0.5136986301, blue: 0.5136986301, alpha: 1)
-        static let buttonBackgroundColor: UIColor = UIColor.white
         static let insetHideBehindButton: CGFloat = -3
         static let clearFlagsDelay: Double = 0.1
         static let replaceCardsDelay: TimeInterval = 1.5
@@ -52,6 +48,16 @@ extension UIView {
         static let nodViewDuration: TimeInterval = 0.6
         static let nodViewSpringDamping: CGFloat = 1
         static let nodViewInitialSpringVelocity: CGFloat = 1
+    }
+}
+
+extension UIFactory {
+    struct Constants {
+        static let scoreLabelThemeColor: UIColor = #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1) // #colorLiteral(red: 0.4737035632, green: 0.8386717439, blue: 0.9746726155, alpha: 1)
+        static let buttonNormalTextColor: UIColor = #colorLiteral(red: 0.3332971931, green: 0.3333585858, blue: 0.3332890868, alpha: 1)
+        static let buttonDisabledTextColor: UIColor = #colorLiteral(red: 0.5136986301, green: 0.5136986301, blue: 0.5136986301, alpha: 1)
+        static let buttonBackgroundColor: UIColor = UIColor.white
+        static let cornerRoundnessFactor: CGFloat = 1
         static let shadowRadius: CGFloat = 15
         static let shadowOpacity: Float = 0.7
         static let shadowOffset: CGSize = CGSize(width: 0, height: 15)

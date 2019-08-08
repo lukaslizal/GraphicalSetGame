@@ -15,6 +15,7 @@ protocol CardTap: class {
 class PlayingCardButton: UIView {
     var playingCardView = PlayingCardView()
     var blurView = UIView()
+    var animator = UIViewPropertyAnimator()
     weak var delegate: CardTap?
 
     required init?(coder aDecoder: NSCoder) {
@@ -55,21 +56,22 @@ class PlayingCardButton: UIView {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        self.center = touches.first?. ?? self.center
         UIView.animate(withDuration: 0.0, delay: 0, options: [.curveEaseOut], animations: {
             self.transform = CGAffineTransform(scaleX: Constants.buttonPressedScale, y: Constants.buttonPressedScale)
         }, completion: nil)
     }
 
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        UIView.animate(withDuration: 0.05, animations: {
-            self.transform = CGAffineTransform.identity
-        })
+//        UIView.animate(withDuration: 0.05, animations: {
+//            self.transform = CGAffineTransform.identity
+//        })
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        UIView.animate(withDuration: 0.05, animations: {
-            self.transform = CGAffineTransform.identity
-        })
+//        UIView.animate(withDuration: 0.05, animations: {
+//            self.transform = CGAffineTransform.identity
+//        })
     }
     @objc func tapHandler(sender: UITapGestureRecognizer) {
         switch sender.state {
@@ -115,6 +117,11 @@ class PlayingCardButton: UIView {
     }
 
     func selectedHighlight() {
+        self.layer.zPosition = 3
+//        self.setupCustomShadow()
+        UIView.animate(withDuration: 0.07, delay: 0, options: [.curveEaseOut], animations: {
+            self.transform = CGAffineTransform(scaleX: 0.94, y: 0.94)
+        }, completion: nil)
         playingCardView.selectedHighlight()
     }
     func successHighlight() {
@@ -122,6 +129,11 @@ class PlayingCardButton: UIView {
     }
     func unhighlight() {
         playingCardView.unhighlight()
+//        self.layer.shadowOpacity = 0
+        self.layer.zPosition = 1
+        UIView.animate(withDuration: 0.07, delay: 0, options: [.curveEaseOut], animations: {
+            self.transform = CGAffineTransform.identity
+        }, completion: nil)
     }
 
 }

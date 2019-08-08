@@ -40,14 +40,6 @@ extension UIView {
         animation.isRemovedOnCompletion = false
         layer.add(animation, forKey: "cornerRadius")
     }
-    
-    func setupCustomShadow(){
-        self.layer.shadowPath = UIBezierPath(rect: self.bounds.insetBy(dx: Constants.shadowInsets.width, dy: Constants.shadowInsets.height)).cgPath
-        self.layer.shadowColor = Constants.shadowColor
-        self.layer.shadowRadius = Constants.shadowRadius
-        self.layer.shadowOpacity = Constants.shadowOpacity
-        self.layer.shadowOffset = Constants.shadowOffset
-    }
 }
 
 extension UIColor {

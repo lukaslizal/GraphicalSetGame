@@ -76,18 +76,6 @@ class PlayingCardView: UIView {
         updateSymbolViewFrames()
         if let parentButtonView = superview {
             layer.cornerRadius = layer.bounds.width * (parentButtonView.layer.cornerRadius / parentButtonView.layer.bounds.width)
-//            let symbolInsets = layer.bounds.width * Constants.symbolInsetsRatio
-//            let symbolsAreaRect = layer.bounds.insetBy(dx: symbolInsets, dy: symbolInsets)
-//            var gridOfShapes = Grid(layout: Grid.Layout.aspectRatio(Constants.symbolAspectRatio), frame: symbolsAreaRect)
-//            gridOfShapes.cellCount = quantity
-//            for index in 0..<shapeViews.count {
-//                if index < quantity {
-//                    let spacingX = shapeViews[index].frame.width * Constants.symbolSpacingToCardRatio
-//                    let spacingY = shapeViews[index].frame.height * Constants.symbolSpacingToCardRatio
-//                    shapeViews[index].frame = (gridOfShapes[index]?.insetBy(dx: spacingX, dy: spacingY))!
-//                    shapeViews[index].isOpaque = false
-//                }
-//            }
         }
     }
 
