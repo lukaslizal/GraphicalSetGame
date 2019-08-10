@@ -377,7 +377,6 @@ class GraphicalSetViewController: UIViewController, CardTap {
 
     private func animateDealCards() {
         if animationFlagDealMoreCards {
-            UIApplication.shared.beginIgnoringInteractionEvents()
 
             for cardModel in game.cardsToDeal {
                 if let indexOnTable = game.cardsOnTable.firstIndex(of: cardModel) {
@@ -388,6 +387,9 @@ class GraphicalSetViewController: UIViewController, CardTap {
                 }
             }
             freeRotationFlag = false
+            if game.cardsToDeal.count > 0 {
+                UIApplication.shared.beginIgnoringInteractionEvents()
+            }
 
             // Small delay to make all playingCardsViews not animate frame change dynamicaly to size of playingCardButtons frames.
             var delay: CGFloat = 0.01
@@ -402,7 +404,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
                             if index == lastIndex {
                                 self.game.cardsToDeal = Set<Card>()
                                 self.freeRotationFlag = true
-                                print("enable interaction")
+//                                print("enable interaction")
                                 UIApplication.shared.endIgnoringInteractionEvents()
                             }
                         })
