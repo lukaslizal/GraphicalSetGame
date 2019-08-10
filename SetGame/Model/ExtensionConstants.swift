@@ -16,7 +16,7 @@ extension GraphicalSetViewController {
         static let insetHideBehindButton: CGFloat = -3
         static let clearFlagsDelay: Double = 0.1
         static let replaceCardsDelay: TimeInterval = 1.5
-        static let animationDealCardDuration: TimeInterval = 0.45 //0.5
+        static let animationDealCardDuration: TimeInterval = 0.6 //0.5
         static let animationDealCardDelayIncrement: TimeInterval = 0.2 * 3
         static let animationDealCardOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction, .allowAnimatedContent]
         static let animationDealCardTimingCurve: UIView.AnimationCurve = .easeOut
@@ -26,7 +26,7 @@ extension GraphicalSetViewController {
         static let animationRearrangeCardRelativeDelay: CGFloat = 0.6
         static let animationRearrangeCardOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction, .allowAnimatedContent]
         static let animationRearrangeCardTimingCurve: UIView.AnimationCurve = .easeInOut
-        static let animationNewGameDuration: TimeInterval = 0.8
+        static let animationNewGameDuration: TimeInterval = 0.8//0.8
         static let animationNewGameCardDelayIncrement: TimeInterval = 1 / 12 * 12
         static let animationNewGameCardOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction, .allowAnimatedContent]
         static let animationNewGameCardTimingCurve: UIView.AnimationCurve = .easeOut
