@@ -17,6 +17,7 @@ class UIFactory {
         graphicalSetViewController.dealCardsButton = UIFactory.setupDealCardsButton(button: graphicalSetViewController.dealCardsButton)
         graphicalSetViewController.targetGrid = UIFactory.setupGrid(inside: graphicalSetViewController.playingBoardView.layer.bounds)
     }
+    @discardableResult
     static func setupMenuButton(button: UIButton) -> UIButton {
         button.backgroundColor = Constants.buttonBackgroundColor
         button.layer.zPosition = 1
@@ -25,6 +26,7 @@ class UIFactory {
         button.layer.rasterizationScale = UIScreen.main.scale
         return button
     }
+    @discardableResult
     static func setupScoreButton(label: UILabel) -> UILabel {
         label.backgroundColor = Constants.scoreLabelThemeColor
         label.superview?.layer.zPosition = 4
@@ -34,6 +36,7 @@ class UIFactory {
         label.layer.rasterizationScale = UIScreen.main.scale
         return label
     }
+    @discardableResult
     static func setupDealCardsButton(button: UIButton) -> UIButton {
         button.backgroundColor = Constants.buttonBackgroundColor
         button.layer.zPosition = 1
@@ -46,6 +49,7 @@ class UIFactory {
         button.titleLabel?.textAlignment = NSTextAlignment.center
         button.setTitleColor(Constants.buttonNormalTextColor, for: .normal)
         button.setTitleColor(Constants.buttonDisabledTextColor, for: .disabled)
+        button.backgroundColor = button.isEnabled ? Constants.menuButtonEnabledColor : Constants.menuButtonDisabledColor
         return button
     }
     static func setupUIGestrues(for viewController: GraphicalSetViewController) {

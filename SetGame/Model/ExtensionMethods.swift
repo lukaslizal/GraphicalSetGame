@@ -132,10 +132,9 @@ extension UIButton {
     
     open override var isEnabled: Bool{
         didSet {
-            backgroundColor = isEnabled ? Constants.menuButtonEnabledColor : Constants.menuButtonDisabledColor
+            UIFactory.setupDealCardsButton(button: self)
         }
     }
-    
 }
 
 extension UIApplication {

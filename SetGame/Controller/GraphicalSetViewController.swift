@@ -148,6 +148,8 @@ class GraphicalSetViewController: UIViewController, CardTap {
             UIFactory.customShadow(on: self.newGameButton)
             UIFactory.customShadow(on: self.scoreLabel.superview)
             UIFactory.customShadow(on: self.dealCardsButton)
+            // Setup deal button.
+            UIFactory.setupDealCardsButton(button: self.dealCardsButton)
         }
     }
 
@@ -355,7 +357,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
         if cardsToRearrange.count > 0 {
             freeRotationFlag = false
             // Small delay to make all playingCardsViews not animate frame change dynamicaly to size of playingCardButtons frames.
-            var delay: CGFloat = 0.01
+            var delay: CGFloat = 0.0
             for (index, cardModel) in cardsToRearrange.enumerated() {
                 if let cardIndex = game.cardsOnTable.firstIndex(of: cardModel), let targetView = targetGridViews(index: cardIndex) {
                     let lastIndex = cardsToRearrange.count-1
@@ -392,7 +394,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
             }
 
             // Small delay to make all playingCardsViews not animate frame change dynamicaly to size of playingCardButtons frames.
-            var delay: CGFloat = 0.01
+            var delay: CGFloat = 0.0
             for (index, cardModel) in Array(game.cardsToDeal).enumerated() {
                 if let cardIndex = game.cardsOnTable.firstIndex(of: cardModel), let targetView = targetGridViews(index: cardIndex) {
                     let lastIndex = game.cardsToDeal.count-1
@@ -430,7 +432,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
             targetGrid = UIFactory.updateGrid(toSize: game.cardsOnTable.count, inside: playingBoardView.layer.bounds)
 
             // Small delay to make all playingCardsViews not animate frame change dynamicaly to size of playingCardButtons frames.
-            var delay: CGFloat = 0.01
+            var delay: CGFloat = 0.0
             for (index, cardModel) in Array(self.game.cardsOnTable).enumerated() {
                 if let cardIndex = self.game.cardsOnTable.firstIndex(of: cardModel), let targetView = targetGridViews(index: cardIndex) {
                     let lastIndex = game.cardsOnTable.count-1
@@ -503,7 +505,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
             freeRotationFlag = false
 
             // Small delay to make all playingCardsViews not animate frame change dynamicaly to size of playingCardButtons frames.
-            var delay: CGFloat = 0.01
+            var delay: CGFloat = 0.00
             for (index, cardModel) in Array(game.cardsMatched).enumerated() {
                 if let cardIndex = game.cardsOnTable.firstIndex(of: cardModel), let targetView = targetViewScoreLabel(index: cardIndex) {
                     let lastIndex = game.cardsMatched.count-1
@@ -521,7 +523,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
                                 // Eventough we want to updateUI() at this point to trigger deal new cards animation, we don't call it here. updateUI() gets called by viewDidLayoutSubviews() after updateScoreLabel() change triggers autolayout rearrangement. So Calling updateUI inhere would cause some troubles.
                             }
                         })
-                    delay += CGFloat(Constants.animationSuccessMatchDuration) / CGFloat(game.cardsMatched.count)
+                    delay += CGFloat(Constants.animationSuccessMatchDuration/1.5) / CGFloat(game.cardsMatched.count)
                 }
             }
         }
