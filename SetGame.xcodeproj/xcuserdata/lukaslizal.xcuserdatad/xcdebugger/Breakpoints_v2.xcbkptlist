@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetGame/Controller/GraphicalSetViewController.swift"
-            timestampString = "587148367.5948189"
+            timestampString = "587228917.744205"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "190"
-            endingLineNumber = "190"
+            startingLineNumber = "185"
+            endingLineNumber = "185"
             landmarkName = "updateUI()"
             landmarkType = "7">
          </BreakpointContent>
@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetGame/Controller/GraphicalSetViewController.swift"
-            timestampString = "587148367.595508"
+            timestampString = "587228917.744989"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "210"
-            endingLineNumber = "210"
+            startingLineNumber = "203"
+            endingLineNumber = "203"
             landmarkName = "updatePlayingCardButtons()"
             landmarkType = "7">
          </BreakpointContent>

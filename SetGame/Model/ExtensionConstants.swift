@@ -27,10 +27,10 @@ extension GraphicalSetViewController {
         static let animationRearrangeCardOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction, .allowAnimatedContent]
         static let animationRearrangeCardTimingCurve: UIView.AnimationCurve = .easeInOut
         static let animationNewGameDuration: TimeInterval = 0.8//0.8
-        static let animationNewGameCardDelayIncrement: TimeInterval = 1 / 12 * 12
-        static let animationNewGameCardOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction, .allowAnimatedContent]
-        static let animationNewGameCardTimingCurve: UIView.AnimationCurve = .easeOut
-        static let animationNewGameCardRelativeDelay: CGFloat = 0.6
+        static let animationNewGameDelayIncrement: TimeInterval = 1 / 12 * 12
+        static let animationNewGameOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction, .allowAnimatedContent]
+        static let animationNewGameTimingCurve: UIView.AnimationCurve = .easeOut
+        static let animationNewGameRelativeDelay: CGFloat = 0.6
         static let animationSuccessMatchDuration: TimeInterval = 0.3 //0.5
         static let animationSuccessMatchWaitFor: TimeInterval = 0.1
         static let animationSuccessMatchDelayIncrement: TimeInterval = 0.1
@@ -62,7 +62,7 @@ extension UIView {
 extension UIFactory {
     struct Constants {
         static let scoreLabelThemeColor: UIColor = #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1) // #colorLiteral(red: 0.4737035632, green: 0.8386717439, blue: 0.9746726155, alpha: 1)
-        
+
         static let menuButtonEnabledColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         static let menuButtonDisabledColor: UIColor = #colorLiteral(red: 0.6839908859, green: 0.6711440114, blue: 0.6311190294, alpha: 1)
         static let buttonNormalTextColor: UIColor = #colorLiteral(red: 0.3332971931, green: 0.3333585858, blue: 0.3332890868, alpha: 1)
@@ -74,6 +74,34 @@ extension UIFactory {
         static let shadowOffset: CGSize = CGSize(width: 0, height: 15)
         static let shadowInsets: CGSize = CGSize(width: 2, height: 20)
         static let shadowColor: CGColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+    }
+}
+
+extension AnimationFactory {
+    struct Constants {
+        static let insetHideBehindButton: CGFloat = -3
+        static let replaceCardsDelay: TimeInterval = 1.5
+        static let animationDealCardDuration: TimeInterval = 0.6 //0.5
+        static let animationDealCardDelayIncrement: TimeInterval = 0.2 * 3
+        static let animationDealCardOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction, .allowAnimatedContent]
+        static let animationDealCardTimingCurve: UIView.AnimationCurve = .easeOut
+        static let animationDealCardsRelativeDelay: CGFloat = 0.6
+        static let animationRearrangeCardDuration: TimeInterval = 0.25
+        static let animationRearrangeCardDelayIncrement: TimeInterval = 0.03 * 12
+        static let animationRearrangeCardRelativeDelay: CGFloat = 0.6
+        static let animationRearrangeCardOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction, .allowAnimatedContent]
+        static let animationRearrangeCardTimingCurve: UIView.AnimationCurve = .easeInOut
+        static let animationNewGameDuration: TimeInterval = 0.8//0.8
+        static let animationNewGameDelayIncrement: TimeInterval = 1 / 12 * 12
+        static let animationNewGameOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction, .allowAnimatedContent]
+        static let animationNewGameTimingCurve: UIView.AnimationCurve = .easeOut
+        static let animationNewGameRelativeDelay: CGFloat = 0.6
+        static let animationSuccessMatchDuration: TimeInterval = 0.3 //0.5
+        static let animationSuccessMatchWaitFor: TimeInterval = 0.1
+        static let animationSuccessMatchDelayIncrement: TimeInterval = 0.1
+        static let animationSuccessMatchOptions: UIView.AnimationOptions = [.curveEaseIn, .allowUserInteraction, .allowAnimatedContent]
+        static let animationSuccessMatchTimingCurve: UIView.AnimationCurve = .easeIn
+        static let animationSuccessMatchRelativeDelay: CGFloat = 0.6
     }
 }
 

@@ -63,11 +63,6 @@ class GraphicalSetViewController: UIViewController, CardTap {
     var animationFlagSuccessMatch = false
     var freeRotationFlag = true
 
-    lazy var newGameAnimator: UIViewPropertyAnimator = UIViewPropertyAnimator(duration: GraphicalSetViewController.Constants.animationNewGameDuration + 5, curve: GraphicalSetViewController.Constants.animationNewGameCardTimingCurve)
-    lazy var dealCardAnimator: UIViewPropertyAnimator = UIViewPropertyAnimator(duration: GraphicalSetViewController.Constants.animationDealCardDuration + 5, curve: GraphicalSetViewController.Constants.animationDealCardTimingCurve)
-    lazy var successAnimator: UIViewPropertyAnimator = UIViewPropertyAnimator(duration: GraphicalSetViewController.Constants.animationSuccessMatchDuration + 5, curve: GraphicalSetViewController.Constants.animationSuccessMatchTimingCurve)
-    lazy var rearrangeAnimator: UIViewPropertyAnimator = UIViewPropertyAnimator(duration: GraphicalSetViewController.Constants.animationRearrangeCardDuration + 0.2, curve: GraphicalSetViewController.Constants.animationRearrangeCardTimingCurve)
-
     // MARK: UI OUTLETS
 
     @IBOutlet weak var playingBoardView: UIView!
@@ -200,9 +195,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
         animateSuccessMatch()
 
         // Clear flags.
-        DispatchQueue.main.asyncAfter(deadline: .now() + Constants.clearFlagsDelay) {
-            self.clearAnimationFlags()
-        }
+        clearAnimationFlags()
     }
 
     func updatePlayingCardButtons() {
@@ -271,18 +264,18 @@ class GraphicalSetViewController: UIViewController, CardTap {
 
     private func updateScoreLabel() {
         var suffix = Constants.scoreGradeFirstSuffix
-//        switch playingCardButtons.count {
-//        case 0...21:
-//            suffix = Constants.scoreGradeFirstSuffix
-//        case 22...31:
-//            suffix = Constants.scoreGradeSecondSuffix
-//        case 32...41:
-//            suffix = Constants.scoreGradeThirdSuffix
-//        case 42...51:
-//            suffix = Constants.scoreGradeFourthSuffix
-//        default:
-//            suffix = Constants.scoreGradeFifthSuffix
-//        }
+        switch playingCardButtons.count {
+        case 0...21:
+            suffix = Constants.scoreGradeFirstSuffix
+        case 22...31:
+            suffix = Constants.scoreGradeSecondSuffix
+        case 32...41:
+            suffix = Constants.scoreGradeThirdSuffix
+        case 42...51:
+            suffix = Constants.scoreGradeFourthSuffix
+        default:
+            suffix = Constants.scoreGradeFifthSuffix
+        }
         var scoreText = ""
         switch game.score.playerScore {
         case 0:
@@ -306,345 +299,64 @@ class GraphicalSetViewController: UIViewController, CardTap {
 
     // MARK: ANIMATIONS
 
-//    private func animate(cards: [Card], onto targetViewBy: (_ index: Int) -> (UIView?), duration: TimeInterval, waitFor: TimeInterval, animationTimeSpacing: TimeInterval, animationOptions: UIView.AnimationOptions, targetElementSpacing: CGFloat, onComplete: @escaping (_ finished: Bool) -> (Void)) {
-//        var delay = 0.0
-//        for (index, card) in cards.enumerated() {
-//            if let cardIndex = game.cardsOnTable.firstIndex(of: card), let animationTargetView = targetViewBy(cardIndex) {
-//                playingCardButtons[cardIndex].cornerRadiusAnimationWithDuration(duration: CFTimeInterval(duration), to: animationTargetView.layer.cornerRadius, delay: waitFor + (Double(delay) / TimeInterval(cards.count)))
-//                playingCardButtons[cardIndex].playingCardView.cornerRadiusAnimationWithDuration(duration: CFTimeInterval(duration), to: animationTargetView.layer.cornerRadius, delay: waitFor + (Double(delay) / TimeInterval(cards.count)))
-//                let completionBlock = index == cards.endIndex - 1 ? onComplete : nil
-//                UIView.animate(withDuration: duration, delay: waitFor + (delay / TimeInterval(cards.count)), options: animationOptions, animations: { [weak self] in
-//                        self?.playingCardButtons[cardIndex].frame = animationTargetView.frame
-//                    },
-//                    completion: completionBlock)
-//            }
-//            delay += animationTimeSpacing
-//        }
-//    }
-//
-//
-//    private func animate(cards: [Card], onto targetViewBy: (_ index: Int) -> (UIView?), duration: TimeInterval, waitFor: TimeInterval, animationTimeSpacing: TimeInterval, animationOptions: UIView.AnimationOptions, targetElementSpacing: CGFloat, onComplete: @escaping (_ finished: Bool) -> (Void)) {
-//        var delay = 0.0
-//        for (index, card) in cards.enumerated() {
-//            if let cardIndex = game.cardsOnTable.firstIndex(of: card), let animationTargetView = targetViewBy(cardIndex) {
-//                playingCardButtons[cardIndex].cornerRadiusAnimationWithDuration(duration: CFTimeInterval(duration), to: animationTargetView.layer.cornerRadius, delay: waitFor + (Double(delay) / TimeInterval(cards.count)))
-//                playingCardButtons[cardIndex].playingCardView.cornerRadiusAnimationWithDuration(duration: CFTimeInterval(duration), to: animationTargetView.layer.cornerRadius, delay: waitFor + (Double(delay) / TimeInterval(cards.count)))
-//                let completionBlock = index == cards.endIndex - 1 ? onComplete : nil
-//                UIView.animate(withDuration: duration, delay: waitFor + (delay / TimeInterval(cards.count)), options: animationOptions, animations: { [weak self] in
-//                    self?.playingCardButtons[cardIndex].frame = animationTargetView.frame
-//                    },
-//                               completion: completionBlock)
-//            }
-//
-//            delay += animationTimeSpacing
-//        }
-//    }
-
     private func animateRearrangeCards() {
         // Update grid for animating cards into the new updated grid layout.
         targetGrid = UIFactory.updateGrid(toSize: game.cardsOnTable.count, inside: playingBoardView.layer.bounds)
         // Determine which cards should be rearranged on table to new position.
-        let cardsToRearrange = game.cardsOnTable.filter() {
-            var cardsPreviousGridPositionMatches = false
-            // Determine whether cards position in a grid changed since last ui update - subject to optimalization - get rid of previous card coordinates and update grid after this?
-            if let cardButtonIndex = game.cardsOnTable.firstIndex(of: $0), let previousCardCoordinates = previousCardsGridLayout[$0] {
-                cardsPreviousGridPositionMatches = (previousCardCoordinates == targetGrid.getCoordinates(at: cardButtonIndex))
-            }
-            // When card is on the table, didn't change position in targetGrid coordinates or target grid has changed its layout, then include this card into cards to rearrange animation cards.
-            return !game.cardsToDeal.contains($0) && !game.cardsMatched.contains($0) && (!cardsPreviousGridPositionMatches || targetGridFlagLayoutChanged)
-        }
+        let cardsToRearrange = UIFactory.filterCardsToRearrange(cardModel: game.cardsOnTable, with: previousCardsGridLayout, layoutChangedFlag: targetGridFlagLayoutChanged, grid: targetGrid, dealCards: game.cardsToDeal, matchedCards: game.cardsMatched)
+//        print(cardsToRearrange.count)
+
         // Animate selected cards.
         if cardsToRearrange.count > 0 {
             freeRotationFlag = false
-            // Small delay to make all playingCardsViews not animate frame change dynamicaly to size of playingCardButtons frames.
-            var delay: CGFloat = 0.0
-            for (index, cardModel) in cardsToRearrange.enumerated() {
-                if let cardIndex = game.cardsOnTable.firstIndex(of: cardModel), let targetView = targetGridViews(index: cardIndex) {
-                    let lastIndex = cardsToRearrange.count-1
-                    UIViewPropertyAnimator.runningPropertyAnimator(withDuration: Constants.animationRearrangeCardDuration, delay: TimeInterval(delay), options: Constants.animationRearrangeCardOptions, animations: {
-                            self.playingCardButtons[cardIndex].frame = targetView.frame
-                            self.playingCardButtons[cardIndex].layer.cornerRadius = targetView.layer.cornerRadius
-                            self.playingCardButtons[cardIndex].playingCardView.layer.cornerRadius = targetView.layer.cornerRadius
-                        }, completion: { _ in
-                            if index == lastIndex {
-                                self.game.cardsToDeal = Set<Card>()
-                                self.freeRotationFlag = true
-                            }
-                        })
-                    delay += CGFloat(Constants.animationRearrangeCardDuration) / CGFloat(cardsToRearrange.count)
-                }
-            }
+            AnimationFactory.rearrangeAnimation(toRearrangeModel: cardsToRearrange, tableModel: game.cardsOnTable, views: playingCardButtons, grid: targetGrid, completion: {(animationPosition) in
+                self.game.cardsToDeal = Set<Card>()
+                self.freeRotationFlag = true
+            })
         }
     }
 
     private func animateDealCards() {
         if animationFlagDealMoreCards {
-
-            for cardModel in game.cardsToDeal {
-                if let indexOnTable = game.cardsOnTable.firstIndex(of: cardModel) {
-                    playingCardButtons[indexOnTable].frame = dealCardsButton.convert(dealCardsButton.bounds, to: playingBoardView).insetBy(dx: Constants.insetHideBehindButton, dy: Constants.insetHideBehindButton)
-                    playingCardButtons[indexOnTable].layer.cornerRadius = dealCardsButton.layer.cornerRadius
-                    playingCardButtons[indexOnTable].playingCardView.layer.cornerRadius = dealCardsButton.layer.cornerRadius
-//                    playingCardButtons[indexOnTable].setNeedsLayout()
-                }
-            }
             freeRotationFlag = false
             if game.cardsToDeal.count > 0 {
                 UIApplication.shared.beginIgnoringInteractionEvents()
             }
-
-            // Small delay to make all playingCardsViews not animate frame change dynamicaly to size of playingCardButtons frames.
-            var delay: CGFloat = 0.0
-            for (index, cardModel) in Array(game.cardsToDeal).enumerated() {
-                if let cardIndex = game.cardsOnTable.firstIndex(of: cardModel), let targetView = targetGridViews(index: cardIndex) {
-                    let lastIndex = game.cardsToDeal.count-1
-                    UIViewPropertyAnimator.runningPropertyAnimator(withDuration: Constants.animationDealCardDuration, delay: TimeInterval(delay), options: Constants.animationDealCardOptions, animations: {
-                            self.playingCardButtons[cardIndex].frame = targetView.frame
-                            self.playingCardButtons[cardIndex].layer.cornerRadius = targetView.layer.cornerRadius
-                            self.playingCardButtons[cardIndex].playingCardView.layer.cornerRadius = targetView.layer.cornerRadius
-                        }, completion: { _ in
-                            if index == lastIndex {
-                                self.game.cardsToDeal = Set<Card>()
-                                self.freeRotationFlag = true
-//                                print("enable interaction")
-                                UIApplication.shared.endIgnoringInteractionEvents()
-                            }
-                        })
-                    delay += CGFloat(Constants.animationDealCardDuration) / CGFloat(game.cardsToDeal.count)
-                }
-            }
+            AnimationFactory.dealCardsAnimation(toDealModel: Array(game.cardsToDeal), tableModel: game.cardsOnTable, views: playingCardButtons, grid: targetGrid, startView: dealCardsButton, completion: {(animationPosition) in
+                self.game.cardsToDeal = Set<Card>()
+                self.freeRotationFlag = true
+                UIApplication.shared.endIgnoringInteractionEvents()
+            })
         }
     }
 
     private func animateNewGame() {
         if animationFlagNewGame {
             UIApplication.shared.beginIgnoringInteractionEvents()
-            for playingCardButton in playingCardButtons {
-                playingCardButton.layer.removeAllAnimations()
-                playingCardButton.playingCardView.layer.removeAllAnimations()
-                playingCardButton.frame = newGameButton.convert(newGameButton.bounds, to: playingBoardView).insetBy(dx: Constants.insetHideBehindButton, dy: Constants.insetHideBehindButton)
-                playingCardButton.layer.cornerRadius = newGameButton.layer.cornerRadius
-                playingCardButton.playingCardView.layer.cornerRadius = newGameButton.layer.cornerRadius
-                playingCardButton.setNeedsLayout()
-            }
             freeRotationFlag = false
             animationFlagNewGame = false
             targetGrid = UIFactory.updateGrid(toSize: game.cardsOnTable.count, inside: playingBoardView.layer.bounds)
 
-            // Small delay to make all playingCardsViews not animate frame change dynamicaly to size of playingCardButtons frames.
-            var delay: CGFloat = 0.0
-            for (index, cardModel) in Array(self.game.cardsOnTable).enumerated() {
-                if let cardIndex = self.game.cardsOnTable.firstIndex(of: cardModel), let targetView = targetGridViews(index: cardIndex) {
-                    let lastIndex = game.cardsOnTable.count-1
-                    UIViewPropertyAnimator.runningPropertyAnimator(withDuration: Constants.animationNewGameDuration, delay: TimeInterval(delay), options: Constants.animationNewGameCardOptions, animations: {
-                            self.playingCardButtons[cardIndex].frame = targetView.frame
-                            self.playingCardButtons[cardIndex].layer.cornerRadius = targetView.layer.cornerRadius
-                            self.playingCardButtons[cardIndex].playingCardView.layer.cornerRadius = targetView.layer.cornerRadius
-                        }, completion: { _ in
-                            if index == lastIndex {
-                                self.game.cardsToDeal = Set<Card>()
-                                self.freeRotationFlag = true
-                                UIApplication.shared.endIgnoringInteractionEvents()
-                            }
-                        })
-                    delay += CGFloat(Constants.animationNewGameDuration * 2) / CGFloat(self.game.cardsOnTable.count)
-                }
-            }
-
-//            // Small delay to make all playingCardsViews not animate frame change dynamicaly to size of playingCardButtons frames.
-//            var delay: CGFloat = 0.01
-//            UIViewPropertyAnimator.runningPropertyAnimator(withDuration: Constants.animationNewGameDuration+2, delay: 0.01, options: Constants.animationNewGameCardOptions, animations: {
-//                UIView.animateKeyframes(withDuration: 1, delay: 0, animations: {
-//                    for cardModel in Array(self.game.cardsOnTable) {
-//                        if let cardIndex = self.game.cardsOnTable.firstIndex(of: cardModel), let targetView = self.targetGridViews(index: cardIndex) {
-//
-//                            UIView.addKeyframe(withRelativeStartTime: 0.7 * Double(delay), relativeDuration: 1.0 - 0.7, animations: {
-//                                    self.playingCardButtons[cardIndex].frame = targetView.frame
-//                                    self.playingCardButtons[cardIndex].layer.cornerRadius = targetView.layer.cornerRadius
-//                                    self.playingCardButtons[cardIndex].playingCardView.layer.cornerRadius = targetView.layer.cornerRadius
-//                                })
-//                            delay += 1.0 / CGFloat(self.game.cardsOnTable.count)
-//                        }
-//                    }
-//                }, completion: nil)
-//            }, completion: { _ in
-//                    self.game.cardsToDeal = Set<Card>()
-//                    self.freeRotationFlag = true
-//                })
-
-//            for cardModel in Array(game.cardsOnTable) {
-//                if let cardIndex = game.cardsOnTable.firstIndex(of: cardModel), let targetView = targetGridViews(index: cardIndex) {
-//                    newGameAnimator.addAnimations({
-//                        self.playingCardButtons[cardIndex].frame = targetView.frame
-//                        self.playingCardButtons[cardIndex].layer.cornerRadius = targetView.layer.cornerRadius
-//                        self.playingCardButtons[cardIndex].playingCardView.layer.cornerRadius = targetView.layer.cornerRadius
-//                    }, delayFactor: delay)
-//                    delay += Constants.animationNewGameCardRelativeDelay / CGFloat(game.cardsOnTable.count)
-//                }
-//            }
-//            newGameAnimator.addCompletion { _ in
-//                self.game.cardsToDeal = Set<Card>()
-//                self.freeRotationFlag = true
-//            }
-//            newGameAnimator.startAnimation()
+            AnimationFactory.newGameAnimation(tableModel: game.cardsOnTable, views: playingCardButtons, grid: targetGrid, startView: newGameButton, completion: {(animationPosition) in
+                self.game.cardsToDeal = Set<Card>()
+                self.freeRotationFlag = true
+                UIApplication.shared.endIgnoringInteractionEvents()
+            })
         }
     }
 
     private func animateSuccessMatch() {
         if animationFlagSuccessMatch {
             UIApplication.shared.beginIgnoringInteractionEvents()
-            for cardModel in game.cardsMatched {
-                if let indexOnTable = game.cardsOnTable.firstIndex(of: cardModel), let rect = targetGrid[indexOnTable] {
-                    playingCardButtons[indexOnTable].layer.zPosition = 2
-                    playingCardButtons[indexOnTable].frame = rect
-                    playingCardButtons[indexOnTable].layer.cornerRadius = PlayingCardView.Constants.cornerRadiusToWidthRatio * rect.width
-                    playingCardButtons[indexOnTable].playingCardView.layer.cornerRadius = PlayingCardView.Constants.cornerRadiusToWidthRatio * rect.width
-                    playingCardButtons[indexOnTable].setNeedsLayout()
-                }
-            }
             freeRotationFlag = false
 
-            // Small delay to make all playingCardsViews not animate frame change dynamicaly to size of playingCardButtons frames.
-            var delay: CGFloat = 0.00
-            for (index, cardModel) in Array(game.cardsMatched).enumerated() {
-                if let cardIndex = game.cardsOnTable.firstIndex(of: cardModel), let targetView = targetViewScoreLabel(index: cardIndex) {
-                    let lastIndex = game.cardsMatched.count-1
-                    UIViewPropertyAnimator.runningPropertyAnimator(withDuration: Constants.animationSuccessMatchDuration, delay: TimeInterval(delay), options: Constants.animationSuccessMatchOptions, animations: {
-                            self.playingCardButtons[cardIndex].frame = targetView.frame
-                            self.playingCardButtons[cardIndex].layer.cornerRadius = targetView.layer.cornerRadius
-                            self.playingCardButtons[cardIndex].playingCardView.layer.cornerRadius = targetView.layer.cornerRadius
-                        }, completion: { _ in
-                            if index == lastIndex {
-                                self.view.nod()
-                                self.replaceMatchedCards()
-                                self.animationFlagDealMoreCards = true
-                                self.updateScoreLabel()
-                                UIApplication.shared.endIgnoringInteractionEvents()
-                                // Eventough we want to updateUI() at this point to trigger deal new cards animation, we don't call it here. updateUI() gets called by viewDidLayoutSubviews() after updateScoreLabel() change triggers autolayout rearrangement. So Calling updateUI inhere would cause some troubles.
-                            }
-                        })
-                    delay += CGFloat(Constants.animationSuccessMatchDuration/1.5) / CGFloat(game.cardsMatched.count)
-                }
-            }
+            AnimationFactory.successMatchAnimation(matchedModel: Array(game.cardsMatched), tableModel: game.cardsOnTable, views: playingCardButtons, targetView: scoreLabel, completion: {(animationPosition) in self.view.nod()
+                self.replaceMatchedCards()
+                self.animationFlagDealMoreCards = true
+                self.updateScoreLabel()
+                UIApplication.shared.endIgnoringInteractionEvents()
+                // Eventough we want to updateUI() at this point to trigger deal new cards animation, we don't call it here. updateUI() gets called by viewDidLayoutSubviews() after updateScoreLabel() change triggers autolayout rearrangement. So Calling updateUI inhere would cause some troubles.
+            })
         }
     }
-//    private func animateRearrangeCards() {
-//        targetGrid = UIFactory.updateGrid(toSize: game.cardsOnTable.count, inside: playingBoardView.layer.bounds)
-//
-//        let cardsToRearrange = game.cardsOnTable.filter() {
-//            var cardsPreviousGridPositionMatches = false
-//            if let cardButtonIndex = game.cardsOnTable.firstIndex(of: $0), let previousCardCoordinates = previousCardsGridLayout[$0] {
-//                cardsPreviousGridPositionMatches = (previousCardCoordinates == targetGrid.getCoordinates(at: cardButtonIndex))
-//            }
-//            print("!cardsPreviousGridPositionMatches: " + String(!cardsPreviousGridPositionMatches) + ", targetGridFlagLaoutChanged: " + String(targetGridFlagLayoutChanged))
-//            return !game.cardsToDeal.contains($0) && !game.cardsMatched.contains($0) && (!cardsPreviousGridPositionMatches || targetGridFlagLayoutChanged)
-//        }
-//        print("cardsToRearrange: " + String(cardsToRearrange.count))
-//        if cardsToRearrange.count > 0 {
-//            freeRotationFlag = false
-//            animate(cards: cardsToRearrange, onto: targetGridViews, duration: Constants.animationRearrangeCardDuration, waitFor: 0, animationTimeSpacing: Constants.animationRearrangeCardDelayIncrement, animationOptions: Constants.animationRearrangeCardOptions, targetElementSpacing: PlayingCardButton.Constants.playingCardsSpacing, onComplete: { [unowned self] (finished: Bool) -> (Void) in
-//                self.game.cardsToDeal = Set<Card>()
-//                self.freeRotationFlag = true
-//            })
-//        }
-//    }
-
-//    private func animateDealCards() {
-//        if animationFlagDealMoreCards {
-//            UIApplication.ignoreInteractionEvents(for: Constants.animationDealCardDuration + Constants.animationDealCardDelayIncrement / 2)
-//            prepareForDealCardsAnimation()
-//            freeRotationFlag = false
-//
-//            animate(cards: Array(game.cardsToDeal), onto: targetGridViews, duration: Constants.animationDealCardDuration, waitFor: 0, animationTimeSpacing: Constants.animationDealCardDelayIncrement, animationOptions: Constants.animationDealCardOptions, targetElementSpacing: PlayingCardButton.Constants.playingCardsSpacing, onComplete: { [unowned self] (finished: Bool) -> (Void) in
-//                    self.game.cardsToDeal = Set<Card>()
-//                    self.freeRotationFlag = true
-//                })
-//        }
-//    }
-//
-//    private func animateNewGame() {
-//        if animationFlagNewGame {
-//            UIApplication.ignoreInteractionEvents(for: Constants.animationNewGameDuration + Constants.animationNewGameCardDelayIncrement / 2)
-//            prepareForNewGameAnimation()
-//            freeRotationFlag = false
-//            animationFlagNewGame = false
-//            targetGrid = UIFactory.updateGrid(toSize: game.cardsOnTable.count, inside: playingBoardView.layer.bounds)
-//
-//            animate(cards: Array(game.cardsOnTable), onto: targetGridViews, duration: Constants.animationNewGameDuration, waitFor: 0, animationTimeSpacing: Constants.animationNewGameCardDelayIncrement, animationOptions: Constants.animationNewGameCardOptions, targetElementSpacing: PlayingCardButton.Constants.playingCardsSpacing, onComplete: { [unowned self] (finished: Bool) -> (Void) in
-//                    self.game.cardsToDeal = Set<Card>()
-//                    print(self.freeRotationFlag)
-//                    self.freeRotationFlag = true
-//                })
-//        }
-//    }
-//
-//    private func animateSuccessMatch() {
-//        if animationFlagSuccessMatch {
-//            UIApplication.ignoreInteractionEvents(for: Constants.animationSuccessMatchWaitFor + Constants.animationSuccessMatchDuration + Constants.animationSuccessMatchDelayIncrement / 2 - Constants.animationSuccessMatchDelayIncrement / Double(game.cardsMatched.count))
-//            prepareForSuccessMatchAnimation()
-//            freeRotationFlag = false
-//
-//            animate(cards: Array(game.cardsMatched), onto: targetViewScoreLabel, duration: Constants.animationSuccessMatchDuration, waitFor: Constants.animationSuccessMatchWaitFor, animationTimeSpacing: Constants.animationSuccessMatchDelayIncrement, animationOptions: Constants.animationSuccessMatchOptions, targetElementSpacing: 0, onComplete: { [unowned self] (finished: Bool) -> Void in
-//                    self.view.nod()
-//                    self.replaceMatchedCards()
-//                    self.animationFlagDealMoreCards = true
-//                    self.updateScoreLabel()
-//                    // Eventough we want to updateUI() at this point to trigger deal new cards animation, we don't call it here. updateUI() gets called by viewDidLayoutSubviews() after updateScoreLabel() change triggers autolayout rearrangement. So Calling updateUI inhere would cause some troubles.
-//                })
-//        }
-//    }
-//    // Setup cards for deal animation starting frame.
-//    private func prepareForDealCardsAnimation() {
-//        for cardModel in game.cardsToDeal {
-//            if let indexOnTable = game.cardsOnTable.firstIndex(of: cardModel) {
-//                playingCardButtons[indexOnTable].frame = dealCardsButton.convert(dealCardsButton.bounds, to: playingBoardView).insetBy(dx: Constants.insetHideBehindButton, dy: Constants.insetHideBehindButton)
-//                playingCardButtons[indexOnTable].layer.cornerRadius = dealCardsButton.layer.cornerRadius
-//                playingCardButtons[indexOnTable].playingCardView.layer.cornerRadius = dealCardsButton.layer.cornerRadius
-//                playingCardButtons[indexOnTable].setNeedsLayout()
-//            }
-//        }
-//    }
-//    // Setup cards for new game animation starting frame.
-//    private func prepareForNewGameAnimation() {
-//        for playingCardButton in playingCardButtons {
-//            playingCardButton.layer.removeAllAnimations()
-//            playingCardButton.playingCardView.layer.removeAllAnimations()
-//            playingCardButton.frame = newGameButton.convert(newGameButton.bounds, to: playingBoardView).insetBy(dx: Constants.insetHideBehindButton, dy: Constants.insetHideBehindButton)
-//            playingCardButton.layer.cornerRadius = newGameButton.layer.cornerRadius
-//            playingCardButton.playingCardView.layer.cornerRadius = newGameButton.layer.cornerRadius
-//            playingCardButton.setNeedsLayout()
-//        }
-//    }
-//    // Setup cards for sucess match animation starting frame.
-//    private func prepareForSuccessMatchAnimation() {
-//        for cardModel in game.cardsMatched {
-//            if let indexOnTable = game.cardsOnTable.firstIndex(of: cardModel), let rect = targetGrid[indexOnTable] {
-//                playingCardButtons[indexOnTable].layer.zPosition = 2
-//                playingCardButtons[indexOnTable].frame = rect
-//                playingCardButtons[indexOnTable].layer.cornerRadius = PlayingCardView.Constants.cornerRadiusToWidthRatio * rect.width
-//                playingCardButtons[indexOnTable].playingCardView.layer.cornerRadius = PlayingCardView.Constants.cornerRadiusToWidthRatio * rect.width
-//                playingCardButtons[indexOnTable].setNeedsLayout()
-//            }
-//        }
-//    }
-
-    // Returns UIView positioned and sized according to specified index in a card grid.
-    private func targetGridViews(index: Int) -> UIView? {
-        let view = UIView()
-        if let rect = self.targetGrid[index] {
-            view.layer.cornerRadius = PlayingCardView.Constants.cornerRadiusToWidthRatio * rect.width
-            view.frame = rect
-            return view
-        }
-        return nil
-    }
-    // Retruns UIView positioned and sized according to Score label.
-    private func targetViewScoreLabel(index: Int) -> UIView? {
-        let view = UIView()
-        view.layer.cornerRadius = scoreLabel.layer.cornerRadius
-        view.frame = scoreLabel.convert(scoreLabel.layer.bounds, to: self.playingBoardView)
-        return view }
-
 }
-
-

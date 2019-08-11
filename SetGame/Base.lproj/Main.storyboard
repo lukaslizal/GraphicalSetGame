@@ -75,7 +75,7 @@
                                                     <constraint firstItem="rRw-EG-xfc" firstAttribute="leading" secondItem="QSL-rX-bRp" secondAttribute="leading" id="UKS-B1-jtu"/>
                                                     <constraint firstItem="rRw-EG-xfc" firstAttribute="top" secondItem="QSL-rX-bRp" secondAttribute="top" id="Umt-LT-Wx3"/>
                                                     <constraint firstAttribute="bottom" secondItem="rRw-EG-xfc" secondAttribute="bottom" id="Wcx-eJ-nml"/>
-                                                    <constraint firstAttribute="width" constant="100" id="bRx-YH-QSL"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="bRx-YH-QSL"/>
                                                     <constraint firstAttribute="width" secondItem="QSL-rX-bRp" secondAttribute="height" multiplier="2:1" priority="750" id="fiO-5o-Yqx"/>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="v7Y-gq-HHC"/>
                                                 </constraints>
