@@ -44,44 +44,71 @@ import UIKit
 // add winner screen (Lottie animation)
 // add local persistant high score
 
+/**
+ Displays actual gameplay screen.
+ ## Basic game rules:
+ 1. Three cards, where two cards share same one feature but third card does not, is not considered a set.
+ 2. Any other three cards are considered a set
+ 
+ - author:
+ Lukas Lizal
+ */
 class GraphicalSetViewController: UIViewController, CardTap {
 
     // MARK: STORED PROPERTIES
 
-    var game: Game = Game()
-    var playingCardButtons: [PlayingCardButton] = []
-    var targetGrid = Grid(layout: .aspectRatio(PlayingCardView.Constants.cardFrameAspectRatio)) {
+    private var game: Game = Game()
+    private var playingCardButtons: [PlayingCardButton] = []
+    private var targetGridFlagLayoutChanged = true
+    private var previousCardsGridLayout: [Card: (Int, Int)] = [:]
+    private var animationFlagNewGame = false
+    private var animationFlagDealMoreCards = false
+    private var animationFlagSuccessMatch = false
+    private var freeRotationFlag = true
+    internal var tableGrid = Grid(layout: .aspectRatio(PlayingCardView.Constants.cardFrameAspectRatio)) {
         didSet {
             // Flag signaling that all cards should be rearranged no matter wheter they haven't been changed, added or other.
-            targetGridFlagLayoutChanged = targetGridFlagLayoutChanged || (oldValue.dimensions != targetGrid.dimensions)
+            targetGridFlagLayoutChanged = targetGridFlagLayoutChanged || (oldValue.dimensions != tableGrid.dimensions)
         }
     }
-    var targetGridFlagLayoutChanged = true
-    var previousCardsGridLayout: [Card: (Int, Int)] = [:]
-    var animationFlagNewGame = false
-    var animationFlagDealMoreCards = false
-    var animationFlagSuccessMatch = false
-    var freeRotationFlag = true
+    
+    // MARK: AUTOROTATION OVERRIDES
+    
+    /**
+     Support disabling device autorotation when cards are animated on table. Autoratation would cause
+     cards to endup on wrong place - playce that would be only correct in previous orientation's layout
+     */
+    override internal var shouldAutorotate: Bool {
+        return freeRotationFlag
+    }
+    override internal var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if freeRotationFlag {
+            return .allButUpsideDown
+        }
+        else {
+            return .portrait
+        }
+    }
 
     // MARK: UI OUTLETS
 
-    @IBOutlet weak var playingBoardView: UIView!
-    @IBOutlet weak var newGameButton: UIButton!
-    @IBAction func newGamePressed(_ sender: UIButton) {
+    @IBOutlet weak internal var playingBoardView: UIView!
+    @IBOutlet weak internal var newGameButton: UIButton!
+    @IBOutlet weak internal var dealCardsButton: UIButton!
+    @IBOutlet weak internal var scoreLabel: UILabel!
+    @IBAction internal func newGamePressed(_ sender: UIButton) {
         newGame()
         updateUI()
     }
-    @IBOutlet weak var dealCardsButton: UIButton!
-    @IBAction func dealCardsPressed(_ sender: UIButton) {
+    @IBAction internal func dealCardsPressed(_ sender: UIButton) {
         dealThreeCards()
         updateUI()
         updateScoreLabel()
     }
-    @IBOutlet weak var scoreLabel: UILabel!
 
     // MARK: TOUCH CONTROLS
 
-    func tapped(playingCardButton: PlayingCardButton) {
+    internal func tapped(playingCardButton: PlayingCardButton) {
         // Select card in model. Card is a subview of tap gesture recognising UIView "button"
         if let buttonIndex = playingCardButtons.firstIndex(of: playingCardButton) {
             let selectedCard = game.cardsOnTable[buttonIndex]
@@ -98,7 +125,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
         }
     }
 
-    @objc func swipeToDealCards(_ sender: UISwipeGestureRecognizer) {
+    @objc internal func swipeToDealCards(_ sender: UISwipeGestureRecognizer) {
         switch sender.state {
         case .ended:
             dealThreeCards()
@@ -109,7 +136,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
         }
     }
 
-    @objc func rotateToShuffle(_ sender: UIRotationGestureRecognizer) {
+    @objc internal func rotateToShuffle(_ sender: UIRotationGestureRecognizer) {
         switch sender.state {
         case .began:
             game.shuffle()
@@ -121,19 +148,19 @@ class GraphicalSetViewController: UIViewController, CardTap {
 
     // MARK: VIEWCONTROLLER OVERRIDE METHODS
 
-    override func viewDidLoad() {
+    internal override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        UIFactory.setup(graphicalSetViewController: self)
+        UIFactory.setup(viewController: self)
         newGame()
     }
 
-    override func viewDidLayoutSubviews() {
+    internal override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         // When orientation changes targetGrid layout changes
         self.targetGridFlagLayoutChanged = true
         DispatchQueue.main.asyncAfter(deadline: .now()) {
-            self.targetGrid = UIFactory.updateGrid(toSize: self.game.cardsOnTable.count, inside: self.playingBoardView.layer.bounds)
+            self.tableGrid = UIFactory.updateGrid(toSize: self.game.cardsOnTable.count, inside: self.playingBoardView.layer.bounds)
             self.updateUI()
             // Button as round as it gets.
             UIFactory.roundedCorners(on: self.newGameButton)
@@ -148,27 +175,12 @@ class GraphicalSetViewController: UIViewController, CardTap {
         }
     }
 
-    // Support disabling device autorotation when cards are animated on table. Autoratation would cause
-    // cards to endup on wrong place - playce that would be only correct in previous orientation's layout
-    override var shouldAutorotate: Bool {
-        return freeRotationFlag
-    }
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if freeRotationFlag {
-            return .allButUpsideDown
-        }
-        else {
-            return .portrait
-        }
-    }
-
     // MARK: CONTROLLER
 
     private func newGame() {
         resetUI()
         game = Game()
-        targetGrid = UIFactory.updateGrid(toSize: game.cardsOnTable.count, inside: playingBoardView.layer.bounds)
+        tableGrid = UIFactory.updateGrid(toSize: game.cardsOnTable.count, inside: playingBoardView.layer.bounds)
         animationFlagNewGame = true
         updateScoreLabel()
     }
@@ -198,7 +210,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
         clearAnimationFlags()
     }
 
-    func updatePlayingCardButtons() {
+    private func updatePlayingCardButtons() {
         // Save last View state's card's coordinates in a grid for later use.
         previousCardsGridLayout = [:]
         // Helper array for rearranging all buttons according to card order in model.
@@ -208,7 +220,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
             let model = game.cardsOnTable[indexModel]
             // Update buttons order according to model.
             if let indexButton = playingCardButtons.firstIndex(where: { cardModelEqualsCardView(cardModel: model, cardView: $0.playingCardView) }) {
-                previousCardsGridLayout[model] = targetGrid.getCoordinates(at: indexButton)
+                previousCardsGridLayout[model] = tableGrid.getCoordinates(at: indexButton)
                 newCardsOnTableButton.append(playingCardButtons[indexButton])
             }
             // And create buttons for any newly dealt cards.
@@ -232,8 +244,8 @@ class GraphicalSetViewController: UIViewController, CardTap {
 
     }
     // True if model card equals ui view card.
-    func cardModelEqualsCardView(cardModel: Card, cardView: PlayingCardView) -> Bool {
-        return cardView.shapeType == cardModel.shape.rawValue && cardView.colorType == cardModel.color.rawValue && cardView.fillType == cardModel.pattern.rawValue && cardView.quantity == cardModel.quantity.rawValue + 1
+    private func cardModelEqualsCardView(cardModel: Card, cardView: PlayingCardView) -> Bool {
+        return cardView.shape == cardModel.shape.rawValue && cardView.color == cardModel.color.rawValue && cardView.fill == cardModel.pattern.rawValue && cardView.quantity == cardModel.quantity.rawValue + 1
     }
 
     private func replaceMatchedCards() {
@@ -263,19 +275,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
     }
 
     private func updateScoreLabel() {
-        var suffix = Constants.scoreGradeFirstSuffix
-        switch playingCardButtons.count {
-        case 0...21:
-            suffix = Constants.scoreGradeFirstSuffix
-        case 22...31:
-            suffix = Constants.scoreGradeSecondSuffix
-        case 32...41:
-            suffix = Constants.scoreGradeThirdSuffix
-        case 42...51:
-            suffix = Constants.scoreGradeFourthSuffix
-        default:
-            suffix = Constants.scoreGradeFifthSuffix
-        }
+        let suffix = Constants.scoreGradeFirstSuffix
         var scoreText = ""
         switch game.score.playerScore {
         case 0:
@@ -301,16 +301,14 @@ class GraphicalSetViewController: UIViewController, CardTap {
 
     private func animateRearrangeCards() {
         // Update grid for animating cards into the new updated grid layout.
-        targetGrid = UIFactory.updateGrid(toSize: game.cardsOnTable.count, inside: playingBoardView.layer.bounds)
+        tableGrid = UIFactory.updateGrid(toSize: game.cardsOnTable.count, inside: playingBoardView.layer.bounds)
         // Determine which cards should be rearranged on table to new position.
-        let cardsToRearrange = UIFactory.filterCardsToRearrange(cardModel: game.cardsOnTable, with: previousCardsGridLayout, layoutChangedFlag: targetGridFlagLayoutChanged, grid: targetGrid, dealCards: game.cardsToDeal, matchedCards: game.cardsMatched)
-//        print(cardsToRearrange.count)
-
+        let cardsToRearrange = UIFactory.filterCardsToRearrange(cardModel: game.cardsOnTable, with: previousCardsGridLayout, layoutChangedFlag: targetGridFlagLayoutChanged, grid: tableGrid, dealCards: game.cardsToDeal, matchedCards: game.cardsMatched)
         // Animate selected cards.
         if cardsToRearrange.count > 0 {
             freeRotationFlag = false
-            AnimationFactory.rearrangeAnimation(toRearrangeModel: cardsToRearrange, tableModel: game.cardsOnTable, views: playingCardButtons, grid: targetGrid, completion: {(animationPosition) in
-                self.game.cardsToDeal = Set<Card>()
+            AnimationFactory.rearrangeAnimation(toRearrangeModel: cardsToRearrange, tableModel: game.cardsOnTable, views: playingCardButtons, grid: tableGrid, completion: {(animationPosition) in
+                self.game.allCardsDealt()
                 self.freeRotationFlag = true
             })
         }
@@ -322,8 +320,8 @@ class GraphicalSetViewController: UIViewController, CardTap {
             if game.cardsToDeal.count > 0 {
                 UIApplication.shared.beginIgnoringInteractionEvents()
             }
-            AnimationFactory.dealCardsAnimation(toDealModel: Array(game.cardsToDeal), tableModel: game.cardsOnTable, views: playingCardButtons, grid: targetGrid, startView: dealCardsButton, completion: {(animationPosition) in
-                self.game.cardsToDeal = Set<Card>()
+            AnimationFactory.dealCardsAnimation(toDealModel: Array(game.cardsToDeal), tableModel: game.cardsOnTable, views: playingCardButtons, grid: tableGrid, startView: dealCardsButton, completion: {(animationPosition) in
+                self.game.allCardsDealt()
                 self.freeRotationFlag = true
                 UIApplication.shared.endIgnoringInteractionEvents()
             })
@@ -335,10 +333,9 @@ class GraphicalSetViewController: UIViewController, CardTap {
             UIApplication.shared.beginIgnoringInteractionEvents()
             freeRotationFlag = false
             animationFlagNewGame = false
-            targetGrid = UIFactory.updateGrid(toSize: game.cardsOnTable.count, inside: playingBoardView.layer.bounds)
-
-            AnimationFactory.newGameAnimation(tableModel: game.cardsOnTable, views: playingCardButtons, grid: targetGrid, startView: newGameButton, completion: {(animationPosition) in
-                self.game.cardsToDeal = Set<Card>()
+            tableGrid = UIFactory.updateGrid(toSize: game.cardsOnTable.count, inside: playingBoardView.layer.bounds)
+            AnimationFactory.newGameAnimation(tableModel: game.cardsOnTable, views: playingCardButtons, grid: tableGrid, startView: newGameButton, completion: {(animationPosition) in
+                self.game.allCardsDealt()
                 self.freeRotationFlag = true
                 UIApplication.shared.endIgnoringInteractionEvents()
             })
@@ -349,7 +346,6 @@ class GraphicalSetViewController: UIViewController, CardTap {
         if animationFlagSuccessMatch {
             UIApplication.shared.beginIgnoringInteractionEvents()
             freeRotationFlag = false
-
             AnimationFactory.successMatchAnimation(matchedModel: Array(game.cardsMatched), tableModel: game.cardsOnTable, views: playingCardButtons, targetView: scoreLabel, completion: {(animationPosition) in self.view.nod()
                 self.replaceMatchedCards()
                 self.animationFlagDealMoreCards = true

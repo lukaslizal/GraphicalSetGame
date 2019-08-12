@@ -8,6 +8,12 @@
 
 import UIKit
 
+/**
+ Draws a shape of given features.
+ 
+ - author:
+ Lukas Lizal
+ */
 class ShapeView: UIView {
     var shape: ShapeType = ShapeType(rawValue: 0)! { didSet { setNeedsDisplay() } }
     var shapeColor: UIColor = UIColor.ColorPalette.color(of: 0) { didSet { setNeedsDisplay() } }

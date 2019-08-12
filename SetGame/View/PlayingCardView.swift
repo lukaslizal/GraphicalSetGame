@@ -8,27 +8,39 @@
 
 import UIKit
 
+/**
+ Visual representation of a plaing card with ability to render different shapes, quantities, fill patterns and color. Dynamicaly changes by changing these 4 properties.
+ 
+ - author:
+ Lukas Lizal
+ */
 class PlayingCardView: UIView {
-    var shapeViews: [ShapeView] = [ShapeView(), ShapeView(), ShapeView()]
-    var shapeType: Int = 0 {
+    private var shapeViews: [ShapeView] = {
+        var views = [ShapeView(), ShapeView(), ShapeView()]
+        for index in 0..<3{
+         views[index].isOpaque = false
+        }
+        return views
+    }()
+    internal var shape: Int = 0 {
         didSet {
             for view in shapeViews {
-                view.shape = ShapeType(rawValue: shapeType)!
+                view.shape = ShapeType(rawValue: shape)!
             }
             setNeedsLayout() } }
-    var quantity: Int = 0 {
+    internal var quantity: Int = 0 {
         didSet {
             setNeedsLayout() } }
-    var fillType: Int = 0 {
+    internal var fill: Int = 0 {
         didSet {
             for view in shapeViews {
-                view.fill = FillType(rawValue: fillType)!
+                view.fill = FillType(rawValue: fill)!
             }
             setNeedsLayout() } }
-    var colorType: Int = 0 {
+    internal var color: Int = 0 {
         didSet {
             for view in shapeViews {
-                view.shapeColor = UIColor.ColorPalette.color(of: colorType)
+                view.shapeColor = UIColor.ColorPalette.color(of: color)
             }
             setNeedsLayout()
         }
@@ -45,40 +57,37 @@ class PlayingCardView: UIView {
     init(frame: CGRect, cornerRadius: CGFloat, shapeType: Int, quantityType: Int, fillType: Int, colorType: Int) {
         super.init(frame: frame)
         layer.cornerRadius = cornerRadius
-        layer.backgroundColor = Constants.cardColor //UIColor.white.cgColor
+        layer.backgroundColor = Constants.cardColor
         clipsToBounds = true
-        setupSubviews(quantity: quantityType + 1, shapeType: shapeType, fillType: fillType, colorType: colorType)
+        setupShapeViews(quantity: quantityType + 1, shapeType: shapeType, fillType: fillType, colorType: colorType)
     }
 
-    private func setupSubviews(quantity: Int, shapeType: Int, fillType: Int, colorType: Int) {
+    private func setupShapeViews(quantity: Int, shapeType: Int, fillType: Int, colorType: Int) {
         updateSymbolViewFrames()
-        for index in 0..<quantity {
-            shapeViews[index].isOpaque = false
-        }
-        self.shapeType = shapeType
+        self.shape = shapeType
         self.quantity = quantity
-        self.colorType = colorType
-        self.fillType = fillType
+        self.color = colorType
+        self.fill = fillType
         self.autoresizingMask = [.flexibleWidth, .flexibleHeight] // we dont want autolayout
     }
 
-
-    override func isEqual(_ object: Any?) -> Bool {
+    internal override func isEqual(_ object: Any?) -> Bool {
         guard let other = object as? PlayingCardView else {
             return false
         }
-        return self.shapeType == other.shapeType && self.quantity == other.quantity && self.fillType == other.fillType && self.colorType == other.colorType
+        return self.shape == other.shape && self.quantity == other.quantity && self.fill == other.fill && self.color == other.color
     }
 
-    override func layoutSubviews() {
+    internal override func layoutSubviews() {
         super.layoutSubviews()
-
         updateSymbolViewFrames()
         if let parentButtonView = superview {
             layer.cornerRadius = layer.bounds.width * (parentButtonView.layer.cornerRadius / parentButtonView.layer.bounds.width)
         }
     }
-
+    /**
+     Updates size and poition of symbols in a card according to its current size.
+     */
     private func updateSymbolViewFrames() {
         
         let symbolInsets = layer.bounds.width * Constants.symbolInsetsRatio
@@ -87,23 +96,31 @@ class PlayingCardView: UIView {
         let symbolHeight = symbolsAreaRect.width / PlayingCardView.Constants.symbolAspectRatio
         var symbolOffsetAccumulation: CGFloat = -((symbolHeight)*CGFloat(quantity))/2
         for index in 0..<quantity {
-            shapeViews[index].frame = CGRect(x: symbolInsets, y: symbolAreaVerticalCenter + symbolOffsetAccumulation, width: symbolsAreaRect.width, height: symbolsAreaRect.width/PlayingCardView.Constants.symbolAspectRatio) // symbolsAreaRect.width*PlayingCardView.Constants
+            shapeViews[index].frame = CGRect(x: symbolInsets, y: symbolAreaVerticalCenter + symbolOffsetAccumulation, width: symbolsAreaRect.width, height: symbolsAreaRect.width/PlayingCardView.Constants.symbolAspectRatio)
             addSubview(shapeViews[index])
             
             symbolOffsetAccumulation += symbolHeight
         }
     }
-
-    func selectedHighlight() {
+    /**
+     Visually highlights button as a selected card.
+     */
+    internal func selectedHighlight() {
         self.backgroundColor = UIColor(cgColor: Constants.selectedHighlightColor)
     }
-    func successHighlight() {
+    /**
+     Visually highlights button as a successfuly matched card.
+     */
+    internal func successHighlight() {
         self.backgroundColor = UIColor(cgColor: Constants.selectedSuccessColor)
         for shapeView in self.shapeViews {
             shapeView.shapeColor = UIColor.clear
         }
     }
-    func unhighlight() {
+    /**
+     Unhighlights button back to normal state.
+     */
+    internal func unhighlight() {
         self.backgroundColor = UIColor(cgColor: Constants.cardColor)
     }
 }

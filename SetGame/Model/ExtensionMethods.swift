@@ -9,46 +9,43 @@
 import Foundation
 import UIKit
 
+/**
+ Miscellaneous extension methods.
+ 
+ - author:
+ Lukas Lizal
+ */
 extension UIView {
-    
-    func shake() {
+    /**
+     Shakes UIView in a disapproving way (;_;)
+     */
+    internal func shake() {
         self.transform = CGAffineTransform(translationX: Constants.shakeViewAmplitude, y: 0)
         UIView.animate(withDuration: Constants.shakeViewDuration, delay: 0, usingSpringWithDamping: Constants.shakeViewSpringDamping, initialSpringVelocity: Constants.shakeViewInitialSpringVelocity, options: [.curveEaseInOut, .allowUserInteraction], animations: {
             self.transform = CGAffineTransform.identity
         }, completion: nil)
     }
-    
-    func nod() {
+    /**
+     Nods UIView in an approving way (^_^)
+     */
+    internal func nod() {
         self.transform = CGAffineTransform(translationX: 0, y: -Constants.nodViewAmplitude)
         UIView.animate(withDuration: Constants.nodViewDuration, delay: 0, usingSpringWithDamping: Constants.nodViewSpringDamping, initialSpringVelocity: Constants.nodViewInitialSpringVelocity, options: [.curveEaseInOut, .allowUserInteraction], animations: {
             self.transform = CGAffineTransform.identity
         }, completion: nil)
     }
-    
-    func cornerRadiusAnimationWithDuration(duration: CFTimeInterval, to: CGFloat, delay: Double = 0)
-    {
-        let from = layer.cornerRadius
-        self.layer.cornerRadius = to
-        
-        let animation = CABasicAnimation(keyPath: "cornerRadius")
-        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
-        animation.fromValue = from
-        animation.toValue = to
-        animation.duration = duration
-        animation.beginTime = CACurrentMediaTime()+delay
-        animation.fillMode = .backwards
-        animation.isRemovedOnCompletion = false
-        layer.add(animation, forKey: "cornerRadius")
-    }
 }
 
 extension UIColor {
+    /**
+     Three colors palette where each color is ordered and retrievable by a number.
+     */
     struct ColorPalette {
-        static var firstColor: UIColor { return #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1) }
-        static var secondColor: UIColor { return #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1) }
-        static var thirdColor: UIColor { return #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1) }
+        internal static var firstColor: UIColor { return #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1) }
+        internal static var secondColor: UIColor { return #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1) }
+        internal static var thirdColor: UIColor { return #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1) }
         
-        static func color(of type: Int) -> UIColor {
+        internal static func color(of type: Int) -> UIColor {
             switch(type) {
             case 0:
                 return firstColor
@@ -64,28 +61,30 @@ extension UIColor {
 }
 
 extension CGRect {
-    func mappedPointFrom(normalized point: CGPoint) -> CGPoint {
+    /**
+     Map normalized CGPoint (floatin point values in range 0..1) to a point in full width and height of given CGRect.
+     */
+    internal func mappedPointFrom(normalized point: CGPoint) -> CGPoint {
         let x = 0 + point.x * self.width
         let y = 0 + point.y * self.height
         return CGPoint(x: x, y: y)
     }
 }
 
-/**
- Extension methods helping core gameplay mechanic to be executed. That is finding (non) matching card features.
- 
- - author:
- Lukas Lizal
- */
 extension Collection where Element == Card {
-    func isSet()->Bool{
+    /**
+     Finding (non) matching card features in a collection of Cards.
+     */
+    internal func isSet()->Bool{
         //        Cheating:
         //        return true
         return !anyIncompleteMatches() && self.count == 3
     }
     
-    // Incomplete feature matches (meaning two cards with matching feature but third one without this feature).
-    func anyIncompleteMatches() -> Bool{
+    /**
+     Incomplete feature matches (meaning two cards with matching feature but third one without this feature).
+    */
+    internal func anyIncompleteMatches() -> Bool{
         var pairFeaturesComparison = Dictionary<Set<Card>,(Bool,Bool,Bool,Bool)>()
         var featureMatchesCounter = (0,0,0,0)
         for cardOne in self{
@@ -109,36 +108,31 @@ extension Collection where Element == Card {
         return featureMatchesCounter.0 == 1 || featureMatchesCounter.1 == 1 || featureMatchesCounter.2 == 1 || featureMatchesCounter.3 == 1
     }
 }
-/**
- Extension method merges two dictionaries
- 
- - author:
- Lukas Lizal
- */
 extension Dictionary {
-    mutating func merge(dict: [Key: Value]){
+    /**
+     Merges two dictionaries.
+     */
+    internal mutating func merge(dict: [Key: Value]){
         for (k, v) in dict {
             updateValue(v, forKey: k)
         }
     }
 }
-/**
- Extension method makes UIButton disabled state change opacity
- 
- - author:
- Lukas Lizal
- */
 extension UIButton {
-    
+    /**
+     Makes UIButton disabled state change opacity.
+     */
     open override var isEnabled: Bool{
         didSet {
             UIFactory.setupDealCardsButton(button: self)
         }
     }
 }
-
 extension UIApplication {
-    static func ignoreInteractionEvents(for time: TimeInterval){
+    /**
+     Ignore any touch input across the wole app for specified time period.
+     */
+    internal static func ignoreInteractionEvents(for time: TimeInterval){
         UIApplication.shared.beginIgnoringInteractionEvents()
         DispatchQueue.main.asyncAfter(deadline: .now()+time) {
             UIApplication.shared.endIgnoringInteractionEvents()

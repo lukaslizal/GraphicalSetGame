@@ -18,11 +18,11 @@ import Foundation
  Lukas Lizal
  */
 struct Game {
-    var score: Score = Score()
+    private(set) var score: Score = Score()
     private(set) var cardsOnTable: Array<Card>
     private(set) var cardsSelected = Set<Card>()
     private(set) var cardsInPack = Set<Card>()
-    var cardsToDeal = Set<Card>()
+    private(set) var cardsToDeal = Set<Card>()
     var cardsMatched: Set<Card>
     {
         var matched = Set<Card>()
@@ -78,6 +78,12 @@ struct Game {
     internal mutating func shuffle() {
         cardsOnTable.shuffle()
     }
+    
+    // Update model after cards have been dealt to the table in view.
+    internal mutating func allCardsDealt() {
+        cardsToDeal = Set<Card>()
+    }
+    
     // Deal new cards by number of cards to deal.
     internal mutating func dealCards(quantity count: Int) {
         cardsToDeal = []

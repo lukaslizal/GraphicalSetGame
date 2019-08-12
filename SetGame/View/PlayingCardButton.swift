@@ -8,17 +8,25 @@
 
 import UIKit
 
+/**
+ Custom tap delegate protocol.
+ 
+ - author:
+ Lukas Lizal
+ */
 protocol CardTap: class {
     func tapped(playingCardButton: PlayingCardButton)
 }
 
+/**
+ Represents custom touch responsive UIView with nested playing card view.
+ 
+ - author:
+ Lukas Lizal
+ */
 class PlayingCardButton: UIView {
     var playingCardView = PlayingCardView()
     var blurView = UIView()
-//    lazy var newGameAnimator: UIViewPropertyAnimator = UIViewPropertyAnimator(duration: GraphicalSetViewController.Constants.animationNewGameDuration, curve: GraphicalSetViewController.Constants.animationNewGameTimingCurve)
-//    lazy var dealCardAnimator: UIViewPropertyAnimator = UIViewPropertyAnimator(duration: GraphicalSetViewController.Constants.animationDealCardDuration, curve: GraphicalSetViewController.Constants.animationDealCardTimingCurve)
-//    lazy var successAnimator: UIViewPropertyAnimator = UIViewPropertyAnimator(duration: GraphicalSetViewController.Constants.animationSuccessMatchDuration, curve: GraphicalSetViewController.Constants.animationSuccessMatchTimingCurve)
-//    lazy var rearrangeAnimator: UIViewPropertyAnimator = UIViewPropertyAnimator(duration: GraphicalSetViewController.Constants.animationRearrangeCardDuration, curve: GraphicalSetViewController.Constants.animationRearrangeCardTimingCurve)
     weak var delegate: CardTap?
 
     required init?(coder aDecoder: NSCoder) {
@@ -118,21 +126,27 @@ class PlayingCardButton: UIView {
         playingCardView.setNeedsLayout()
         playingCardView.layoutIfNeeded()
     }
-
+    /**
+     Visually highlights button as a selected card.
+     */
     func selectedHighlight() {
         self.layer.zPosition = 3
-//        self.setupCustomShadow()
         UIView.animate(withDuration: 0.07, delay: 0, options: [.curveEaseOut], animations: {
             self.transform = CGAffineTransform(scaleX: 0.94, y: 0.94)
         }, completion: nil)
         playingCardView.selectedHighlight()
     }
+    /**
+     Visually highlights button as a successfuly matched card.
+     */
     func successHighlight() {
         playingCardView.successHighlight()
     }
+    /**
+     Unhighlights button back to normal state.
+     */
     func unhighlight() {
         playingCardView.unhighlight()
-//        self.layer.shadowOpacity = 0
         self.layer.zPosition = 1
         UIView.animate(withDuration: 0.07, delay: 0, options: [.curveEaseOut], animations: {
             self.transform = CGAffineTransform.identity
