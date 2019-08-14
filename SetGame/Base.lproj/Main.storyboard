@@ -18,6 +18,40 @@
         </array>
     </customFonts>
     <scenes>
+        <!--Menu View Controller-->
+        <scene sceneID="2xH-hM-z9o">
+            <objects>
+                <viewController id="iH1-yq-4D8" customClass="MenuViewController" customModule="SetGame" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EdD-ya-MHL">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MATCH THE PACK" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2O-Am-dYr">
+                                <rect key="frame" x="85" y="60" width="150" height="90"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="90" id="mhM-iT-Zhf"/>
+                                    <constraint firstAttribute="width" constant="150" id="ryp-tj-esb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="CheGuevaraBarry-Brown" family="CheGuevara Barry" pointSize="33"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="s2O-Am-dYr" firstAttribute="centerX" secondItem="EdD-ya-MHL" secondAttribute="centerX" id="KkE-9b-caR"/>
+                            <constraint firstItem="s2O-Am-dYr" firstAttribute="top" secondItem="Faf-rF-3MU" secondAttribute="top" constant="40" id="y4l-q2-QhC"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Faf-rF-3MU"/>
+                    </view>
+                    <connections>
+                        <outlet property="gameTitle" destination="s2O-Am-dYr" id="B8N-Js-Qhy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8JB-Si-TIT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2518.125" y="142.6056338028169"/>
+        </scene>
         <!--Graphical Set View Controller-->
         <scene sceneID="Evy-hQ-IUo">
             <objects>

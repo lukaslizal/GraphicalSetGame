@@ -117,8 +117,10 @@ class AnimationFactory {
         for (index, cardModel) in matchedModel.enumerated() {
             let lastIndex = index == matchedModel.count - 1
             if let cardIndex = tableModel.firstIndex(of: cardModel) {
+                views[cardIndex].layer.zPosition = 1
                 UIViewPropertyAnimator.runningPropertyAnimator(withDuration: Constants.animationSuccessMatchDuration, delay: TimeInterval(delay), options: Constants.animationSuccessMatchOptions, animations: {
                     views[cardIndex].frame = targetView.convert(targetView.layer.bounds, to: views[cardIndex].superview)
+                    views[cardIndex].playingCardView.frame = targetView.layer.bounds
                     views[cardIndex].layer.cornerRadius = targetView.layer.cornerRadius
                     views[cardIndex].playingCardView.layer.cornerRadius = targetView.layer.cornerRadius
                 }, completion: lastIndex ? completion : nil)

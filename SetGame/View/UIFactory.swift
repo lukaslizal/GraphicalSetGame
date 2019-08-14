@@ -16,8 +16,7 @@ import UIKit
  */
 class UIFactory {
     internal static func setup(viewController: GraphicalSetViewController) {
-        viewController.view.backgroundColor = GraphicalSetViewController.Constants.mainThemeColor
-        UIFactory.setupUIGestrues(for: viewController)
+        viewController.view.backgroundColor = GraphicalSetViewController.Constants.mainThemeBackgroundColor
         viewController.newGameButton = UIFactory.setupMenuButton(button: viewController.newGameButton)
         viewController.scoreLabel = UIFactory.setupScoreButton(label: viewController.scoreLabel)
         viewController.dealCardsButton = UIFactory.setupDealCardsButton(button: viewController.dealCardsButton)
@@ -61,8 +60,10 @@ class UIFactory {
     internal static func setupUIGestrues(for viewController: GraphicalSetViewController) {
         let swipeGesture = UISwipeGestureRecognizer(target: viewController, action: #selector(viewController.swipeToDealCards))
         swipeGesture.direction = .down
+        swipeGesture.delegate = viewController
         viewController.view.addGestureRecognizer(swipeGesture)
         let rotateGesture = UIRotationGestureRecognizer(target: viewController, action: #selector(viewController.rotateToShuffle(_:)))
+        rotateGesture.delegate = viewController
         viewController.view.addGestureRecognizer(rotateGesture)
     }
     internal static func setupGrid(inside rect: CGRect) -> Grid {

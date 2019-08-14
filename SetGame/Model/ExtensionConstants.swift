@@ -17,7 +17,7 @@ import UIKit
  */
 extension GraphicalSetViewController {
     struct Constants {
-        static let mainThemeColor: UIColor = #colorLiteral(red: 0.3580985833, green: 0.3581614372, blue: 0.3580903332, alpha: 1)
+        static let mainThemeBackgroundColor: UIColor = #colorLiteral(red: 0.3580985833, green: 0.3581614372, blue: 0.3580903332, alpha: 1)
         static let scoreGradeFirstSuffix: String = " 🧠"
         static let scoreGradeSecondSuffix: String = " 🥇"
         static let scoreGradeThirdSuffix: String = " 🥈"
@@ -27,14 +27,22 @@ extension GraphicalSetViewController {
     }
 }
 
+extension MenuViewController {
+    struct Constants {
+        static let mainThemeBackgroundColor: UIColor = #colorLiteral(red: 0.590934428, green: 0.5910381495, blue: 0.5909208137, alpha: 1)
+        static let gameTitleTextColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    }
+}
+
+
 extension UIView {
     struct Constants {
         static let shakeViewAmplitude: CGFloat = 20
         static let shakeViewDuration: TimeInterval = 0.6
         static let shakeViewSpringDamping: CGFloat = 0.3
         static let shakeViewInitialSpringVelocity: CGFloat = 1
-        static let nodViewAmplitude: CGFloat = 11
-        static let nodViewDuration: TimeInterval = 0.6
+        static let nodViewAmplitude: CGFloat = 12
+        static let nodViewDuration: TimeInterval = 0.4
         static let nodViewSpringDamping: CGFloat = 1
         static let nodViewInitialSpringVelocity: CGFloat = 1
     }
@@ -88,7 +96,12 @@ extension PlayingCardButton {
         static let buttonColor: CGColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
         static let playingCardsSpacing: CGFloat = 4
         static let cornerRadiusToWidthRatio: CGFloat = 1 / 10
-        static let buttonPressedScale: CGFloat = 0.98
+        static let animationButtonScaleDown: CGFloat = 0.9
+        static let animationButtonScaleDownDuration: Double = 0.3
+        static let animationButtonDownDamping: CGFloat = 0.3
+        static let animationButtonScaleUp: CGFloat = 0.75
+        static let animationButtonScaleUpDuration: Double = 0.15
+        static let animationButtonUpDamping: CGFloat = 0.8
     }
 }
 

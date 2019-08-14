@@ -27,6 +27,7 @@
 		3DDF4BEC22EF1AEE00030AC6 /* BPreplayBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3DDF4BE822EF1AEE00030AC6 /* BPreplayBold.otf */; };
 		3DDF4BED22EF1AEE00030AC6 /* BPreplayItalics.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3DDF4BE922EF1AEE00030AC6 /* BPreplayItalics.otf */; };
 		3DE3A79322E1F1CB00717455 /* ExtensionConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE3A79222E1F1CB00717455 /* ExtensionConstants.swift */; };
+		3DE89BA423019B0E00587188 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE89BA323019B0E00587188 /* MenuViewController.swift */; };
 		3DECE75D22C4FB7F00DF4624 /* ShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DECE75C22C4FB7F00DF4624 /* ShapeView.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +54,7 @@
 		3DDF4BE822EF1AEE00030AC6 /* BPreplayBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BPreplayBold.otf; sourceTree = "<group>"; };
 		3DDF4BE922EF1AEE00030AC6 /* BPreplayItalics.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BPreplayItalics.otf; sourceTree = "<group>"; };
 		3DE3A79222E1F1CB00717455 /* ExtensionConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionConstants.swift; sourceTree = "<group>"; };
+		3DE89BA323019B0E00587188 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		3DECE75C22C4FB7F00DF4624 /* ShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -128,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				3DA5517A22C935CD00437A14 /* GraphicalSetViewController.swift */,
+				3DE89BA323019B0E00587188 /* MenuViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -223,6 +226,7 @@
 				3D8DEE8423016EBE00B33422 /* AnimationFactory.swift in Sources */,
 				3DECE75D22C4FB7F00DF4624 /* ShapeView.swift in Sources */,
 				3D0DDFB22294059800EF5FAE /* ExtensionMethods.swift in Sources */,
+				3DE89BA423019B0E00587188 /* MenuViewController.swift in Sources */,
 				3D1E715E22E61FC00081CAE0 /* PlayingCardButton.swift in Sources */,
 				3D8DEE8623016F1200B33422 /* UIFactory.swift in Sources */,
 				3DB1ECF522BCD92000B70EB9 /* PlayingCardView.swift in Sources */,

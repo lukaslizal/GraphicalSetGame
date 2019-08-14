@@ -58,7 +58,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
     // MARK: STORED PROPERTIES
 
     private var game: Game = Game()
-    private var playingCardButtons: [PlayingCardButton] = []
+    var playingCardButtons: [PlayingCardButton] = []
     private var targetGridFlagLayoutChanged = true
     private var previousCardsGridLayout: [Card: (Int, Int)] = [:]
     private var animationFlagNewGame = false
@@ -72,7 +72,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
         }
     }
     
-    // MARK: AUTOROTATION OVERRIDES
+    // MARK: AUTOROTATION
     
     /**
      Support disabling device autorotation when cards are animated on table. Autoratation would cause
@@ -107,12 +107,15 @@ class GraphicalSetViewController: UIViewController, CardTap {
     }
 
     // MARK: TOUCH CONTROLS
-
-    internal func tapped(playingCardButton: PlayingCardButton) {
+    
+    internal func tapped(playingCardButton: PlayingCardButton) -> Bool {
         // Select card in model. Card is a subview of tap gesture recognising UIView "button"
         if let buttonIndex = playingCardButtons.firstIndex(of: playingCardButton) {
             let selectedCard = game.cardsOnTable[buttonIndex]
-            game.select(selectedCard)
+            if !game.select(selectedCard){
+                updateUI()
+                return false
+            }
             if game.selectedIsMatch {
                 // Replace matched cards
                 animationFlagSuccessMatch = true
@@ -123,6 +126,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
             }
             updateUI()
         }
+        return true
     }
 
     @objc internal func swipeToDealCards(_ sender: UISwipeGestureRecognizer) {
@@ -152,6 +156,11 @@ class GraphicalSetViewController: UIViewController, CardTap {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         UIFactory.setup(viewController: self)
+        // FIXME: Concurrent UILongPressGestureRecogniser on PlayingCardButton views
+        // This is where I am trying to setup UIRotateGestureRecogniser and UISwipeGestureRecogniser. I thought use of isExclusiveTouch and isMultipleTouchEnabled could the key to solving my concurent UILongPressGestureRecognisers but doesn't seem to change anything in how touch works when i put it here.
+        UIFactory.setupUIGestrues(for: self)
+        self.view.isExclusiveTouch = true
+        self.view.isMultipleTouchEnabled = false
         newGame()
     }
 
@@ -354,5 +363,25 @@ class GraphicalSetViewController: UIViewController, CardTap {
                 // Eventough we want to updateUI() at this point to trigger deal new cards animation, we don't call it here. updateUI() gets called by viewDidLayoutSubviews() after updateScoreLabel() change triggers autolayout rearrangement. So Calling updateUI inhere would cause some troubles.
             })
         }
+    }
+}
+
+// MARK: TOUCH CONTROLS
+
+extension GraphicalSetViewController: UIGestureRecognizerDelegate {
+    // FIXME: Concurrent UILongPressGestureRecogniser on PlayingCardButton views
+    /**
+     Require fail of other gestures when swipe or rotation gestures are recognised. Prevents unwanted selecting of cards.
+     */
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer is UISwipeGestureRecognizer && gestureRecognizer.state == .ended
+        {
+            return true
+        }
+        if gestureRecognizer is UIRotationGestureRecognizer && gestureRecognizer.state == .began
+        {
+            return true
+        }
+        return false
     }
 }

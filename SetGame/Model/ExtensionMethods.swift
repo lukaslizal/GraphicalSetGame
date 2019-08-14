@@ -34,6 +34,16 @@ extension UIView {
             self.transform = CGAffineTransform.identity
         }, completion: nil)
     }
+    /**
+     Get views original frame without actual transform applied
+     */
+    var originalFrame: CGRect {
+        let currentTransform = transform
+        transform = .identity
+        let originalFrame = frame
+        transform = currentTransform
+        return originalFrame
+    }
 }
 
 extension UIColor {
@@ -137,5 +147,13 @@ extension UIApplication {
         DispatchQueue.main.asyncAfter(deadline: .now()+time) {
             UIApplication.shared.endIgnoringInteractionEvents()
         }
+    }
+}
+extension UILongPressGestureRecognizer {
+    /**
+     Adds ability to cancel gesture.
+     */
+    internal func cancel(){
+        self.state = .cancelled
     }
 }

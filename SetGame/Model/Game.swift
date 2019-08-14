@@ -96,13 +96,13 @@ struct Game {
         }
     }
 
-    // Select or deselect card depending on situation.
-    internal mutating func select(_ card: Card) {
+    // Select or deselect card depending on situation. When card is deselected returns false, when card is selected returns true.
+    internal mutating func select(_ card: Card) -> Bool{
         cardsToDeal = []
         // When less then three cards are slected and you tap already selected card. Deselect given card.
         if cardsSelected.count < 3, cardsSelected.contains(card) {
             cardsSelected.remove(card)
-            return
+            return false
         }
         // Else deselect all.
             else if cardsSelected.count == 3 {
@@ -112,5 +112,7 @@ struct Game {
         if cardsOnTable.contains(card) {
             cardsSelected.insert(card)
         }
+        
+        return true
     }
 }
