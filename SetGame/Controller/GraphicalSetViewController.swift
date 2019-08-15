@@ -159,8 +159,8 @@ class GraphicalSetViewController: UIViewController, CardTap {
         // FIXME: Concurrent UILongPressGestureRecogniser on PlayingCardButton views
         // This is where I am trying to setup UIRotateGestureRecogniser and UISwipeGestureRecogniser. I thought use of isExclusiveTouch and isMultipleTouchEnabled could the key to solving my concurent UILongPressGestureRecognisers but doesn't seem to change anything in how touch works when i put it here.
         UIFactory.setupUIGestrues(for: self)
-        self.view.isExclusiveTouch = true
-        self.view.isMultipleTouchEnabled = false
+//        self.view.isExclusiveTouch = true
+//        self.view.isMultipleTouchEnabled = false
         newGame()
     }
 

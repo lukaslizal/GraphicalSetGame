@@ -71,7 +71,7 @@ class PlayingCardButton: UIView {
         self.addGestureRecognizer(longPressGestureRecogniser)
         gesture = longPressGestureRecogniser
         self.isExclusiveTouch = true
-        self.isMultipleTouchEnabled = false
+//        self.isMultipleTouchEnabled = false
     }
 
     @objc func longPressHandler(sender: UILongPressGestureRecognizer) {

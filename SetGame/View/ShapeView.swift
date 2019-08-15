@@ -31,6 +31,7 @@ class ShapeView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.contentMode = .redraw
+        self.isExclusiveTouch = true
     }
 
     override func draw(_ rect: CGRect) {

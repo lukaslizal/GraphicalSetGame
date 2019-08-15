@@ -59,6 +59,8 @@ class PlayingCardView: UIView {
         layer.cornerRadius = cornerRadius
         layer.backgroundColor = Constants.cardColor
         clipsToBounds = true
+        self.isExclusiveTouch = true
+
         setupShapeViews(quantity: quantityType + 1, shapeType: shapeType, fillType: fillType, colorType: colorType)
     }
 
