@@ -27,10 +27,10 @@ import UIKit
 // animated sucess highlight crop circles x
 // animated unsuccessful highlight crop circles x
 // selected, success, wrong highlight x
+// hide statusbar ingame show in menu x
 // animate shadows on deal cards x
 // score label custom view animated rework x
 // add menu button x
-// add interuptable transition to menu x
 // add info/tutorial screen + first opening tutorial x
 // press animation scal factor relative to screen size not card size
 //
@@ -156,11 +156,8 @@ class GraphicalSetViewController: UIViewController, CardTap {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         UIFactory.setup(viewController: self)
-        // FIXME: Concurrent UILongPressGestureRecogniser on PlayingCardButton views
-        // This is where I am trying to setup UIRotateGestureRecogniser and UISwipeGestureRecogniser. I thought use of isExclusiveTouch and isMultipleTouchEnabled could the key to solving my concurent UILongPressGestureRecognisers but doesn't seem to change anything in how touch works when i put it here.
-        UIFactory.setupUIGestrues(for: self)
-//        self.view.isExclusiveTouch = true
-//        self.view.isMultipleTouchEnabled = false
+        UIFactory.setupUISwipeGesture(for: self)
+        UIFactory.setupUIRotateGesture(for: self)
         newGame()
     }
 
@@ -360,7 +357,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
                 self.animationFlagDealMoreCards = true
                 self.updateScoreLabel()
                 UIApplication.shared.endIgnoringInteractionEvents()
-                // Eventough we want to updateUI() at this point to trigger deal new cards animation, we don't call it here. updateUI() gets called by viewDidLayoutSubviews() after updateScoreLabel() change triggers autolayout rearrangement. So Calling updateUI inhere would cause some troubles.
+                // Eventough we want to updateUI() at this point to trigger deal new cards animation, we don't call it here. updateUI() gets called by viewDidLayoutSubviews() after updateScoreLabel() change triggers autolayout rearrangement. So Calling updateUI inhere would only cause some troubles.
             })
         }
     }
@@ -369,12 +366,8 @@ class GraphicalSetViewController: UIViewController, CardTap {
 // MARK: TOUCH CONTROLS
 
 extension GraphicalSetViewController: UIGestureRecognizerDelegate {
-    // FIXME: Concurrent UILongPressGestureRecogniser on PlayingCardButton views
-    /**
-     Require fail of other gestures when swipe or rotation gestures are recognised. Prevents unwanted selecting of cards.
-     */
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        if gestureRecognizer is UISwipeGestureRecognizer && gestureRecognizer.state == .ended
+        if gestureRecognizer is UISwipeGestureRecognizer && gestureRecognizer.state == .began
         {
             return true
         }

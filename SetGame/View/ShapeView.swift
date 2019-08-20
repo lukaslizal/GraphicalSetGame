@@ -15,14 +15,22 @@ import UIKit
  Lukas Lizal
  */
 class ShapeView: UIView {
+    
+    // MARK: STORED PROPERTIES
+    
     var shape: ShapeType = ShapeType(rawValue: 0)! { didSet { setNeedsDisplay() } }
     var shapeColor: UIColor = UIColor.ColorPalette.color(of: 0) { didSet { setNeedsDisplay() } }
     var fill: FillType = FillType(rawValue: 0)! { didSet { setNeedsDisplay() } }
+    
+    // MARK: COMPUTED PROPERTIES
+    
     lazy var drawingArea: CGRect = {
         let insets = layer.bounds.width * Constants.symbolInsetsRatio
         return self.frame.insetBy(dx: insets, dy: insets)
     }()
-
+    
+    // MARK: INITIALIZATION
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.contentMode = .redraw
@@ -33,7 +41,12 @@ class ShapeView: UIView {
         self.contentMode = .redraw
         self.isExclusiveTouch = true
     }
-
+    
+    // MARK: SHAPE CUSTOM DRAWING
+    
+    /**
+     Draw a shape depending on view's configuration (color, fill, shape).
+     */
     override func draw(_ rect: CGRect) {
         let path = UIBezierPath()
         path.lineWidth = frame.height * Constants.symbolStrokeWidthToSymbolHeight
@@ -130,6 +143,8 @@ class ShapeView: UIView {
         path.stroke()
     }
 }
+
+// MARK: DRAWING ENUMS
 
 enum FillType: Int {
     case stroke = 0

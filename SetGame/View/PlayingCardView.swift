@@ -15,6 +15,9 @@ import UIKit
  Lukas Lizal
  */
 class PlayingCardView: UIView {
+    
+    // MARK: STORED PROPERTIES
+    
     private var shapeViews: [ShapeView] = {
         var views = [ShapeView(), ShapeView(), ShapeView()]
         for index in 0..<3{
@@ -45,6 +48,8 @@ class PlayingCardView: UIView {
             setNeedsLayout()
         }
     }
+    
+    // MARK: INITIALIZATION
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -72,7 +77,9 @@ class PlayingCardView: UIView {
         self.fill = fillType
         self.autoresizingMask = [.flexibleWidth, .flexibleHeight] // we dont want autolayout
     }
-
+    
+    // MARK: OVERRIDDEN FUNCTIONS
+    
     internal override func isEqual(_ object: Any?) -> Bool {
         guard let other = object as? PlayingCardView else {
             return false
@@ -87,8 +94,11 @@ class PlayingCardView: UIView {
             layer.cornerRadius = layer.bounds.width * (parentButtonView.layer.cornerRadius / parentButtonView.layer.bounds.width)
         }
     }
+    
+    // MARK: SHAPE SUBVIEWS LAYOUT
+    
     /**
-     Updates size and poition of symbols in a card according to its current size.
+     Updates size and position of symbols in a card according to its current size.
      */
     private func updateSymbolViewFrames() {
         
@@ -103,27 +113,6 @@ class PlayingCardView: UIView {
             
             symbolOffsetAccumulation += symbolHeight
         }
-    }
-    /**
-     Visually highlights button as a selected card.
-     */
-    internal func selectedHighlight() {
-        self.backgroundColor = UIColor(cgColor: Constants.selectedHighlightColor)
-    }
-    /**
-     Visually highlights button as a successfuly matched card.
-     */
-    internal func successHighlight() {
-        self.backgroundColor = UIColor(cgColor: Constants.selectedSuccessColor)
-        for shapeView in self.shapeViews {
-            shapeView.shapeColor = UIColor.clear
-        }
-    }
-    /**
-     Unhighlights button back to normal state.
-     */
-    internal func unhighlight() {
-        self.backgroundColor = UIColor(cgColor: Constants.cardColor)
     }
 }
 

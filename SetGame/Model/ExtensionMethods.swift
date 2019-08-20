@@ -22,8 +22,8 @@ extension UIView {
     internal func shake() {
         self.transform = CGAffineTransform(translationX: Constants.shakeViewAmplitude, y: 0)
         UIView.animate(withDuration: Constants.shakeViewDuration, delay: 0, usingSpringWithDamping: Constants.shakeViewSpringDamping, initialSpringVelocity: Constants.shakeViewInitialSpringVelocity, options: [.curveEaseInOut, .allowUserInteraction], animations: {
-            self.transform = CGAffineTransform.identity
-        }, completion: nil)
+                self.transform = CGAffineTransform.identity
+            }, completion: nil)
     }
     /**
      Nods UIView in an approving way (^_^)
@@ -31,8 +31,8 @@ extension UIView {
     internal func nod() {
         self.transform = CGAffineTransform(translationX: 0, y: -Constants.nodViewAmplitude)
         UIView.animate(withDuration: Constants.nodViewDuration, delay: 0, usingSpringWithDamping: Constants.nodViewSpringDamping, initialSpringVelocity: Constants.nodViewInitialSpringVelocity, options: [.curveEaseInOut, .allowUserInteraction], animations: {
-            self.transform = CGAffineTransform.identity
-        }, completion: nil)
+                self.transform = CGAffineTransform.identity
+            }, completion: nil)
     }
     /**
      Get views original frame without actual transform applied
@@ -54,7 +54,7 @@ extension UIColor {
         internal static var firstColor: UIColor { return #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1) }
         internal static var secondColor: UIColor { return #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1) }
         internal static var thirdColor: UIColor { return #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1) }
-        
+
         internal static func color(of type: Int) -> UIColor {
             switch(type) {
             case 0:
@@ -85,30 +85,30 @@ extension Collection where Element == Card {
     /**
      Finding (non) matching card features in a collection of Cards.
      */
-    internal func isSet()->Bool{
+    internal func isSet() -> Bool {
         //        Cheating:
         //        return true
         return !anyIncompleteMatches() && self.count == 3
     }
-    
+
     /**
      Incomplete feature matches (meaning two cards with matching feature but third one without this feature).
     */
-    internal func anyIncompleteMatches() -> Bool{
-        var pairFeaturesComparison = Dictionary<Set<Card>,(Bool,Bool,Bool,Bool)>()
-        var featureMatchesCounter = (0,0,0,0)
-        for cardOne in self{
+    internal func anyIncompleteMatches() -> Bool {
+        var pairFeaturesComparison = Dictionary<Set<Card>, (Bool, Bool, Bool, Bool)>()
+        var featureMatchesCounter = (0, 0, 0, 0)
+        for cardOne in self {
             // Link card with each other except itself, then compare features of these pairs.
-            for cardTwo in self{
+            for cardTwo in self {
                 if cardTwo != cardOne {
                     let pair = Set<Card>(arrayLiteral: cardOne, cardTwo)
-                    let featureComparison = (cardOne.shape == cardTwo.shape,cardOne.color == cardTwo.color,cardOne.pattern == cardTwo.pattern,cardOne.quantity == cardTwo.quantity)
+                    let featureComparison = (cardOne.shape == cardTwo.shape, cardOne.color == cardTwo.color, cardOne.pattern == cardTwo.pattern, cardOne.quantity == cardTwo.quantity)
                     pairFeaturesComparison[pair] = featureComparison
                 }
             }
         }
         // Compares features and update feature matching counter accordingly
-        for (_, featuresMatching) in pairFeaturesComparison{
+        for (_, featuresMatching) in pairFeaturesComparison {
             featureMatchesCounter.0 += featuresMatching.0 ? 1 : 0
             featureMatchesCounter.1 += featuresMatching.1 ? 1 : 0
             featureMatchesCounter.2 += featuresMatching.2 ? 1 : 0
@@ -122,7 +122,7 @@ extension Dictionary {
     /**
      Merges two dictionaries.
      */
-    internal mutating func merge(dict: [Key: Value]){
+    internal mutating func merge(dict: [Key: Value]) {
         for (k, v) in dict {
             updateValue(v, forKey: k)
         }
@@ -132,7 +132,7 @@ extension UIButton {
     /**
      Makes UIButton disabled state change opacity.
      */
-    open override var isEnabled: Bool{
+    open override var isEnabled: Bool {
         didSet {
             UIFactory.setupDealCardsButton(button: self)
         }
@@ -142,9 +142,9 @@ extension UIApplication {
     /**
      Ignore any touch input across the wole app for specified time period.
      */
-    internal static func ignoreInteractionEvents(for time: TimeInterval){
+    internal static func ignoreInteractionEvents(for time: TimeInterval) {
         UIApplication.shared.beginIgnoringInteractionEvents()
-        DispatchQueue.main.asyncAfter(deadline: .now()+time) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + time) {
             UIApplication.shared.endIgnoringInteractionEvents()
         }
     }
@@ -153,7 +153,7 @@ extension UILongPressGestureRecognizer {
     /**
      Adds ability to cancel gesture.
      */
-    internal func cancel(){
+    internal func cancel() {
         self.state = .cancelled
     }
 }

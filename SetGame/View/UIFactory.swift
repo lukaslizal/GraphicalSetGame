@@ -57,14 +57,23 @@ class UIFactory {
         button.backgroundColor = button.isEnabled ? Constants.menuButtonEnabledColor : Constants.menuButtonDisabledColor
         return button
     }
-    internal static func setupUIGestrues(for viewController: GraphicalSetViewController) {
+    internal static func setupUISwipeGesture(for viewController: GraphicalSetViewController) {
         let swipeGesture = UISwipeGestureRecognizer(target: viewController, action: #selector(viewController.swipeToDealCards))
         swipeGesture.direction = .down
         swipeGesture.delegate = viewController
         viewController.view.addGestureRecognizer(swipeGesture)
+    }
+    internal static func setupUIRotateGesture(for viewController: GraphicalSetViewController) {
         let rotateGesture = UIRotationGestureRecognizer(target: viewController, action: #selector(viewController.rotateToShuffle(_:)))
         rotateGesture.delegate = viewController
         viewController.view.addGestureRecognizer(rotateGesture)
+    }
+    internal static func setupLongPressGesture(for view: PlayingCardButton) {
+        let longPressGestureRecogniser = UILongPressGestureRecognizer(target: view, action: #selector(view.longPressHandler))
+        longPressGestureRecogniser.minimumPressDuration = 0
+        longPressGestureRecogniser.delegate = view
+        view.addGestureRecognizer(longPressGestureRecogniser)
+        view.isExclusiveTouch = true
     }
     internal static func setupGrid(inside rect: CGRect) -> Grid {
         return Grid(layout: .aspectRatio(PlayingCardView.Constants.cardFrameAspectRatio), frame: rect)
@@ -91,7 +100,7 @@ class UIFactory {
     /**
      Returns only the cards that need any rearrangment on the table.
      */
-    internal static func filterCardsToRearrange(cardModel: [Card], with previousCardsGridLayout: [Card:(Int,Int)], layoutChangedFlag: Bool, grid: Grid, dealCards: Set<Card>, matchedCards: Set<Card>) -> [Card] {
+    internal static func filterCardsToRearrange(cardModel: [Card], with previousCardsGridLayout: [Card: (Int, Int)], layoutChangedFlag: Bool, grid: Grid, dealCards: Set<Card>, matchedCards: Set<Card>) -> [Card] {
         return cardModel.filter() {
             var cardsPreviousGridPositionMatches = false
             // Determine whether cards position in a grid changed since last ui update - subject to optimalization - get rid of previous card coordinates and update grid after this?
@@ -102,4 +111,17 @@ class UIFactory {
             return !dealCards.contains($0) && !matchedCards.contains($0) && (!cardsPreviousGridPositionMatches || layoutChangedFlag)
         }
     }
+
+    /**
+     Overlays view with success Color
+     */
+    internal static func successColorOverlay(view: UIView) {
+        let succesOverlay = UIView(frame: view.bounds.insetBy(dx: -100, dy: -100))
+        succesOverlay.isOpaque = false
+        succesOverlay.layer.zPosition = 1000
+        succesOverlay.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+        succesOverlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(succesOverlay)
+    }
+
 }

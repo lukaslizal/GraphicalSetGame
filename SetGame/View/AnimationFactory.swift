@@ -118,7 +118,7 @@ class AnimationFactory {
             let lastIndex = index == matchedModel.count - 1
             if let cardIndex = tableModel.firstIndex(of: cardModel) {
                 views[cardIndex].layer.zPosition = 1
-                UIViewPropertyAnimator.runningPropertyAnimator(withDuration: Constants.animationSuccessMatchDuration, delay: TimeInterval(delay), options: Constants.animationSuccessMatchOptions, animations: {
+                UIViewPropertyAnimator.runningPropertyAnimator(withDuration: Constants.animationSuccessMatchDuration, delay: Constants.animationSuccessMatchDelay + TimeInterval(delay), options: Constants.animationSuccessMatchOptions, animations: {
                     views[cardIndex].frame = targetView.convert(targetView.layer.bounds, to: views[cardIndex].superview)
                     views[cardIndex].playingCardView.frame = targetView.layer.bounds
                     views[cardIndex].layer.cornerRadius = targetView.layer.cornerRadius
@@ -127,5 +127,41 @@ class AnimationFactory {
                 delay += CGFloat(Constants.animationSuccessMatchDuration / 2.0) / CGFloat(matchedModel.count)
             }
         }
+    }
+    /**
+     Finger released from a view animation.
+     */
+    internal static func animationReleaseView(view: UIView) {
+        UIViewPropertyAnimator(duration: Constants.animationButtonScaleUpDuration, dampingRatio: Constants.animationButtonUpDamping) {
+            view.transform = CGAffineTransform.identity
+            }.startAnimation()
+    }
+    /**
+     Finger pressed down view animation.
+     */
+    internal static func animationPressView(view: UIView) {
+        UIViewPropertyAnimator(duration: Constants.animationButtonScaleDownDuration, dampingRatio: Constants.animationButtonDownDamping) {
+        view.transform = CGAffineTransform(scaleX: Constants.animationButtonScaleDown, y: Constants.animationButtonScaleDown)
+        }.startAnimation()
+    }
+    /**
+     Finger pressed down view animation.
+     */
+    internal static func animationTouchCircle(view: UIView, to color: UIColor, touchPoint: CGPoint) {
+        let backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        backgroundView.center = touchPoint
+        backgroundView.layer.cornerRadius = 0
+        backgroundView.backgroundColor = color
+        UIViewPropertyAnimator.runningPropertyAnimator(withDuration: Constants.animationTouchCircleDuration, delay: 0, options: Constants.animationTouchCircleOptions, animations: {
+            backgroundView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: view.frame.height*3, height: view.frame.height*3))
+            backgroundView.center = touchPoint
+            backgroundView.layer.cornerRadius = view.frame.height*3/2
+        })
+        { (position) in
+            view.backgroundColor = backgroundView.backgroundColor
+            backgroundView.removeFromSuperview()
+        }
+        
+        view.addSubview(backgroundView)
     }
 }

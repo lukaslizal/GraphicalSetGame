@@ -25,16 +25,15 @@ protocol CardTap: class {
  Lukas Lizal
  */
 class PlayingCardButton: UIView {
-    
+
     // MARK: STORED PROPERTIES
-    
+
     var playingCardView = PlayingCardView()
     var selected: Bool = false
-    var gesture: UILongPressGestureRecognizer = UILongPressGestureRecognizer()
     weak var delegate: CardTap?
-    
+
     // MARK: INITIALIZATION
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -49,7 +48,7 @@ class PlayingCardButton: UIView {
         layer.backgroundColor = Constants.buttonColor
         clipsToBounds = true
         setupPlayingCardView(cornerRadius: cornerRadius, shapeType: shapeType, quantityType: quantityType, fillType: fillType, colorType: colorType)
-        setupGestures()
+        UIFactory.setupLongPressGesture(for: self)
     }
 
     private func setupPlayingCardView(cornerRadius: CGFloat, shapeType: Int, quantityType: Int, fillType: Int, colorType: Int) {
@@ -58,34 +57,18 @@ class PlayingCardButton: UIView {
         playingCardView = PlayingCardView(frame: rect, cornerRadius: cardViewCornerRadius, shapeType: shapeType, quantityType: quantityType, fillType: fillType, colorType: colorType)
         addSubview(playingCardView)
     }
-    
+
     // MARK: TOUCH CONTROLS
-    
-    // FIXME: Concurrent UILongPressGestureRecogniser on PlayingCardButton views.
-    // This is where I am trying to setup this views UILongPressGestureRecogniser. I thought use of isExclusiveTouch and isMultipleTouchEnabled could help with my problem but doesn't seem to change anything in how touch works here.
-    
-    func setupGestures() {
-        let longPressGestureRecogniser = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressHandler))
-        longPressGestureRecogniser.minimumPressDuration = 0
-        longPressGestureRecogniser.delegate = self
-        self.addGestureRecognizer(longPressGestureRecogniser)
-        gesture = longPressGestureRecogniser
-        self.isExclusiveTouch = true
-//        self.isMultipleTouchEnabled = false
-    }
 
     @objc func longPressHandler(sender: UILongPressGestureRecognizer) {
+        
         switch sender.state {
         case .began:
             if !selected {
-                UIViewPropertyAnimator(duration: Constants.animationButtonScaleDownDuration, dampingRatio: Constants.animationButtonDownDamping) {
-                    self.playingCardView.transform = CGAffineTransform(scaleX: Constants.animationButtonScaleDown, y: Constants.animationButtonScaleDown)
-                }.startAnimation()
+                AnimationFactory.animationPressView(view: self)
             }
             else {
-                UIViewPropertyAnimator(duration: Constants.animationButtonScaleUpDuration, dampingRatio: Constants.animationButtonUpDamping) {
-                    self.playingCardView.transform = CGAffineTransform.identity
-                }.startAnimation()
+                AnimationFactory.animationReleaseView(view: self)
             }
         case .changed:
             let inside = self.point(inside: sender.location(in: self), with: nil)
@@ -94,50 +77,68 @@ class PlayingCardButton: UIView {
             }
         case .cancelled:
             if !selected {
-                UIViewPropertyAnimator(duration: Constants.animationButtonScaleUpDuration, dampingRatio: Constants.animationButtonUpDamping) {
-                    self.playingCardView.transform = CGAffineTransform.identity
-                    }.startAnimation()
+                AnimationFactory.animationReleaseView(view: self)
+            }
+            else {
+                AnimationFactory.animationPressView(view: self)
             }
         case .ended:
             let inside = self.point(inside: sender.location(in: self), with: nil)
             if inside {
                 if let tapDelegate = self.delegate {
                     selected = tapDelegate.tapped(playingCardButton: self)
+                    if !selected {
+                        AnimationFactory.animationTouchCircle(view: playingCardView, to: UIColor(cgColor: PlayingCardView.Constants.cardColor), touchPoint: sender.location(in: self))
+                    }
+                    else {
+                        AnimationFactory.animationTouchCircle(view: playingCardView, to: UIColor(cgColor: PlayingCardView.Constants.selectedHighlightColor), touchPoint: sender.location(in: self))
+                    }
                 }
             }
-            else if !selected {
-                UIViewPropertyAnimator(duration: Constants.animationButtonScaleUpDuration, dampingRatio: Constants.animationButtonUpDamping) {
-                    self.playingCardView.transform = CGAffineTransform.identity
-                }.startAnimation()
+            else {
+                if !selected {
+                    AnimationFactory.animationReleaseView(view: self)
+                }
+                else {
+                    AnimationFactory.animationPressView(view: self)
+                }
             }
+
         default:
             return
         }
     }
-    
+
+    // MARK: OVERRIDDEN FUNCTIONS
+
+    internal override func isEqual(_ object: Any?) -> Bool {
+        guard let otherButton = object as? PlayingCardButton else {
+            return false
+        }
+        return playingCardView == otherButton.playingCardView
+    }
+
     // MARK: CHANGING APPEARANCE
-    
+
     /**
      Visually highlights button as a selected card.
      */
-    func selectedHighlight() {
-        playingCardView.selectedHighlight()
+    internal func selectedHighlight() {
+//        playingCardView.backgroundColor = UIColor(cgColor: PlayingCardView.Constants.selectedHighlightColor)
         selected = true
     }
     /**
      Visually highlights button as a successfuly matched card.
      */
-    func successHighlight() {
-        UIViewPropertyAnimator(duration: Constants.animationButtonScaleUpDuration, dampingRatio: Constants.animationButtonUpDamping) {
-            self.playingCardView.transform = CGAffineTransform.identity
-            }.startAnimation()
-        playingCardView.successHighlight()
+    internal func successHighlight() {
+        AnimationFactory.animationReleaseView(view: self)
+        UIFactory.successColorOverlay(view: playingCardView)
     }
     /**
      Unhighlights buttons color back to normal state.
      */
-    func unhighlight() {
-        playingCardView.unhighlight()
+    internal func unhighlight() {
+//        playingCardView.backgroundColor = UIColor(cgColor: PlayingCardView.Constants.cardColor)
         selected = false
     }
 }
@@ -145,39 +146,10 @@ class PlayingCardButton: UIView {
 // MARK: TOUCH CONTROLS
 
 extension PlayingCardButton: UIGestureRecognizerDelegate {
-    
-    // FIXME: Concurrent UILongPressGestureRecogniser on PlayingCardButton views
-    
     /**
      Allow resognising other gestures (swipe to deal, rotate to shuffle) while pressing card buttons.
      */
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    internal func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
-    }
-    
-    // FIXME: Concurrent UILongPressGestureRecogniser on PlayingCardButton views
-    // Function below could potentionally solve my problem? By requiring other UILongPressGestureRecognizer to fail so there would be only one - the first UIView that was touched that would be recognised. But I couldn't get this to work since this function doesn't seem to check against the same-type gesture recognisers in the scene.
-    
-//    /**
-//     Require fail of other UILongPressGestureRecognizer.
-//     */
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//
-//        if otherGestureRecognizer is UILongPressGestureRecognizer
-//        {
-//            return true
-//            // There seems to be zero UILongPressGestureRecognizer being run through this function.
-//        }
-//        return false
-//        // but it runs through other UIGestureRecognisers - Swipe, Rotate
-//    }
-}
-
-extension PlayingCardButton {
-    override func isEqual(_ object: Any?) -> Bool {
-        guard let otherButton = object as? PlayingCardButton else {
-            return false
-        }
-        return playingCardView == otherButton.playingCardView
     }
 }

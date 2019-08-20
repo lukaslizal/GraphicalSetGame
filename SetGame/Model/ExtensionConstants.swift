@@ -75,7 +75,16 @@ extension AnimationFactory {
         static let animationNewGameDuration: TimeInterval = 0.8
         static let animationNewGameOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction, .allowAnimatedContent]
         static let animationSuccessMatchDuration: TimeInterval = 0.3
+        static let animationSuccessMatchDelay: TimeInterval = 0.0
         static let animationSuccessMatchOptions: UIView.AnimationOptions = [.curveEaseIn, .allowUserInteraction, .allowAnimatedContent]
+        static let animationButtonScaleDown: CGFloat = 0.9
+        static let animationButtonScaleDownDuration: Double = 0.3
+        static let animationButtonDownDamping: CGFloat = 0.3
+        static let animationButtonScaleUp: CGFloat = 0.75
+        static let animationButtonScaleUpDuration: Double = 0.15
+        static let animationButtonUpDamping: CGFloat = 0.8
+        static let animationTouchCircleDuration: TimeInterval = 0.5
+        static let animationTouchCircleOptions: UIView.AnimationOptions = [.curveEaseOut]
     }
 }
 
@@ -96,12 +105,6 @@ extension PlayingCardButton {
         static let buttonColor: CGColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
         static let playingCardsSpacing: CGFloat = 4
         static let cornerRadiusToWidthRatio: CGFloat = 1 / 10
-        static let animationButtonScaleDown: CGFloat = 0.9
-        static let animationButtonScaleDownDuration: Double = 0.3
-        static let animationButtonDownDamping: CGFloat = 0.3
-        static let animationButtonScaleUp: CGFloat = 0.75
-        static let animationButtonScaleUpDuration: Double = 0.15
-        static let animationButtonUpDamping: CGFloat = 0.8
     }
 }
 
