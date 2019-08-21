@@ -22,18 +22,20 @@ import UIKit
 // interuption succes animation no deal cards bug v
 // install bp replay font v
 // animation interupted by device rotation fix v
-// press down animation, press up animation x
-// tap circle animation x
-// animated sucess highlight crop circles x
-// animated unsuccessful highlight crop circles x
-// selected, success, wrong highlight x
-// hide statusbar ingame show in menu x
-// animate shadows on deal cards x
+// press down animation, press up animation v
+// tap circle animation v
+// animated sucess highlight crop circles v
+// animated unsuccessful highlight crop circles v
+// selected, success, wrong highlight v
+// hide statusbar ingame show in menu v
+// visible shadows on selection x
 // score label custom view animated rework x
 // add menu button x
 // add info/tutorial screen + first opening tutorial x
 // press animation scal factor relative to screen size not card size
 //
+// deselect transfrom.identity doesnt scale to size of other cards x
+// autolayout on (furious) device rotation breakdown x
 // make card draw subrects as vertical stackview v
 // device rotation sometimes stuck in disabled flag mode bug v
 // shuffle not working bug v
@@ -109,20 +111,35 @@ class GraphicalSetViewController: UIViewController, CardTap {
     // MARK: TOUCH CONTROLS
     
     internal func tapped(playingCardButton: PlayingCardButton) -> Bool {
-        // Select card in model. Card is a subview of tap gesture recognising UIView "button"
+        // Select card button in model.
         if let buttonIndex = playingCardButtons.firstIndex(of: playingCardButton) {
             let selectedCard = game.cardsOnTable[buttonIndex]
+            // Card gets deselected
             if !game.select(selectedCard){
                 updateUI()
                 return false
             }
+            // Successful attempt to match 3 cards.
             if game.selectedIsMatch {
                 // Replace matched cards
                 animationFlagSuccessMatch = true
             }
+            // Unsuccessful attempt to match 3 cards
             else if game.cardsSelected.count == 3 {
                 // Indicate invalid set selection.
                 view.shake()
+                
+                updateUI()
+                // Remove selected cards background color and Highlight selected cards with unsuccessful background color.
+                for button in playingCardButtons{
+                    if button.selected {
+                        button.unhighlight()
+                        button.unsuccessfulHighlight()
+                    }
+                }
+                playingCardButton.unhighlight()
+                playingCardButton.unsuccessfulHighlight()
+                return false
             }
             updateUI()
         }
@@ -179,6 +196,10 @@ class GraphicalSetViewController: UIViewController, CardTap {
             // Setup deal button.
             UIFactory.setupDealCardsButton(button: self.dealCardsButton)
         }
+    }
+    
+    internal override var prefersStatusBarHidden: Bool {
+        return true
     }
 
     // MARK: CONTROLLER
@@ -265,9 +286,9 @@ class GraphicalSetViewController: UIViewController, CardTap {
 
     private func highlightSelection() {
         for index in 0..<game.cardsOnTable.count {
-            playingCardButtons[index].unhighlight()
+//            playingCardButtons[index].unhighlight()
             if game.cardsSelected.contains(game.cardsOnTable[index]) {
-                playingCardButtons[index].selectedHighlight()
+//                playingCardButtons[index].selectedHighlight()
             }
         }
     }

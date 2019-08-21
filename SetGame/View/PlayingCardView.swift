@@ -43,10 +43,15 @@ class PlayingCardView: UIView {
     internal var color: Int = 0 {
         didSet {
             for view in shapeViews {
-                view.shapeColor = UIColor.ColorPalette.color(of: color)
+                view.shapeColor = ShapeView.Constants.shapeColors[color] // UIColor.ColorPalette.color(of: color)
             }
             setNeedsLayout()
         }
+    }
+    
+    // MARK: COMPUTED PROPERTIES
+    internal var selectedColor: UIColor{
+        return Constants.selectedHighlightColor[color]
     }
     
     // MARK: INITIALIZATION
@@ -62,7 +67,7 @@ class PlayingCardView: UIView {
     init(frame: CGRect, cornerRadius: CGFloat, shapeType: Int, quantityType: Int, fillType: Int, colorType: Int) {
         super.init(frame: frame)
         layer.cornerRadius = cornerRadius
-        layer.backgroundColor = Constants.cardColor
+        layer.backgroundColor = Constants.cardColor.cgColor
         clipsToBounds = true
         self.isExclusiveTouch = true
 

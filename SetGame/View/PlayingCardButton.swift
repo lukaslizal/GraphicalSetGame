@@ -28,9 +28,10 @@ class PlayingCardButton: UIView {
 
     // MARK: STORED PROPERTIES
 
-    var playingCardView = PlayingCardView()
-    var selected: Bool = false
-    weak var delegate: CardTap?
+    internal var playingCardView = PlayingCardView()
+    internal var selected: Bool = false
+    internal weak var delegate: CardTap?
+    private var animator: UIViewPropertyAnimator?
 
     // MARK: INITIALIZATION
 
@@ -61,14 +62,21 @@ class PlayingCardButton: UIView {
     // MARK: TOUCH CONTROLS
 
     @objc func longPressHandler(sender: UILongPressGestureRecognizer) {
-        
+
         switch sender.state {
         case .began:
+            // Remove unsuccessful match color on tap
+            if let animator = animator{
+                animator.pauseAnimation()
+                animator.fractionComplete = 1
+                animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
+                self.animator = nil
+            }
             if !selected {
-                AnimationFactory.animationPressView(view: self)
+                AnimationFactory.animationPressView(view: playingCardView)
             }
             else {
-                AnimationFactory.animationReleaseView(view: self)
+                AnimationFactory.animationReleaseView(view: playingCardView)
             }
         case .changed:
             let inside = self.point(inside: sender.location(in: self), with: nil)
@@ -77,7 +85,7 @@ class PlayingCardButton: UIView {
             }
         case .cancelled:
             if !selected {
-                AnimationFactory.animationReleaseView(view: self)
+                AnimationFactory.animationReleaseView(view: playingCardView)
             }
             else {
                 AnimationFactory.animationPressView(view: self)
@@ -87,17 +95,18 @@ class PlayingCardButton: UIView {
             if inside {
                 if let tapDelegate = self.delegate {
                     selected = tapDelegate.tapped(playingCardButton: self)
+                    // Highlight or Unhighlight selection with background color animation
                     if !selected {
-                        AnimationFactory.animationTouchCircle(view: playingCardView, to: UIColor(cgColor: PlayingCardView.Constants.cardColor), touchPoint: sender.location(in: self))
+                        AnimationFactory.animationTouchCircle(view: playingCardView, to: PlayingCardView.Constants.cardColor, touchPoint: sender.location(in: self))
                     }
                     else {
-                        AnimationFactory.animationTouchCircle(view: playingCardView, to: UIColor(cgColor: PlayingCardView.Constants.selectedHighlightColor), touchPoint: sender.location(in: self))
+                        AnimationFactory.animationTouchCircle(view: playingCardView, to: playingCardView.selectedColor, touchPoint: sender.location(in: self))
                     }
                 }
             }
             else {
                 if !selected {
-                    AnimationFactory.animationReleaseView(view: self)
+                    AnimationFactory.animationReleaseView(view: playingCardView)
                 }
                 else {
                     AnimationFactory.animationPressView(view: self)
@@ -119,27 +128,36 @@ class PlayingCardButton: UIView {
     }
 
     // MARK: CHANGING APPEARANCE
-
-    /**
-     Visually highlights button as a selected card.
-     */
-    internal func selectedHighlight() {
-//        playingCardView.backgroundColor = UIColor(cgColor: PlayingCardView.Constants.selectedHighlightColor)
-        selected = true
-    }
+    
+//    /**
+//     Visually highlights button as a successfuly matched card.
+//     */
+//    internal func selectedHighlight() {
+//        UIFactory.successColorOverlay(view: playingCardView, with: playingCardView.selectedColor)
+//    }
     /**
      Visually highlights button as a successfuly matched card.
      */
     internal func successHighlight() {
-        AnimationFactory.animationReleaseView(view: self)
-        UIFactory.successColorOverlay(view: playingCardView)
+        AnimationFactory.animationReleaseView(view: playingCardView)
+        UIFactory.successColorOverlay(view: playingCardView, with: playingCardView.selectedColor)
     }
+    
     /**
-     Unhighlights buttons color back to normal state.
+     Visually unhighlights button.
      */
     internal func unhighlight() {
-//        playingCardView.backgroundColor = UIColor(cgColor: PlayingCardView.Constants.cardColor)
+        AnimationFactory.animationReleaseView(view: playingCardView)
+        AnimationFactory.animationTouchCircle(view: playingCardView, to: PlayingCardView.Constants.cardColor, touchPoint: playingCardView.center)
         selected = false
+    }
+    
+    /**
+     Visually highlights unsucceessful matched card using cards background color.
+     */
+    internal func unsuccessfulHighlight() {
+        let animator = AnimationFactory.animationUnsuccessfulMatchColor(view: playingCardView, to: PlayingCardView.Constants.unsuccessfulHighlightColor)
+        self.animator = animator
     }
 }
 
@@ -153,3 +171,4 @@ extension PlayingCardButton: UIGestureRecognizerDelegate {
         return true
     }
 }
+

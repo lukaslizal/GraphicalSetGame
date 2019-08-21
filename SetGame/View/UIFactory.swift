@@ -115,11 +115,11 @@ class UIFactory {
     /**
      Overlays view with success Color
      */
-    internal static func successColorOverlay(view: UIView) {
+    internal static func successColorOverlay(view: UIView, with color: UIColor) {
         let succesOverlay = UIView(frame: view.bounds.insetBy(dx: -100, dy: -100))
         succesOverlay.isOpaque = false
         succesOverlay.layer.zPosition = 1000
-        succesOverlay.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+        succesOverlay.backgroundColor = color
         succesOverlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(succesOverlay)
     }

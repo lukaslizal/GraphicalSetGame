@@ -19,7 +19,7 @@ class ShapeView: UIView {
     // MARK: STORED PROPERTIES
     
     var shape: ShapeType = ShapeType(rawValue: 0)! { didSet { setNeedsDisplay() } }
-    var shapeColor: UIColor = UIColor.ColorPalette.color(of: 0) { didSet { setNeedsDisplay() } }
+    var shapeColor: UIColor = Constants.shapeColors[0] { didSet { setNeedsDisplay() } }
     var fill: FillType = FillType(rawValue: 0)! { didSet { setNeedsDisplay() } }
     
     // MARK: COMPUTED PROPERTIES

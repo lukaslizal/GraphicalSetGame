@@ -77,14 +77,16 @@ extension AnimationFactory {
         static let animationSuccessMatchDuration: TimeInterval = 0.3
         static let animationSuccessMatchDelay: TimeInterval = 0.0
         static let animationSuccessMatchOptions: UIView.AnimationOptions = [.curveEaseIn, .allowUserInteraction, .allowAnimatedContent]
-        static let animationButtonScaleDown: CGFloat = 0.9
+        static let animationButtonScaleDown: CGFloat = 0.8
         static let animationButtonScaleDownDuration: Double = 0.3
         static let animationButtonDownDamping: CGFloat = 0.3
         static let animationButtonScaleUp: CGFloat = 0.75
         static let animationButtonScaleUpDuration: Double = 0.15
         static let animationButtonUpDamping: CGFloat = 0.8
-        static let animationTouchCircleDuration: TimeInterval = 0.5
-        static let animationTouchCircleOptions: UIView.AnimationOptions = [.curveEaseOut]
+        static let animationTouchCircleDuration: TimeInterval = 1.5
+        static let animationTouchCircleOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction, .allowAnimatedContent]
+        static let animationUnsuccesfullMatchColorDuration: TimeInterval = 2
+        static let animationUnsuccesfullMatchColorOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction, .allowAnimatedContent]
     }
 }
 
@@ -93,9 +95,10 @@ extension PlayingCardView {
         static let symbolAspectRatio: CGFloat = 12 / 5
         static let cardFrameAspectRatio: CGFloat = 5 / 7
         static let symbolInsetsRatio: CGFloat = 1 / 20
-        static let cardColor: CGColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        static let selectedHighlightColor: CGColor = #colorLiteral(red: 0.7085952207, green: 0.9032234228, blue: 0.9764705896, alpha: 1)
-        static let selectedSuccessColor: CGColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
+        static let cardColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        static let selectedHighlightColor: [UIColor] =  [#colorLiteral(red: 0.8684809835, green: 1, blue: 0.7802248099, alpha: 1), #colorLiteral(red: 0.9276167073, green: 0.8917697381, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.8072766262, blue: 0.8798607505, alpha: 1)] //[#colorLiteral(red: 0.9381606324, green: 1, blue: 0.8966631661, alpha: 1), #colorLiteral(red: 0.9276167073, green: 0.8917697381, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.9525627755, blue: 0.8814069386, alpha: 1)] //[#colorLiteral(red: 0.7952026993, green: 0.8904109589, blue: 0.7313129523, alpha: 1), #colorLiteral(red: 0.8726476846, green: 0.8095779573, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.8483725166, blue: 0.9054789686, alpha: 1)] // [#colorLiteral(red: 0.884876195, green: 1, blue: 0.8076220702, alpha: 1), #colorLiteral(red: 0.8818091884, green: 0.8232765874, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.8072766262, blue: 0.8798607505, alpha: 1)]
+        static let unsuccessfulHighlightColor: UIColor = #colorLiteral(red: 1, green: 0.6670580554, blue: 0.6670580554, alpha: 1)
+        static let selectedSuccessColor: UIColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
         static let cornerRadiusToWidthRatio: CGFloat = 1 / 10
     }
 }
@@ -114,12 +117,38 @@ extension ShapeView {
         static let symbolStrokeWidthToSymbolHeight: CGFloat = 1 / 10
         static let hatchStep: CGFloat = 6
         static let hatchStrokeWidth: CGFloat = 3
+        static let shapeColors: [UIColor] = [#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)] //[#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.897260274, green: 0.680268734, blue: 0, alpha: 1)] //[#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)]
     }
 }
 
 extension Game {
     struct Constants {
-        static let cheatModeIsActive = true
+        static let cheatModeIsActive = false
         static let initialCardCountOnTable: Int = 21 // 20 cards is a maximum amount of card that can not create any set.
     }
 }
+
+//
+//extension UIColor {
+//    /**
+//     Three colors palette where each color is ordered and retrievable by a number.
+//     */
+//    struct ColorPalette {
+//        internal static var firstColor: UIColor { return #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1) }
+//        internal static var secondColor: UIColor { return #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1) }
+//        internal static var thirdColor: UIColor { return #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1) }
+//
+//        internal static func color(of type: Int) -> UIColor {
+//            switch(type) {
+//            case 0:
+//                return firstColor
+//            case 1:
+//                return secondColor
+//            case 2:
+//                return thirdColor
+//            default:
+//                return #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+//            }
+//        }
+//    }
+//}
