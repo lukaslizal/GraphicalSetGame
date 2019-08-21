@@ -38,6 +38,7 @@ extension MenuViewController {
 extension UIView {
     struct Constants {
         static let shakeViewAmplitude: CGFloat = 20
+        static let shakeViewAmplitudeMultiplier: CGFloat = 0.02
         static let shakeViewDuration: TimeInterval = 0.6
         static let shakeViewSpringDamping: CGFloat = 0.3
         static let shakeViewInitialSpringVelocity: CGFloat = 1
@@ -83,7 +84,7 @@ extension AnimationFactory {
         static let animationButtonScaleUp: CGFloat = 0.75
         static let animationButtonScaleUpDuration: Double = 0.15
         static let animationButtonUpDamping: CGFloat = 0.8
-        static let animationTouchCircleDuration: TimeInterval = 1.5
+        static let animationTouchCircleDuration: TimeInterval = 0.9
         static let animationTouchCircleOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction, .allowAnimatedContent]
         static let animationUnsuccesfullMatchColorDuration: TimeInterval = 2
         static let animationUnsuccesfullMatchColorOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction, .allowAnimatedContent]
@@ -123,7 +124,7 @@ extension ShapeView {
 
 extension Game {
     struct Constants {
-        static let cheatModeIsActive = false
+        static let cheatModeIsActive = true
         static let initialCardCountOnTable: Int = 21 // 20 cards is a maximum amount of card that can not create any set.
     }
 }

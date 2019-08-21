@@ -65,7 +65,7 @@ class PlayingCardButton: UIView {
 
         switch sender.state {
         case .began:
-            // Remove unsuccessful match color on tap
+            // Remove unsuccessful match backgound color on tap.
             if let animator = animator{
                 animator.pauseAnimation()
                 animator.fractionComplete = 1
@@ -92,10 +92,11 @@ class PlayingCardButton: UIView {
             }
         case .ended:
             let inside = self.point(inside: sender.location(in: self), with: nil)
+            // If taped inside button, send event to tap delegate.
             if inside {
                 if let tapDelegate = self.delegate {
                     selected = tapDelegate.tapped(playingCardButton: self)
-                    // Highlight or Unhighlight selection with background color animation
+                    // Highlight or Unhighlight selection with background color animation.
                     if !selected {
                         AnimationFactory.animationTouchCircle(view: playingCardView, to: PlayingCardView.Constants.cardColor, touchPoint: sender.location(in: self))
                     }

@@ -32,7 +32,7 @@ import UIKit
 // score label custom view animated rework x
 // add menu button x
 // add info/tutorial screen + first opening tutorial x
-// press animation scal factor relative to screen size not card size
+// shake ampliture relative to screen size v
 //
 // deselect transfrom.identity doesnt scale to size of other cards x
 // autolayout on (furious) device rotation breakdown x

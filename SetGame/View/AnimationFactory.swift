@@ -148,7 +148,6 @@ class AnimationFactory {
      Finger pressed down view animation.
      */
     internal static func animationTouchCircle(view: UIView, to color: UIColor, touchPoint: CGPoint) {
-//        view.backgroundColor = color
         let backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         backgroundView.center = touchPoint
         backgroundView.layer.cornerRadius = 0
@@ -165,7 +164,6 @@ class AnimationFactory {
             }
             backgroundView.removeFromSuperview()
         }
-//        animator.isUserInteractionEnabled = true
         view.addSubview(backgroundView)
     }
     /**

@@ -20,7 +20,7 @@ extension UIView {
      Shakes UIView in a disapproving way (;_;)
      */
     internal func shake() {
-        self.transform = CGAffineTransform(translationX: Constants.shakeViewAmplitude, y: 0)
+        self.transform = CGAffineTransform(translationX: UIScreen.main.bounds.width*Constants.shakeViewAmplitudeMultiplier, y: 0)
         UIView.animate(withDuration: Constants.shakeViewDuration, delay: 0, usingSpringWithDamping: Constants.shakeViewSpringDamping, initialSpringVelocity: Constants.shakeViewInitialSpringVelocity, options: [.curveEaseInOut, .allowUserInteraction], animations: {
                 self.transform = CGAffineTransform.identity
             }, completion: nil)
@@ -29,7 +29,7 @@ extension UIView {
      Nods UIView in an approving way (^_^)
      */
     internal func nod() {
-        self.transform = CGAffineTransform(translationX: 0, y: -Constants.nodViewAmplitude)
+        self.transform = CGAffineTransform(translationX: 0, y: -UIScreen.main.bounds.height*Constants.shakeViewAmplitudeMultiplier)
         UIView.animate(withDuration: Constants.nodViewDuration, delay: 0, usingSpringWithDamping: Constants.nodViewSpringDamping, initialSpringVelocity: Constants.nodViewInitialSpringVelocity, options: [.curveEaseInOut, .allowUserInteraction], animations: {
                 self.transform = CGAffineTransform.identity
             }, completion: nil)
