@@ -131,17 +131,24 @@ class AnimationFactory {
     /**
      Finger released from a view animation.
      */
-    internal static func animationReleaseView(view: UIView) {
+    internal static func animationReleaseView(view: UIView, targetFrame: CGRect) {
         UIViewPropertyAnimator(duration: Constants.animationButtonScaleUpDuration, dampingRatio: Constants.animationButtonUpDamping) {
-            view.transform = CGAffineTransform.identity
+//            view.transform = CGAffineTransform.identity
+            view.frame = targetFrame
+            view.layer.cornerRadius = targetFrame.width * PlayingCardButton.Constants.cornerRadiusToWidthRatio
+//            view.frame = view.frame.insetBy(dx: -10, dy: -10)
+//            view.setNeedsLayout()
         }.startAnimation()
     }
     /**
      Finger pressed down view animation.
      */
-    internal static func animationPressView(view: UIView) {
+    internal static func animationPressView(view: UIView, targetFrame: CGRect) {
         UIViewPropertyAnimator(duration: Constants.animationButtonScaleDownDuration, dampingRatio: Constants.animationButtonDownDamping) {
-            view.transform = CGAffineTransform(scaleX: Constants.animationButtonScaleDown, y: Constants.animationButtonScaleDown)
+//            view.transform = CGAffineTransform(scaleX: Constants.animationButtonScaleDown, y: Constants.animationButtonScaleDown)
+            view.frame = targetFrame
+            view.layer.cornerRadius = targetFrame.width * PlayingCardButton.Constants.cornerRadiusToWidthRatio
+//            view.setNeedsLayout()
         }.startAnimation()
     }
     /**

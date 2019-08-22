@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 // TODO:
 // animated deal v
@@ -28,14 +29,15 @@ import UIKit
 // animated unsuccessful highlight crop circles v
 // selected, success, wrong highlight v
 // hide statusbar ingame show in menu v
+// shake ampliture relative to screen size v
+// add menu button v
 // visible shadows on selection x
 // score label custom view animated rework x
-// add menu button x
 // add info/tutorial screen + first opening tutorial x
-// shake ampliture relative to screen size v
+// custom card button add target-action pattern x
 //
 // deselect transfrom.identity doesnt scale to size of other cards x
-// autolayout on (furious) device rotation breakdown x
+// autolayout on (furious) device rotation breakdown v
 // make card draw subrects as vertical stackview v
 // device rotation sometimes stuck in disabled flag mode bug v
 // shuffle not working bug v
@@ -98,6 +100,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
     @IBOutlet weak internal var newGameButton: UIButton!
     @IBOutlet weak internal var dealCardsButton: UIButton!
     @IBOutlet weak internal var scoreLabel: UILabel!
+    @IBOutlet weak internal var menuView: UIView!
     @IBAction internal func newGamePressed(_ sender: UIButton) {
         newGame()
         updateUI()
@@ -175,6 +178,9 @@ class GraphicalSetViewController: UIViewController, CardTap {
         UIFactory.setup(viewController: self)
         UIFactory.setupUISwipeGesture(for: self)
         UIFactory.setupUIRotateGesture(for: self)
+        self.menuView.layer.zPosition = 1000
+//        self.newGameButton.imageView?.tintColor = Constants.menuButtonsLabelTint
+//        self.dealCardsButton.imageView?.tintColor = Constants.menuButtonsLabelTint
         newGame()
     }
 
@@ -193,6 +199,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
             UIFactory.customShadow(on: self.newGameButton)
             UIFactory.customShadow(on: self.scoreLabel.superview)
             UIFactory.customShadow(on: self.dealCardsButton)
+            
             // Setup deal button.
             UIFactory.setupDealCardsButton(button: self.dealCardsButton)
         }

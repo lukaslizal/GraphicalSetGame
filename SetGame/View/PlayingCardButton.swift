@@ -46,7 +46,7 @@ class PlayingCardButton: UIView {
     init(frame: CGRect, cornerRadius: CGFloat, shapeType: Int, quantityType: Int, fillType: Int, colorType: Int) {
         super.init(frame: frame)
         layer.cornerRadius = cornerRadius
-        layer.backgroundColor = Constants.buttonColor
+        backgroundColor = Constants.buttonColor
         clipsToBounds = true
         setupPlayingCardView(cornerRadius: cornerRadius, shapeType: shapeType, quantityType: quantityType, fillType: fillType, colorType: colorType)
         UIFactory.setupLongPressGesture(for: self)
@@ -54,11 +54,11 @@ class PlayingCardButton: UIView {
 
     private func setupPlayingCardView(cornerRadius: CGFloat, shapeType: Int, quantityType: Int, fillType: Int, colorType: Int) {
         let rect = self.layer.bounds.insetBy(dx: Constants.playingCardsSpacing, dy: Constants.playingCardsSpacing)
-        let cardViewCornerRadius = rect.width * (cornerRadius / layer.bounds.width)
+        let cardViewCornerRadius = rect.width * (cornerRadius / self.layer.bounds.width)
         playingCardView = PlayingCardView(frame: rect, cornerRadius: cardViewCornerRadius, shapeType: shapeType, quantityType: quantityType, fillType: fillType, colorType: colorType)
         addSubview(playingCardView)
     }
-
+    
     // MARK: TOUCH CONTROLS
 
     @objc func longPressHandler(sender: UILongPressGestureRecognizer) {
@@ -73,10 +73,10 @@ class PlayingCardButton: UIView {
                 self.animator = nil
             }
             if !selected {
-                AnimationFactory.animationPressView(view: playingCardView)
+                AnimationFactory.animationPressView(view: playingCardView, targetFrame: self.bounds.insetBy(dx: Constants.playingCardsSpacing+self.frame.width*0.05, dy: Constants.playingCardsSpacing + self.frame.width*0.05))
             }
             else {
-                AnimationFactory.animationReleaseView(view: playingCardView)
+                AnimationFactory.animationReleaseView(view: playingCardView, targetFrame: self.bounds.insetBy(dx: Constants.playingCardsSpacing, dy: Constants.playingCardsSpacing))
             }
         case .changed:
             let inside = self.point(inside: sender.location(in: self), with: nil)
@@ -85,10 +85,10 @@ class PlayingCardButton: UIView {
             }
         case .cancelled:
             if !selected {
-                AnimationFactory.animationReleaseView(view: playingCardView)
+                AnimationFactory.animationReleaseView(view: playingCardView, targetFrame: self.bounds.insetBy(dx: Constants.playingCardsSpacing, dy: Constants.playingCardsSpacing))
             }
             else {
-                AnimationFactory.animationPressView(view: self)
+                AnimationFactory.animationPressView(view: playingCardView, targetFrame: self.bounds.insetBy(dx: Constants.playingCardsSpacing+self.frame.width*0.05, dy:Constants.playingCardsSpacing + self.frame.width*0.05))
             }
         case .ended:
             let inside = self.point(inside: sender.location(in: self), with: nil)
@@ -107,10 +107,10 @@ class PlayingCardButton: UIView {
             }
             else {
                 if !selected {
-                    AnimationFactory.animationReleaseView(view: playingCardView)
+                    AnimationFactory.animationReleaseView(view: playingCardView, targetFrame: self.bounds.insetBy(dx: Constants.playingCardsSpacing, dy: Constants.playingCardsSpacing))
                 }
                 else {
-                    AnimationFactory.animationPressView(view: self)
+                    AnimationFactory.animationPressView(view: playingCardView, targetFrame: self.bounds.insetBy(dx: Constants.playingCardsSpacing+self.frame.width*0.05, dy:Constants.playingCardsSpacing + self.frame.width*0.05))
                 }
             }
 
@@ -140,7 +140,7 @@ class PlayingCardButton: UIView {
      Visually highlights button as a successfuly matched card.
      */
     internal func successHighlight() {
-        AnimationFactory.animationReleaseView(view: playingCardView)
+        AnimationFactory.animationReleaseView(view: playingCardView, targetFrame: self.bounds.insetBy(dx: Constants.playingCardsSpacing, dy: Constants.playingCardsSpacing))
         UIFactory.successColorOverlay(view: playingCardView, with: playingCardView.selectedColor)
     }
     
@@ -148,7 +148,7 @@ class PlayingCardButton: UIView {
      Visually unhighlights button.
      */
     internal func unhighlight() {
-        AnimationFactory.animationReleaseView(view: playingCardView)
+        AnimationFactory.animationReleaseView(view: playingCardView, targetFrame: self.bounds.insetBy(dx: Constants.playingCardsSpacing, dy: Constants.playingCardsSpacing))
         AnimationFactory.animationTouchCircle(view: playingCardView, to: PlayingCardView.Constants.cardColor, touchPoint: playingCardView.center)
         selected = false
     }
@@ -159,6 +159,15 @@ class PlayingCardButton: UIView {
     internal func unsuccessfulHighlight() {
         let animator = AnimationFactory.animationUnsuccessfulMatchColor(view: playingCardView, to: PlayingCardView.Constants.unsuccessfulHighlightColor)
         self.animator = animator
+    }
+    
+    /**
+     Visually highlights unsucceessful matched card using cards background color.
+     */
+    internal func refreshSelected() {
+        if selected{
+//            playingCardView.transform = CGAffineTransform.
+        }
     }
 }
 

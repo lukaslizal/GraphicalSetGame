@@ -18,6 +18,7 @@ import UIKit
 extension GraphicalSetViewController {
     struct Constants {
         static let mainThemeBackgroundColor: UIColor = #colorLiteral(red: 0.3580985833, green: 0.3581614372, blue: 0.3580903332, alpha: 1)
+        static let menuButtonsLabelTint: UIColor = #colorLiteral(red: 0.2827693394, green: 0.2828189714, blue: 0.2827628248, alpha: 1)
         static let scoreGradeFirstSuffix: String = " 🧠"
         static let scoreGradeSecondSuffix: String = " 🥇"
         static let scoreGradeThirdSuffix: String = " 🥈"
@@ -84,7 +85,7 @@ extension AnimationFactory {
         static let animationButtonScaleUp: CGFloat = 0.75
         static let animationButtonScaleUpDuration: Double = 0.15
         static let animationButtonUpDamping: CGFloat = 0.8
-        static let animationTouchCircleDuration: TimeInterval = 0.9
+        static let animationTouchCircleDuration: TimeInterval = 0.6
         static let animationTouchCircleOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction, .allowAnimatedContent]
         static let animationUnsuccesfullMatchColorDuration: TimeInterval = 2
         static let animationUnsuccesfullMatchColorOptions: UIView.AnimationOptions = [.curveEaseOut, .allowUserInteraction, .allowAnimatedContent]
@@ -97,7 +98,7 @@ extension PlayingCardView {
         static let cardFrameAspectRatio: CGFloat = 5 / 7
         static let symbolInsetsRatio: CGFloat = 1 / 20
         static let cardColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        static let selectedHighlightColor: [UIColor] =  [#colorLiteral(red: 0.8684809835, green: 1, blue: 0.7802248099, alpha: 1), #colorLiteral(red: 0.9276167073, green: 0.8917697381, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.8072766262, blue: 0.8798607505, alpha: 1)] //[#colorLiteral(red: 0.9381606324, green: 1, blue: 0.8966631661, alpha: 1), #colorLiteral(red: 0.9276167073, green: 0.8917697381, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.9525627755, blue: 0.8814069386, alpha: 1)] //[#colorLiteral(red: 0.7952026993, green: 0.8904109589, blue: 0.7313129523, alpha: 1), #colorLiteral(red: 0.8726476846, green: 0.8095779573, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.8483725166, blue: 0.9054789686, alpha: 1)] // [#colorLiteral(red: 0.884876195, green: 1, blue: 0.8076220702, alpha: 1), #colorLiteral(red: 0.8818091884, green: 0.8232765874, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.8072766262, blue: 0.8798607505, alpha: 1)]
+        static let selectedHighlightColor: [UIColor] =  [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)]  // [#colorLiteral(red: 0.8684809835, green: 1, blue: 0.7802248099, alpha: 1), #colorLiteral(red: 0.9276167073, green: 0.8917697381, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.8072766262, blue: 0.8798607505, alpha: 1)] //[#colorLiteral(red: 0.9381606324, green: 1, blue: 0.8966631661, alpha: 1), #colorLiteral(red: 0.9276167073, green: 0.8917697381, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.9525627755, blue: 0.8814069386, alpha: 1)] //[#colorLiteral(red: 0.7952026993, green: 0.8904109589, blue: 0.7313129523, alpha: 1), #colorLiteral(red: 0.8726476846, green: 0.8095779573, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.8483725166, blue: 0.9054789686, alpha: 1)] // [#colorLiteral(red: 0.884876195, green: 1, blue: 0.8076220702, alpha: 1), #colorLiteral(red: 0.8818091884, green: 0.8232765874, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.8072766262, blue: 0.8798607505, alpha: 1)]
         static let unsuccessfulHighlightColor: UIColor = #colorLiteral(red: 1, green: 0.6670580554, blue: 0.6670580554, alpha: 1)
         static let selectedSuccessColor: UIColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
         static let cornerRadiusToWidthRatio: CGFloat = 1 / 10
@@ -106,7 +107,8 @@ extension PlayingCardView {
 
 extension PlayingCardButton {
     struct Constants {
-        static let buttonColor: CGColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+        static let buttonColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+        static let outlineColor: UIColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         static let playingCardsSpacing: CGFloat = 4
         static let cornerRadiusToWidthRatio: CGFloat = 1 / 10
     }
