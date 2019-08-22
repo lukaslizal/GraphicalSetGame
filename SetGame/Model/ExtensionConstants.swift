@@ -126,7 +126,7 @@ extension ShapeView {
 
 extension Game {
     struct Constants {
-        static let cheatModeIsActive = true
+        static let cheatModeIsActive = false
         static let initialCardCountOnTable: Int = 21 // 20 cards is a maximum amount of card that can not create any set.
     }
 }
