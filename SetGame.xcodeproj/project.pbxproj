@@ -15,6 +15,7 @@
 		3D0DDFAF228ED2F400EF5FAE /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0DDFAE228ED2F400EF5FAE /* Card.swift */; };
 		3D0DDFB22294059800EF5FAE /* ExtensionMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0DDFB12294059800EF5FAE /* ExtensionMethods.swift */; };
 		3D1E715E22E61FC00081CAE0 /* PlayingCardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1E715D22E61FC00081CAE0 /* PlayingCardButton.swift */; };
+		3D4E677723103E3300513046 /* SetGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4E677623103E3300513046 /* SetGameTests.swift */; };
 		3D781D0D22F0672700D4D3C1 /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D781D0C22F0672700D4D3C1 /* Score.swift */; };
 		3D8DEE8423016EBE00B33422 /* AnimationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8DEE8323016EBE00B33422 /* AnimationFactory.swift */; };
 		3D8DEE8623016F1200B33422 /* UIFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8DEE8523016F1200B33422 /* UIFactory.swift */; };
@@ -31,6 +32,16 @@
 		3DECE75D22C4FB7F00DF4624 /* ShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DECE75C22C4FB7F00DF4624 /* ShapeView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		3D4E677923103E3300513046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3D0DDF8F228EBAE400EF5FAE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3D0DDF96228EBAE400EF5FAE;
+			remoteInfo = SetGame;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		3D0DDF97228EBAE400EF5FAE /* SetGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SetGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D0DDF9A228EBAE400EF5FAE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -42,6 +53,11 @@
 		3D0DDFAE228ED2F400EF5FAE /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		3D0DDFB12294059800EF5FAE /* ExtensionMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionMethods.swift; sourceTree = "<group>"; };
 		3D1E715D22E61FC00081CAE0 /* PlayingCardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingCardButton.swift; sourceTree = "<group>"; };
+		3D4E676823103C6300513046 /* SetGameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGameTests.swift; sourceTree = "<group>"; };
+		3D4E676A23103C6300513046 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D4E677423103E3300513046 /* SetGameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SetGameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D4E677623103E3300513046 /* SetGameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGameTests.swift; sourceTree = "<group>"; };
+		3D4E677823103E3300513046 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D781D0C22F0672700D4D3C1 /* Score.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
 		3D8DEE8323016EBE00B33422 /* AnimationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationFactory.swift; sourceTree = "<group>"; };
 		3D8DEE8523016F1200B33422 /* UIFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFactory.swift; sourceTree = "<group>"; };
@@ -66,6 +82,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3D4E677123103E3300513046 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -73,6 +96,8 @@
 			isa = PBXGroup;
 			children = (
 				3D0DDF99228EBAE400EF5FAE /* SetGame */,
+				3D4E676723103C6300513046 /* SetGameTests */,
+				3D4E677523103E3300513046 /* SetGameTests */,
 				3D0DDF98228EBAE400EF5FAE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -81,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				3D0DDF97228EBAE400EF5FAE /* SetGame.app */,
+				3D4E677423103E3300513046 /* SetGameTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -135,6 +161,24 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		3D4E676723103C6300513046 /* SetGameTests */ = {
+			isa = PBXGroup;
+			children = (
+				3D4E676823103C6300513046 /* SetGameTests.swift */,
+				3D4E676A23103C6300513046 /* Info.plist */,
+			);
+			path = SetGameTests;
+			sourceTree = "<group>";
+		};
+		3D4E677523103E3300513046 /* SetGameTests */ = {
+			isa = PBXGroup;
+			children = (
+				3D4E677623103E3300513046 /* SetGameTests.swift */,
+				3D4E677823103E3300513046 /* Info.plist */,
+			);
+			path = SetGameTests;
+			sourceTree = "<group>";
+		};
 		3DDF4BD522EF050E00030AC6 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,18 +211,40 @@
 			productReference = 3D0DDF97228EBAE400EF5FAE /* SetGame.app */;
 			productType = "com.apple.product-type.application";
 		};
+		3D4E677323103E3300513046 /* SetGameTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3D4E677B23103E3300513046 /* Build configuration list for PBXNativeTarget "SetGameTests" */;
+			buildPhases = (
+				3D4E677023103E3300513046 /* Sources */,
+				3D4E677123103E3300513046 /* Frameworks */,
+				3D4E677223103E3300513046 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3D4E677A23103E3300513046 /* PBXTargetDependency */,
+			);
+			name = SetGameTests;
+			productName = SetGameTests;
+			productReference = 3D4E677423103E3300513046 /* SetGameTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		3D0DDF8F228EBAE400EF5FAE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1020;
+				LastSwiftUpdateCheck = 1030;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Lukas Lizal";
 				TargetAttributes = {
 					3D0DDF96228EBAE400EF5FAE = {
 						CreatedOnToolsVersion = 10.2.1;
+					};
+					3D4E677323103E3300513046 = {
+						CreatedOnToolsVersion = 10.3;
+						TestTargetID = 3D0DDF96228EBAE400EF5FAE;
 					};
 				};
 			};
@@ -196,6 +262,7 @@
 			projectRoot = "";
 			targets = (
 				3D0DDF96228EBAE400EF5FAE /* SetGame */,
+				3D4E677323103E3300513046 /* SetGameTests */,
 			);
 		};
 /* End PBXProject section */
@@ -213,6 +280,13 @@
 				3D0DDFA2228EBAE600EF5FAE /* Assets.xcassets in Resources */,
 				3DDF4BEC22EF1AEE00030AC6 /* BPreplayBold.otf in Resources */,
 				3D0DDFA0228EBAE400EF5FAE /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D4E677223103E3300513046 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,7 +314,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3D4E677023103E3300513046 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D4E677723103E3300513046 /* SetGameTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3D4E677A23103E3300513046 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3D0DDF96228EBAE400EF5FAE /* SetGame */;
+			targetProxy = 3D4E677923103E3300513046 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		3D0DDF9E228EBAE400EF5FAE /* Main.storyboard */ = {
@@ -414,6 +504,48 @@
 			};
 			name = Release;
 		};
+		3D4E677C23103E3300513046 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6LQ8E9FE96;
+				INFOPLIST_FILE = SetGameTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = cz.lukaslizal.SetGameTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SetGame.app/SetGame";
+			};
+			name = Debug;
+		};
+		3D4E677D23103E3300513046 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6LQ8E9FE96;
+				INFOPLIST_FILE = SetGameTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = cz.lukaslizal.SetGameTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SetGame.app/SetGame";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -431,6 +563,15 @@
 			buildConfigurations = (
 				3D0DDFAA228EBAE600EF5FAE /* Debug */,
 				3D0DDFAB228EBAE600EF5FAE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3D4E677B23103E3300513046 /* Build configuration list for PBXNativeTarget "SetGameTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D4E677C23103E3300513046 /* Debug */,
+				3D4E677D23103E3300513046 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

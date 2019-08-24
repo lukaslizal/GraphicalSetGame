@@ -131,7 +131,7 @@ class AnimationFactory {
     /**
      Finger released from a view animation.
      */
-    internal static func animationReleaseView(view: UIView, targetFrame: CGRect) {
+    internal static func animationPressUpView(view: UIView, targetFrame: CGRect) {
         UIViewPropertyAnimator(duration: Constants.animationButtonScaleUpDuration, dampingRatio: Constants.animationButtonUpDamping) {
 //            view.transform = CGAffineTransform.identity
             view.frame = targetFrame
@@ -143,7 +143,7 @@ class AnimationFactory {
     /**
      Finger pressed down view animation.
      */
-    internal static func animationPressView(view: UIView, targetFrame: CGRect) {
+    internal static func animationPressDownView(view: UIView, targetFrame: CGRect) {
         UIViewPropertyAnimator(duration: Constants.animationButtonScaleDownDuration, dampingRatio: Constants.animationButtonDownDamping) {
 //            view.transform = CGAffineTransform(scaleX: Constants.animationButtonScaleDown, y: Constants.animationButtonScaleDown)
             view.frame = targetFrame

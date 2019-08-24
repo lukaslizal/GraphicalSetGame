@@ -62,7 +62,6 @@ class PlayingCardButton: UIView {
     // MARK: TOUCH CONTROLS
 
     @objc func longPressHandler(sender: UILongPressGestureRecognizer) {
-
         switch sender.state {
         case .began:
             // Remove unsuccessful match backgound color on tap.
@@ -72,24 +71,14 @@ class PlayingCardButton: UIView {
                 animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
                 self.animator = nil
             }
-            if !selected {
-                AnimationFactory.animationPressView(view: playingCardView, targetFrame: self.bounds.insetBy(dx: Constants.playingCardsSpacing+self.frame.width*0.05, dy: Constants.playingCardsSpacing + self.frame.width*0.05))
-            }
-            else {
-                AnimationFactory.animationReleaseView(view: playingCardView, targetFrame: self.bounds.insetBy(dx: Constants.playingCardsSpacing, dy: Constants.playingCardsSpacing))
-            }
+            pressScaleAnimation(revertToOriginalSize: selected)
         case .changed:
             let inside = self.point(inside: sender.location(in: self), with: nil)
             if !inside && !selected {
                 sender.cancel()
             }
         case .cancelled:
-            if !selected {
-                AnimationFactory.animationReleaseView(view: playingCardView, targetFrame: self.bounds.insetBy(dx: Constants.playingCardsSpacing, dy: Constants.playingCardsSpacing))
-            }
-            else {
-                AnimationFactory.animationPressView(view: playingCardView, targetFrame: self.bounds.insetBy(dx: Constants.playingCardsSpacing+self.frame.width*0.05, dy:Constants.playingCardsSpacing + self.frame.width*0.05))
-            }
+            pressScaleAnimation(revertToOriginalSize: !selected)
         case .ended:
             let inside = self.point(inside: sender.location(in: self), with: nil)
             // If taped inside button, send event to tap delegate.
@@ -106,12 +95,7 @@ class PlayingCardButton: UIView {
                 }
             }
             else {
-                if !selected {
-                    AnimationFactory.animationReleaseView(view: playingCardView, targetFrame: self.bounds.insetBy(dx: Constants.playingCardsSpacing, dy: Constants.playingCardsSpacing))
-                }
-                else {
-                    AnimationFactory.animationPressView(view: playingCardView, targetFrame: self.bounds.insetBy(dx: Constants.playingCardsSpacing+self.frame.width*0.05, dy:Constants.playingCardsSpacing + self.frame.width*0.05))
-                }
+                pressScaleAnimation(revertToOriginalSize: !selected)
             }
 
         default:
@@ -128,19 +112,29 @@ class PlayingCardButton: UIView {
         return playingCardView == otherButton.playingCardView
     }
 
-    // MARK: CHANGING APPEARANCE
+    // MARK: ANIMATIONS
     
-//    /**
-//     Visually highlights button as a successfuly matched card.
-//     */
-//    internal func selectedHighlight() {
-//        UIFactory.successColorOverlay(view: playingCardView, with: playingCardView.selectedColor)
-//    }
+    /**
+     Visually highlights button as a successfuly matched card.
+     */
+    internal func pressScaleAnimation(revertToOriginalSize: Bool) {
+        let pressDownInset = Constants.playingCardsSpacing + self.frame.width * Constants.pressDownRectRatio
+        let pressUpInset = Constants.playingCardsSpacing
+        let pressDownRect = self.bounds.insetBy(dx: pressDownInset, dy: pressDownInset)
+        let pressUpRect = self.bounds.insetBy(dx: pressUpInset, dy: pressUpInset)
+        if revertToOriginalSize {
+            AnimationFactory.animationPressUpView(view: playingCardView, targetFrame: pressUpRect)
+        }
+        else {
+            AnimationFactory.animationPressDownView(view: playingCardView, targetFrame: pressDownRect)
+        }
+    }
     /**
      Visually highlights button as a successfuly matched card.
      */
     internal func successHighlight() {
-        AnimationFactory.animationReleaseView(view: playingCardView, targetFrame: self.bounds.insetBy(dx: Constants.playingCardsSpacing, dy: Constants.playingCardsSpacing))
+        let pressUpRect = self.bounds.insetBy(dx: Constants.playingCardsSpacing, dy: Constants.playingCardsSpacing)
+        AnimationFactory.animationPressUpView(view: playingCardView, targetFrame: pressUpRect)
         UIFactory.successColorOverlay(view: playingCardView, with: playingCardView.selectedColor)
     }
     
@@ -148,7 +142,8 @@ class PlayingCardButton: UIView {
      Visually unhighlights button.
      */
     internal func unhighlight() {
-        AnimationFactory.animationReleaseView(view: playingCardView, targetFrame: self.bounds.insetBy(dx: Constants.playingCardsSpacing, dy: Constants.playingCardsSpacing))
+        let pressUpRect = self.bounds.insetBy(dx: Constants.playingCardsSpacing, dy: Constants.playingCardsSpacing)
+        AnimationFactory.animationPressUpView(view: playingCardView, targetFrame: pressUpRect)
         AnimationFactory.animationTouchCircle(view: playingCardView, to: PlayingCardView.Constants.cardColor, touchPoint: playingCardView.center)
         selected = false
     }
@@ -159,15 +154,6 @@ class PlayingCardButton: UIView {
     internal func unsuccessfulHighlight() {
         let animator = AnimationFactory.animationUnsuccessfulMatchColor(view: playingCardView, to: PlayingCardView.Constants.unsuccessfulHighlightColor)
         self.animator = animator
-    }
-    
-    /**
-     Visually highlights unsucceessful matched card using cards background color.
-     */
-    internal func refreshSelected() {
-        if selected{
-//            playingCardView.transform = CGAffineTransform.
-        }
     }
 }
 

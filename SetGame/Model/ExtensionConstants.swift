@@ -111,6 +111,7 @@ extension PlayingCardButton {
         static let outlineColor: UIColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         static let playingCardsSpacing: CGFloat = 4
         static let cornerRadiusToWidthRatio: CGFloat = 1 / 10
+        static let pressDownRectRatio: CGFloat = 0.05
     }
 }
 
