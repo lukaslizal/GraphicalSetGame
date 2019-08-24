@@ -9,7 +9,17 @@
 import UIKit
 
 class MenuViewController: UIViewController {
-
+    
+    var isStatusbarHidden: Bool = true
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .slide
+    }
+    
+    internal override var prefersStatusBarHidden: Bool {
+        return isStatusbarHidden
+    }
+    
     @IBOutlet weak var gameTitle: UILabel!
     
     override func viewDidLoad() {
@@ -19,6 +29,27 @@ class MenuViewController: UIViewController {
         gameTitle.textAlignment = .center
         view.backgroundColor = Constants.mainThemeBackgroundColor
         // Do any additional setup after loading the view.
+    }
+    
+    internal override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        isStatusbarHidden = false
+        UIView.animate(withDuration: 0.5) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+    
+    @IBAction func continueGame(_ sender: Any) {
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "game") {
+            isStatusbarHidden = true
+            UIView.animate(withDuration: 0.5) {
+                self.setNeedsStatusBarAppearanceUpdate()
+            }
+            present(vc, animated: true, completion: {
+//                view.frame = UIApplication.shared.w
+                print("gamePresented")
+            })
+        }
     }
     
 

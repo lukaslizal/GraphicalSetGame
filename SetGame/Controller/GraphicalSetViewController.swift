@@ -78,8 +78,12 @@ class GraphicalSetViewController: UIViewController, CardTap {
         }
     }
     
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .slide
+    }
+
     // MARK: AUTOROTATION
-    
+
     /**
      Support disabling device autorotation when cards are animated on table. Autoratation would cause
      cards to endup on wrong place - playce that would be only correct in previous orientation's layout
@@ -104,8 +108,13 @@ class GraphicalSetViewController: UIViewController, CardTap {
     @IBOutlet weak internal var scoreLabel: UILabel!
     @IBOutlet weak internal var menuView: UIView!
     @IBAction internal func newGamePressed(_ sender: UIButton) {
-        newGame()
-        updateUI()
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "menu") {
+            present(vc, animated: true, completion: {
+                print("menuPresented")
+            })
+        }
+//        newGame()
+//        updateUI()
     }
     @IBAction internal func dealCardsPressed(_ sender: UIButton) {
         dealThreeCards()
@@ -114,13 +123,13 @@ class GraphicalSetViewController: UIViewController, CardTap {
     }
 
     // MARK: TOUCH CONTROLS
-    
+
     internal func tapped(playingCardButton: PlayingCardButton) -> Bool {
         // Select card button in model.
         if let buttonIndex = playingCardButtons.firstIndex(of: playingCardButton) {
             let selectedCard = game.cardsOnTable[buttonIndex]
             // Card gets deselected
-            if !game.select(selectedCard){
+            if !game.select(selectedCard) {
                 updateUI()
                 return false
             }
@@ -130,21 +139,21 @@ class GraphicalSetViewController: UIViewController, CardTap {
                 animationFlagSuccessMatch = true
             }
             // Unsuccessful attempt to match 3 cards
-            else if game.cardsSelected.count == 3 {
-                // Indicate invalid set selection.
-                view.shake()
-                
-                updateUI()
-                // Remove selected cards background color and Highlight selected cards with unsuccessful background color.
-                for button in playingCardButtons{
-                    if button.selected {
-                        button.unhighlight()
-                        button.unsuccessfulHighlight()
+                else if game.cardsSelected.count == 3 {
+                    // Indicate invalid set selection.
+                    view.shake()
+
+                    updateUI()
+                    // Remove selected cards background color and Highlight selected cards with unsuccessful background color.
+                    for button in playingCardButtons {
+                        if button.selected {
+                            button.unhighlight()
+                            button.unsuccessfulHighlight()
+                        }
                     }
-                }
-                playingCardButton.unhighlight()
-                playingCardButton.unsuccessfulHighlight()
-                return false
+                    playingCardButton.unhighlight()
+                    playingCardButton.unsuccessfulHighlight()
+                    return false
             }
             updateUI()
         }
@@ -201,12 +210,12 @@ class GraphicalSetViewController: UIViewController, CardTap {
             UIFactory.customShadow(on: self.newGameButton)
             UIFactory.customShadow(on: self.scoreLabel.superview)
             UIFactory.customShadow(on: self.dealCardsButton)
-            
+
             // Setup deal button.
             UIFactory.setupDealCardsButton(button: self.dealCardsButton)
         }
     }
-    
+
     internal override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -343,7 +352,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
         // Animate selected cards.
         if cardsToRearrange.count > 0 {
             freeRotationFlag = false
-            AnimationFactory.rearrangeAnimation(toRearrangeModel: cardsToRearrange, tableModel: game.cardsOnTable, views: playingCardButtons, grid: tableGrid, completion: {(animationPosition) in
+            AnimationFactory.rearrangeAnimation(toRearrangeModel: cardsToRearrange, tableModel: game.cardsOnTable, views: playingCardButtons, grid: tableGrid, completion: { (animationPosition) in
                 self.game.allCardsDealt()
                 self.freeRotationFlag = true
             })
@@ -356,11 +365,11 @@ class GraphicalSetViewController: UIViewController, CardTap {
             if game.cardsToDeal.count > 0 {
                 UIApplication.shared.beginIgnoringInteractionEvents()
             }
-            AnimationFactory.dealCardsAnimation(toDealModel: Array(game.cardsToDeal), tableModel: game.cardsOnTable, views: playingCardButtons, grid: tableGrid, startView: dealCardsButton, completion: {(animationPosition) in
-                self.game.allCardsDealt()
-                self.freeRotationFlag = true
-                UIApplication.shared.endIgnoringInteractionEvents()
-            })
+            AnimationFactory.dealCardsAnimation(toDealModel: Array(game.cardsToDeal), tableModel: game.cardsOnTable, views: playingCardButtons, grid: tableGrid, startView: dealCardsButton, completion: { (animationPosition) in
+                    self.game.allCardsDealt()
+                    self.freeRotationFlag = true
+                    UIApplication.shared.endIgnoringInteractionEvents()
+                })
         }
     }
 
@@ -370,7 +379,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
             freeRotationFlag = false
             animationFlagNewGame = false
             tableGrid = UIFactory.updateGrid(toSize: game.cardsOnTable.count, inside: playingBoardView.layer.bounds)
-            AnimationFactory.newGameAnimation(tableModel: game.cardsOnTable, views: playingCardButtons, grid: tableGrid, startView: newGameButton, completion: {(animationPosition) in
+            AnimationFactory.newGameAnimation(tableModel: game.cardsOnTable, views: playingCardButtons, grid: tableGrid, startView: newGameButton, completion: { (animationPosition) in
                 self.game.allCardsDealt()
                 self.freeRotationFlag = true
                 UIApplication.shared.endIgnoringInteractionEvents()
@@ -382,13 +391,13 @@ class GraphicalSetViewController: UIViewController, CardTap {
         if animationFlagSuccessMatch {
             UIApplication.shared.beginIgnoringInteractionEvents()
             freeRotationFlag = false
-            AnimationFactory.successMatchAnimation(matchedModel: Array(game.cardsMatched), tableModel: game.cardsOnTable, views: playingCardButtons, targetView: scoreLabel, completion: {(animationPosition) in self.view.nod()
-                self.replaceMatchedCards()
-                self.animationFlagDealMoreCards = true
-                self.updateScoreLabel()
-                UIApplication.shared.endIgnoringInteractionEvents()
-                // Eventough we want to updateUI() at this point to trigger deal new cards animation, we don't call it here. updateUI() gets called by viewDidLayoutSubviews() after updateScoreLabel() change triggers autolayout rearrangement. So Calling updateUI inhere would only cause some troubles.
-            })
+            AnimationFactory.successMatchAnimation(matchedModel: Array(game.cardsMatched), tableModel: game.cardsOnTable, views: playingCardButtons, targetView: scoreLabel, completion: { (animationPosition) in self.view.nod()
+                    self.replaceMatchedCards()
+                    self.animationFlagDealMoreCards = true
+                    self.updateScoreLabel()
+                    UIApplication.shared.endIgnoringInteractionEvents()
+                    // Eventough we want to updateUI() at this point to trigger deal new cards animation, we don't call it here. updateUI() gets called by viewDidLayoutSubviews() after updateScoreLabel() change triggers autolayout rearrangement. So Calling updateUI inhere would only cause some troubles.
+                })
         }
     }
 }
@@ -398,11 +407,11 @@ class GraphicalSetViewController: UIViewController, CardTap {
 extension GraphicalSetViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         if gestureRecognizer is UISwipeGestureRecognizer && gestureRecognizer.state == .began
-        {
+            {
             return true
         }
         if gestureRecognizer is UIRotationGestureRecognizer && gestureRecognizer.state == .began
-        {
+            {
             return true
         }
         return false
