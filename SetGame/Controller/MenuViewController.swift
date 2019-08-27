@@ -9,28 +9,27 @@
 import UIKit
 
 class MenuViewController: UIViewController {
-    
-    var isStatusbarHidden: Bool = true
-    
+
+    private var isStatusbarHidden: Bool = true
+    internal var gameMVC: GraphicalSetViewController?
+
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return .slide
     }
-    
+
     internal override var prefersStatusBarHidden: Bool {
         return isStatusbarHidden
     }
-    
-    @IBOutlet weak var gameTitle: UILabel!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        gameTitle.numberOfLines = 0
-        gameTitle.textColor = Constants.gameTitleTextColor
-        gameTitle.textAlignment = .center
-        view.backgroundColor = Constants.mainThemeBackgroundColor
         // Do any additional setup after loading the view.
+//        gameTitle.numberOfLines = 0
+//        gameTitle.textColor = Constants.gameTitleTextColor
+//        gameTitle.textAlignment = .center
+//        view.backgroundColor = Constants.mainThemeBackgroundColor
     }
-    
+
     internal override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         isStatusbarHidden = false
@@ -38,29 +37,15 @@ class MenuViewController: UIViewController {
             self.setNeedsStatusBarAppearanceUpdate()
         }
     }
-    
+
     @IBAction func continueGame(_ sender: Any) {
-        if let vc = storyboard?.instantiateViewController(withIdentifier: "game") {
-            isStatusbarHidden = true
-            UIView.animate(withDuration: 0.5) {
-                self.setNeedsStatusBarAppearanceUpdate()
-            }
-            present(vc, animated: true, completion: {
-//                view.frame = UIApplication.shared.w
-                print("gamePresented")
-            })
+        isStatusbarHidden = true
+        UIView.animate(withDuration: 0.5) {
+            self.setNeedsStatusBarAppearanceUpdate()
         }
+        // new game
+//            performSegue(withIdentifier: "showGame", sender: self)
+        // continue game
+        navigationController?.popToViewController(gameMVC!, animated: true)
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

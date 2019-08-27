@@ -97,7 +97,7 @@ extension PlayingCardView {
         static let symbolAspectRatio: CGFloat = 12 / 5
         static let cardFrameAspectRatio: CGFloat = 5 / 7
         static let symbolInsetsRatio: CGFloat = 1 / 20
-        static let cardColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        static let cardColor: UIColor = #colorLiteral(red: 0.9997372031, green: 0.9990465367, blue: 0.9589491605, alpha: 1)
         static let selectedHighlightColor: [UIColor] =  [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)]  // [#colorLiteral(red: 0.8684809835, green: 1, blue: 0.7802248099, alpha: 1), #colorLiteral(red: 0.9276167073, green: 0.8917697381, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.8072766262, blue: 0.8798607505, alpha: 1)] //[#colorLiteral(red: 0.9381606324, green: 1, blue: 0.8966631661, alpha: 1), #colorLiteral(red: 0.9276167073, green: 0.8917697381, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.9525627755, blue: 0.8814069386, alpha: 1)] //[#colorLiteral(red: 0.7952026993, green: 0.8904109589, blue: 0.7313129523, alpha: 1), #colorLiteral(red: 0.8726476846, green: 0.8095779573, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.8483725166, blue: 0.9054789686, alpha: 1)] // [#colorLiteral(red: 0.884876195, green: 1, blue: 0.8076220702, alpha: 1), #colorLiteral(red: 0.8818091884, green: 0.8232765874, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.8072766262, blue: 0.8798607505, alpha: 1)]
         static let unsuccessfulHighlightColor: UIColor = #colorLiteral(red: 1, green: 0.6670580554, blue: 0.6670580554, alpha: 1)
         static let selectedSuccessColor: UIColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
@@ -121,7 +121,9 @@ extension ShapeView {
         static let symbolStrokeWidthToSymbolHeight: CGFloat = 1 / 10
         static let hatchStep: CGFloat = 6
         static let hatchStrokeWidth: CGFloat = 3
-        static let shapeColors: [UIColor] = [#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)] //[#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.897260274, green: 0.680268734, blue: 0, alpha: 1)] //[#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)]
+        static let shapeColors: [UIColor] = [#colorLiteral(red: 0.4474182725, green: 0.9546989799, blue: 0.6607666612, alpha: 1), #colorLiteral(red: 0.9279355407, green: 0.3509399891, blue: 0.611196816, alpha: 1), #colorLiteral(red: 0.8460462689, green: 0.5130195022, blue: 0.9950392842, alpha: 1)]
+        //[#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)]
+        //[#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.897260274, green: 0.680268734, blue: 0, alpha: 1)] //[#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)]
     }
 }
 
@@ -132,27 +134,8 @@ extension Game {
     }
 }
 
-//
-//extension UIColor {
-//    /**
-//     Three colors palette where each color is ordered and retrievable by a number.
-//     */
-//    struct ColorPalette {
-//        internal static var firstColor: UIColor { return #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1) }
-//        internal static var secondColor: UIColor { return #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1) }
-//        internal static var thirdColor: UIColor { return #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1) }
-//
-//        internal static func color(of type: Int) -> UIColor {
-//            switch(type) {
-//            case 0:
-//                return firstColor
-//            case 1:
-//                return secondColor
-//            case 2:
-//                return thirdColor
-//            default:
-//                return #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-//            }
-//        }
-//    }
-//}
+extension PushVerticalAnimator {
+    struct Constants {
+        static let transitionAnimationDuration: TimeInterval = 0.7
+    }
+}

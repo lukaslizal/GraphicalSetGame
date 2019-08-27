@@ -59,10 +59,12 @@ import Foundation
  - author:
  Lukas Lizal
  */
-class GraphicalSetViewController: UIViewController, CardTap {
+class GraphicalSetViewController: UIViewController, UINavigationControllerDelegate, CardTap {
 
     // MARK: STORED PROPERTIES
-
+    
+    internal var transitionAnimator = PushVerticalAnimator()
+    
     private var game: Game = Game()
     var playingCardButtons: [PlayingCardButton] = []
     private var targetGridFlagLayoutChanged = true
@@ -77,7 +79,7 @@ class GraphicalSetViewController: UIViewController, CardTap {
             targetGridFlagLayoutChanged = targetGridFlagLayoutChanged || (oldValue.dimensions != tableGrid.dimensions)
         }
     }
-    
+
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return .slide
     }
@@ -109,9 +111,13 @@ class GraphicalSetViewController: UIViewController, CardTap {
     @IBOutlet weak internal var menuView: UIView!
     @IBAction internal func newGamePressed(_ sender: UIButton) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "menu") {
-            present(vc, animated: true, completion: {
-                print("menuPresented")
-            })
+            if let menuViewController = vc as? MenuViewController{
+                menuViewController.gameMVC = self
+                navigationController?.pushViewController(menuViewController, animated: true)
+            }
+//            present(vc, animated: true, completion: {
+//                print("menuPresented")
+//            })
         }
 //        newGame()
 //        updateUI()
@@ -180,12 +186,27 @@ class GraphicalSetViewController: UIViewController, CardTap {
             return
         }
     }
+    
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        switch operation {
+        case .push:
+            transitionAnimator.presenting = true
+            return transitionAnimator
+        case .pop:
+            transitionAnimator.presenting = false
+            return transitionAnimator
+        default:
+            return nil
+        }
+    }
 
     // MARK: VIEWCONTROLLER OVERRIDE METHODS
 
     internal override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        self.navigationController?.delegate = self
         UIFactory.setup(viewController: self)
         UIFactory.setupUISwipeGesture(for: self)
         UIFactory.setupUIRotateGesture(for: self)
@@ -417,3 +438,4 @@ extension GraphicalSetViewController: UIGestureRecognizerDelegate {
         return false
     }
 }
+
