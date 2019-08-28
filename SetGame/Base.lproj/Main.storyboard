@@ -101,21 +101,29 @@
                                                 <constraints>
                                                     <constraint firstItem="RG4-fe-AED" firstAttribute="width" secondItem="7Rw-J5-YmR" secondAttribute="width" multiplier="0.5" id="69r-az-QI5"/>
                                                     <constraint firstItem="RG4-fe-AED" firstAttribute="height" secondItem="7Rw-J5-YmR" secondAttribute="height" multiplier="3/5" id="g7E-VP-0IB"/>
+                                                    <constraint firstItem="Rhm-eR-hNV" firstAttribute="width" secondItem="7Rw-J5-YmR" secondAttribute="width" multiplier="0.5" id="t6a-xm-shZ"/>
                                                 </constraints>
                                                 <variation key="default">
                                                     <mask key="constraints">
+                                                        <exclude reference="t6a-xm-shZ"/>
                                                         <exclude reference="69r-az-QI5"/>
                                                         <exclude reference="g7E-VP-0IB"/>
                                                     </mask>
                                                 </variation>
                                                 <variation key="heightClass=compact">
                                                     <mask key="constraints">
-                                                        <include reference="69r-az-QI5"/>
+                                                        <exclude reference="69r-az-QI5"/>
                                                     </mask>
                                                 </variation>
                                                 <variation key="heightClass=regular-widthClass=compact" axis="vertical">
                                                     <mask key="constraints">
                                                         <include reference="g7E-VP-0IB"/>
+                                                    </mask>
+                                                </variation>
+                                                <variation key="heightClass=regular-widthClass=regular">
+                                                    <mask key="constraints">
+                                                        <include reference="t6a-xm-shZ"/>
+                                                        <include reference="69r-az-QI5"/>
                                                     </mask>
                                                 </variation>
                                             </stackView>
