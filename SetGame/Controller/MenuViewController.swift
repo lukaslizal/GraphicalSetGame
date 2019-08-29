@@ -24,9 +24,13 @@ class MenuViewController: UIViewController {
         UIView.animate(withDuration: 0.5) {
             self.setNeedsStatusBarAppearanceUpdate()
         }
-        // new game
-        performSegue(withIdentifier: "showGame", sender: self)
-        
+        CATransaction.begin()
+        navigationController?.popToViewController(gameMVC!, animated: true)
+        CATransaction.setCompletionBlock({
+            self.gameMVC?.restartGame()
+        })
+        CATransaction.commit()
+
     }
     @IBOutlet weak var tutorialButton: UIButton!
     @IBOutlet weak var highScoresButton: UIButton!
@@ -41,7 +45,7 @@ class MenuViewController: UIViewController {
     }
     @IBOutlet weak var continueBar: UIView!
     @IBOutlet weak var logo: UIView!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -49,12 +53,10 @@ class MenuViewController: UIViewController {
         restartGameButton.layer.cornerRadius = restartGameButton.frame.height / 2
         tutorialButton.layer.cornerRadius = tutorialButton.frame.height / 2
         highScoresButton.layer.cornerRadius = highScoresButton.frame.height / 2
-        continueBar.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
-        continueBar.layer.cornerRadius = 5
-        continueBar.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
+//        continueBar.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
         continueBar.layer.cornerRadius = continueBar.frame.height / 2
         logo.layer.cornerRadius = restartGameButton.frame.height / 2
-        
+
         // Do any additional setup after loading the view.
 //        gameTitle.numberOfLines = 0
 //        gameTitle.textColor = Constants.gameTitleTextColor

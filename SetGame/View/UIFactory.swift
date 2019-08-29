@@ -26,7 +26,7 @@ class UIFactory {
     internal static func setupMenuButton(button: UIButton) -> UIButton {
         button.backgroundColor = Constants.buttonBackgroundColor
         button.layer.zPosition = 1
-        button.layer.cornerRadius = button.frame.height / 2.0
+        button.layer.cornerRadius = min(button.layer.bounds.width/2, button.layer.bounds.height/2)
         button.layer.shouldRasterize = true
         button.layer.rasterizationScale = UIScreen.main.scale
         return button
@@ -35,7 +35,7 @@ class UIFactory {
     internal static func setupScoreButton(label: UILabel) -> UILabel {
         label.backgroundColor = Constants.scoreLabelThemeColor
         label.superview?.layer.zPosition = 4
-        label.layer.cornerRadius = label.frame.height / 2.0
+        label.layer.cornerRadius = min(label.layer.bounds.width/2, label.layer.bounds.height/2)
         label.clipsToBounds = true
         label.layer.shouldRasterize = true
         label.layer.rasterizationScale = UIScreen.main.scale
@@ -45,7 +45,7 @@ class UIFactory {
     internal static func setupDealCardsButton(button: UIButton) -> UIButton {
         button.backgroundColor = Constants.buttonBackgroundColor
         button.layer.zPosition = 1
-        button.layer.cornerRadius = button.frame.height / 2.0
+        button.layer.cornerRadius = min(button.layer.bounds.width/2, button.layer.bounds.height/2)
         button.layer.shouldRasterize = true
         button.layer.rasterizationScale = UIScreen.main.scale
         button.titleLabel?.minimumScaleFactor = 0.5

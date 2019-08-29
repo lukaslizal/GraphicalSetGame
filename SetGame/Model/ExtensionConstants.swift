@@ -136,6 +136,6 @@ extension Game {
 
 extension PushVerticalAnimator {
     struct Constants {
-        static let transitionAnimationDuration: TimeInterval = 0.7
+        static let transitionAnimationDuration: TimeInterval = 1.2
     }
 }

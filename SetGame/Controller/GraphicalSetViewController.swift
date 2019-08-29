@@ -109,6 +109,7 @@ class GraphicalSetViewController: UIViewController, UINavigationControllerDelega
     @IBOutlet weak internal var dealCardsButton: UIButton!
     @IBOutlet weak internal var scoreLabel: UILabel!
     @IBOutlet weak internal var menuView: UIView!
+    @IBOutlet weak var menuBorder: UIView!
     @IBAction internal func newGamePressed(_ sender: UIButton) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "menu") {
             if let menuViewController = vc as? MenuViewController{
@@ -208,36 +209,38 @@ class GraphicalSetViewController: UIViewController, UINavigationControllerDelega
         // Do any additional setup after loading the view.
         self.navigationController?.delegate = self
         
-//        newGameButton.imageView?.contentMode = .scaleAspectFit
-//        newGameButton.imageView?.adjustsImageSizeForAccessibilityContentSizeCategory = false
+        newGameButton.imageView?.contentMode = .scaleAspectFit
         
         UIFactory.setup(viewController: self)
         UIFactory.setupUISwipeGesture(for: self)
         UIFactory.setupUIRotateGesture(for: self)
         self.menuView.layer.zPosition = 1000
-//        self.newGameButton.imageView?.tintColor = Constants.menuButtonsLabelTint
-//        self.dealCardsButton.imageView?.tintColor = Constants.menuButtonsLabelTint
+        self.menuBorder.layer.cornerRadius = min(menuBorder.layer.bounds.width/2, menuBorder.layer.bounds.height/2)
         newGame()
     }
-
+    
     internal override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         // When orientation changes targetGrid layout changes
         self.targetGridFlagLayoutChanged = true
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.tableGrid = UIFactory.updateGrid(toSize: self.game.cardsOnTable.count, inside: self.playingBoardView.layer.bounds)
-            self.updateUI()
             // Button as round as it gets.
             UIFactory.roundedCorners(on: self.newGameButton)
             UIFactory.roundedCorners(on: self.scoreLabel)
             UIFactory.roundedCorners(on: self.dealCardsButton)
             // Recalculate soft shadows.
-            UIFactory.customShadow(on: self.newGameButton)
-            UIFactory.customShadow(on: self.scoreLabel.superview)
-            UIFactory.customShadow(on: self.dealCardsButton)
-
+//            UIFactory.customShadow(on: self.newGameButton.superview)
+//            UIFactory.customShadow(on: self.scoreLabel.superview)
+//            UIFactory.customShadow(on: self.dealCardsButton.superview)
+//            UIFactory.customShadow(on: self.menuBorder)
+            
+            self.menuBorder.layer.cornerRadius = min(self.menuBorder.layer.bounds.width/2, self.menuBorder.layer.bounds.height/2)
+            
             // Setup deal button.
             UIFactory.setupDealCardsButton(button: self.dealCardsButton)
+            // Update UI (cards) after buttons have been set up. Cards animations are dependent on buttons corner radiuses and and frames.
+            self.updateUI()
         }
     }
 
@@ -247,6 +250,11 @@ class GraphicalSetViewController: UIViewController, UINavigationControllerDelega
 
     // MARK: CONTROLLER
 
+    internal func restartGame(){
+        newGame()
+        updateUI()
+    }
+    
     private func newGame() {
         resetUI()
         game = Game()
