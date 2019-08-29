@@ -207,6 +207,10 @@ class GraphicalSetViewController: UIViewController, UINavigationControllerDelega
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.navigationController?.delegate = self
+        
+//        newGameButton.imageView?.contentMode = .scaleAspectFit
+//        newGameButton.imageView?.adjustsImageSizeForAccessibilityContentSizeCategory = false
+        
         UIFactory.setup(viewController: self)
         UIFactory.setupUISwipeGesture(for: self)
         UIFactory.setupUIRotateGesture(for: self)
