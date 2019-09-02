@@ -20,7 +20,7 @@ extension UIView {
      Shakes UIView in a disapproving way (;_;)
      */
     internal func shake() {
-        let amplitude = UIScreen.main.bounds.width*Constants.shakeViewAmplitudeMultiplier < 15 ? 15 : UIScreen.main.bounds.width*Constants.shakeViewAmplitudeMultiplier
+        let amplitude = UIScreen.main.bounds.width*Constants.shakeViewAmplitudeMultiplier < Constants.shakeViewAmplitude ? Constants.shakeViewAmplitude : UIScreen.main.bounds.width*Constants.shakeViewAmplitudeMultiplier
         self.transform = CGAffineTransform(translationX: amplitude, y: 0)
         UIView.animate(withDuration: Constants.shakeViewDuration, delay: 0, usingSpringWithDamping: Constants.shakeViewSpringDamping, initialSpringVelocity: Constants.shakeViewInitialSpringVelocity, options: [.curveEaseInOut, .allowUserInteraction], animations: {
                 self.transform = CGAffineTransform.identity
@@ -30,7 +30,8 @@ extension UIView {
      Nods UIView in an approving way (^_^)
      */
     internal func nod() {
-        self.transform = CGAffineTransform(translationX: 0, y: -UIScreen.main.bounds.height*Constants.shakeViewAmplitudeMultiplier)
+        let amplitude = UIScreen.main.bounds.width*Constants.shakeViewAmplitudeMultiplier < Constants.nodViewAmplitude ? Constants.nodViewAmplitude : UIScreen.main.bounds.width*Constants.shakeViewAmplitudeMultiplier
+        self.transform = CGAffineTransform(translationX: 0, y: -amplitude)
         UIView.animate(withDuration: Constants.nodViewDuration, delay: 0, usingSpringWithDamping: Constants.nodViewSpringDamping, initialSpringVelocity: Constants.nodViewInitialSpringVelocity, options: [.curveEaseInOut, .allowUserInteraction], animations: {
                 self.transform = CGAffineTransform.identity
             }, completion: nil)

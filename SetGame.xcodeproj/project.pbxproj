@@ -50,11 +50,11 @@
 		3D8DEE8323016EBE00B33422 /* AnimationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationFactory.swift; sourceTree = "<group>"; };
 		3D8DEE8523016F1200B33422 /* UIFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFactory.swift; sourceTree = "<group>"; };
 		3DA5517A22C935CD00437A14 /* GraphicalSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphicalSetViewController.swift; sourceTree = "<group>"; };
-		3DA89D212318103000085626 /* CheGuevaraBarry-Brown.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "CheGuevaraBarry-Brown.ttf"; path = "../../../../../Desktop/CheGuevaraBarry-Brown.ttf"; sourceTree = "<group>"; };
-		3DA89D222318103000085626 /* BPreplay.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = BPreplay.otf; path = ../../../../../Desktop/BPreplay.otf; sourceTree = "<group>"; };
-		3DA89D232318103000085626 /* BPreplayBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = BPreplayBold.otf; path = ../../../../../Desktop/BPreplayBold.otf; sourceTree = "<group>"; };
-		3DA89D242318103000085626 /* BPreplayItalics.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = BPreplayItalics.otf; path = ../../../../../Desktop/BPreplayItalics.otf; sourceTree = "<group>"; };
-		3DA89D252318103100085626 /* BPreplayBoldItalics.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = BPreplayBoldItalics.otf; path = ../../../../../Desktop/BPreplayBoldItalics.otf; sourceTree = "<group>"; };
+		3DA89D212318103000085626 /* CheGuevaraBarry-Brown.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "CheGuevaraBarry-Brown.ttf"; path = "SetGame/Fonts/CheGuevaraBarry-Brown.ttf"; sourceTree = SOURCE_ROOT; };
+		3DA89D222318103000085626 /* BPreplay.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = BPreplay.otf; path = SetGame/Fonts/BPreplay.otf; sourceTree = SOURCE_ROOT; };
+		3DA89D232318103000085626 /* BPreplayBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = BPreplayBold.otf; path = SetGame/Fonts/BPreplayBold.otf; sourceTree = SOURCE_ROOT; };
+		3DA89D242318103000085626 /* BPreplayItalics.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = BPreplayItalics.otf; path = SetGame/Fonts/BPreplayItalics.otf; sourceTree = SOURCE_ROOT; };
+		3DA89D252318103100085626 /* BPreplayBoldItalics.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BPreplayBoldItalics.otf; sourceTree = "<group>"; };
 		3DB1ECED22B69D6500B70EB9 /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		3DB1ECF422BCD92000B70EB9 /* PlayingCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingCardView.swift; sourceTree = "<group>"; };
 		3DE3A79222E1F1CB00717455 /* ExtensionConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionConstants.swift; sourceTree = "<group>"; };

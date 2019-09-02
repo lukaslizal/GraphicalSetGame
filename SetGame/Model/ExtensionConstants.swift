@@ -32,6 +32,8 @@ extension MenuViewController {
     struct Constants {
         static let mainThemeBackgroundColor: UIColor = #colorLiteral(red: 0.590934428, green: 0.5910381495, blue: 0.5909208137, alpha: 1)
         static let gameTitleTextColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        static let continueButtonHighlightedColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        static let continueButtonColor: UIColor = #colorLiteral(red: 0.904109589, green: 0.8681550845, blue: 0.4986197281, alpha: 1)
     }
 }
 
@@ -43,7 +45,7 @@ extension UIView {
         static let shakeViewDuration: TimeInterval = 0.6
         static let shakeViewSpringDamping: CGFloat = 0.3
         static let shakeViewInitialSpringVelocity: CGFloat = 1
-        static let nodViewAmplitude: CGFloat = 12
+        static let nodViewAmplitude: CGFloat = 18
         static let nodViewDuration: TimeInterval = 0.4
         static let nodViewSpringDamping: CGFloat = 1
         static let nodViewInitialSpringVelocity: CGFloat = 1
@@ -129,13 +131,13 @@ extension ShapeView {
 
 extension Game {
     struct Constants {
-        static let cheatModeIsActive = false
+        static let cheatModeIsActive = true
         static let initialCardCountOnTable: Int = 21 // 20 cards is a maximum amount of card that can not create any set.
     }
 }
 
 extension PushVerticalAnimator {
     struct Constants {
-        static let transitionAnimationDuration: TimeInterval = 1.2
+        static let transitionAnimationDuration: TimeInterval = 1
     }
 }

@@ -31,10 +31,16 @@ import Foundation
 // hide statusbar ingame show in menu v
 // shake ampliture relative to screen size v
 // add menu button v
-// add main menu screen x
+// add main menu screen v
+// continue button reveal animation v
+// continue button animation flashing v
+// restart game confirmation v
+// score view
+// logo view
+// menu animated background
+// rework color scheme
 // make launch screen x
 // make gifs x
-// score label custom view animated rework x
 // add info/tutorial screen + first opening tutorial x
 // custom card button add target-action pattern x
 //
@@ -44,9 +50,7 @@ import Foundation
 // device rotation sometimes stuck in disabled flag mode bug v
 // shuffle not working bug v
 //
-// new game confirmation screen
-// animate cards away before confirmation screen
-// detect no more combinations -> end the game (other thread)
+// less than 21 cards remaining in pack -> end of game
 // add winner screen (Lottie animation)
 // add local persistant high score
 
