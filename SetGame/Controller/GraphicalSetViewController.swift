@@ -112,6 +112,7 @@ class GraphicalSetViewController: UIViewController, UINavigationControllerDelega
     @IBOutlet weak internal var newGameButton: UIButton!
     @IBOutlet weak internal var dealCardsButton: UIButton!
     @IBOutlet weak internal var scoreLabel: UILabel!
+    @IBOutlet weak var scoreView: UIView!
     @IBOutlet weak internal var menuView: UIView!
     @IBOutlet weak var menuBorder: UIView!
     @IBAction internal func newGamePressed(_ sender: UIButton) {
@@ -230,16 +231,18 @@ class GraphicalSetViewController: UIViewController, UINavigationControllerDelega
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.tableGrid = UIFactory.updateGrid(toSize: self.game.cardsOnTable.count, inside: self.playingBoardView.layer.bounds)
             // Button as round as it gets.
-            UIFactory.roundedCorners(on: self.newGameButton)
-            UIFactory.roundedCorners(on: self.scoreLabel)
-            UIFactory.roundedCorners(on: self.dealCardsButton)
-            // Recalculate soft shadows.
-//            UIFactory.customShadow(on: self.newGameButton.superview)
-//            UIFactory.customShadow(on: self.scoreLabel.superview)
-//            UIFactory.customShadow(on: self.dealCardsButton.superview)
-//            UIFactory.customShadow(on: self.menuBorder)
+            UIFactory.setMaxCornerRadius(on: self.newGameButton)
+            UIFactory.setMaxCornerRadius(on: self.scoreLabel)
+            UIFactory.setMaxCornerRadius(on: self.dealCardsButton)
+            self.scoreView.layer.cornerRadius = min(self.scoreView.frame.width, self.scoreView.frame.height) / 8
             
-            self.menuBorder.layer.cornerRadius = min(self.menuBorder.layer.bounds.width/2, self.menuBorder.layer.bounds.height/2)
+//            self.menuBorder.layer.cornerRadius = min(self.menuBorder.layer.bounds.width/2, self.menuBorder.layer.bounds.height/2)
+            
+            // Recalculate soft shadows.
+            UIFactory.customShadow(on: self.newGameButton.superview, color: Constants.blackShadowColor, offset: Constants.shadowOffset)
+            UIFactory.customShadow(on: self.scoreLabel.superview, color: Constants.blackShadowColor, offset: Constants.shadowOffset)
+            UIFactory.customShadow(on: self.dealCardsButton.superview, color: Constants.blackShadowColor, offset: Constants.shadowOffset)
+            UIFactory.customShadow(on: self.scoreView, color: Constants.blackShadowColor, offset: Constants.shadowOffset)
             
             // Setup deal button.
             UIFactory.setupDealCardsButton(button: self.dealCardsButton)
@@ -428,7 +431,7 @@ class GraphicalSetViewController: UIViewController, UINavigationControllerDelega
         if animationFlagSuccessMatch {
             UIApplication.shared.beginIgnoringInteractionEvents()
             freeRotationFlag = false
-            AnimationFactory.successMatchAnimation(matchedModel: Array(game.cardsMatched), tableModel: game.cardsOnTable, views: playingCardButtons, targetView: scoreLabel, completion: { (animationPosition) in self.view.nod()
+            AnimationFactory.successMatchAnimation(matchedModel: Array(game.cardsMatched), tableModel: game.cardsOnTable, views: playingCardButtons, targetView: scoreView, completion: { (animationPosition) in self.view.nod()
                     self.replaceMatchedCards()
                     self.animationFlagDealMoreCards = true
                     self.updateScoreLabel()

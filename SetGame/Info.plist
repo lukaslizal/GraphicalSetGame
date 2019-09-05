@@ -24,10 +24,6 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>BPreplay.otf</string>
-		<string>BPreplayBold.otf</string>
-		<string>BPreplayBoldItalics.otf</string>
-		<string>BPreplayItalics.otf</string>
 		<string>CheGuevaraBarry-Brown.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

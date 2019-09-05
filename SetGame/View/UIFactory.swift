@@ -83,20 +83,22 @@ class UIFactory {
         grid.cellCount = cellCount
         return grid
     }
-    internal static func roundedCorners(on view: UIView?) {
+    internal static func setMaxCornerRadius(on view: UIView?) {
         if let roundCornerView = view {
             roundCornerView.layer.cornerRadius = CGFloat.minimum(roundCornerView.frame.height, roundCornerView.frame.height) / 2.0 * Constants.cornerRoundnessFactor
         }
     }
-    internal static func customShadow(on view: UIView?) {
+    
+    internal static func customShadow(on view: UIView?, color: CGColor, offset: CGSize) {
         if let shadowView = view {
-            shadowView.layer.shadowPath = UIBezierPath(rect: shadowView.bounds.insetBy(dx: Constants.shadowInsets.width, dy: Constants.shadowInsets.height)).cgPath
-            shadowView.layer.shadowColor = Constants.shadowColor
+            //            shadowView.layer.shadowPath = UIBezierPath(rect: shadowView.bounds.insetBy(dx: Constants.shadowInsets.width, dy: Constants.shadowInsets.height)).cgPath
+            shadowView.layer.shadowColor = color
             shadowView.layer.shadowRadius = Constants.shadowRadius
             shadowView.layer.shadowOpacity = Constants.shadowOpacity
-            shadowView.layer.shadowOffset = Constants.shadowOffset
+            shadowView.layer.shadowOffset = offset
         }
     }
+    
     /**
      Returns only the cards that need any rearrangment on the table.
      */

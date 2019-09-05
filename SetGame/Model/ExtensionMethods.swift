@@ -20,7 +20,7 @@ extension UIView {
      Shakes UIView in a disapproving way (;_;)
      */
     internal func shake() {
-        let amplitude = UIScreen.main.bounds.width*Constants.shakeViewAmplitudeMultiplier < Constants.shakeViewAmplitude ? Constants.shakeViewAmplitude : UIScreen.main.bounds.width*Constants.shakeViewAmplitudeMultiplier
+        let amplitude = UIScreen.main.bounds.width * Constants.shakeViewAmplitudeMultiplier < Constants.shakeViewAmplitude ? Constants.shakeViewAmplitude : UIScreen.main.bounds.width * Constants.shakeViewAmplitudeMultiplier
         self.transform = CGAffineTransform(translationX: amplitude, y: 0)
         UIView.animate(withDuration: Constants.shakeViewDuration, delay: 0, usingSpringWithDamping: Constants.shakeViewSpringDamping, initialSpringVelocity: Constants.shakeViewInitialSpringVelocity, options: [.curveEaseInOut, .allowUserInteraction], animations: {
                 self.transform = CGAffineTransform.identity
@@ -30,7 +30,7 @@ extension UIView {
      Nods UIView in an approving way (^_^)
      */
     internal func nod() {
-        let amplitude = UIScreen.main.bounds.width*Constants.shakeViewAmplitudeMultiplier < Constants.nodViewAmplitude ? Constants.nodViewAmplitude : UIScreen.main.bounds.width*Constants.shakeViewAmplitudeMultiplier
+        let amplitude = UIScreen.main.bounds.width * Constants.shakeViewAmplitudeMultiplier < Constants.nodViewAmplitude ? Constants.nodViewAmplitude : UIScreen.main.bounds.width * Constants.shakeViewAmplitudeMultiplier
         self.transform = CGAffineTransform(translationX: 0, y: -amplitude)
         UIView.animate(withDuration: Constants.nodViewDuration, delay: 0, usingSpringWithDamping: Constants.nodViewSpringDamping, initialSpringVelocity: Constants.nodViewInitialSpringVelocity, options: [.curveEaseInOut, .allowUserInteraction], animations: {
                 self.transform = CGAffineTransform.identity
@@ -45,6 +45,23 @@ extension UIView {
         let originalFrame = frame
         transform = currentTransform
         return originalFrame
+    }
+    /**
+     Returns UIView snapshot image.
+    */
+    func asImage() -> UIImage {
+        if #available(iOS 10.0, *) {
+            let renderer = UIGraphicsImageRenderer(bounds: bounds)
+            return renderer.image { rendererContext in
+                layer.render(in: rendererContext.cgContext)
+            }
+        } else {
+            UIGraphicsBeginImageContext(self.frame.size)
+            self.layer.render(in: UIGraphicsGetCurrentContext()!)
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return UIImage(cgImage: image!.cgImage!)
+        }
     }
 }
 

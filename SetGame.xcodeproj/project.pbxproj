@@ -20,12 +20,9 @@
 		3D781D0D22F0672700D4D3C1 /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D781D0C22F0672700D4D3C1 /* Score.swift */; };
 		3D8DEE8423016EBE00B33422 /* AnimationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8DEE8323016EBE00B33422 /* AnimationFactory.swift */; };
 		3D8DEE8623016F1200B33422 /* UIFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8DEE8523016F1200B33422 /* UIFactory.swift */; };
+		3D93AEF7231D78EE00A3AA1E /* CheGuevaraBarry-Brown.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D93AEF6231D78EE00A3AA1E /* CheGuevaraBarry-Brown.ttf */; };
+		3D9BBC5F23214437008366D3 /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9BBC5E23214436008366D3 /* ScoreView.swift */; };
 		3DA5517B22C935CD00437A14 /* GraphicalSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA5517A22C935CD00437A14 /* GraphicalSetViewController.swift */; };
-		3DA89D262318103100085626 /* CheGuevaraBarry-Brown.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3DA89D212318103000085626 /* CheGuevaraBarry-Brown.ttf */; };
-		3DA89D272318103100085626 /* BPreplay.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3DA89D222318103000085626 /* BPreplay.otf */; };
-		3DA89D282318103100085626 /* BPreplayBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3DA89D232318103000085626 /* BPreplayBold.otf */; };
-		3DA89D292318103100085626 /* BPreplayItalics.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3DA89D242318103000085626 /* BPreplayItalics.otf */; };
-		3DA89D2A2318103100085626 /* BPreplayBoldItalics.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3DA89D252318103100085626 /* BPreplayBoldItalics.otf */; };
 		3DB1ECEE22B69D6500B70EB9 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1ECED22B69D6500B70EB9 /* Grid.swift */; };
 		3DB1ECF522BCD92000B70EB9 /* PlayingCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB1ECF422BCD92000B70EB9 /* PlayingCardView.swift */; };
 		3DE3A79322E1F1CB00717455 /* ExtensionConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE3A79222E1F1CB00717455 /* ExtensionConstants.swift */; };
@@ -49,12 +46,9 @@
 		3D781D0C22F0672700D4D3C1 /* Score.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
 		3D8DEE8323016EBE00B33422 /* AnimationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationFactory.swift; sourceTree = "<group>"; };
 		3D8DEE8523016F1200B33422 /* UIFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFactory.swift; sourceTree = "<group>"; };
+		3D93AEF6231D78EE00A3AA1E /* CheGuevaraBarry-Brown.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CheGuevaraBarry-Brown.ttf"; sourceTree = "<group>"; };
+		3D9BBC5E23214436008366D3 /* ScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreView.swift; sourceTree = "<group>"; };
 		3DA5517A22C935CD00437A14 /* GraphicalSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphicalSetViewController.swift; sourceTree = "<group>"; };
-		3DA89D212318103000085626 /* CheGuevaraBarry-Brown.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "CheGuevaraBarry-Brown.ttf"; path = "SetGame/Fonts/CheGuevaraBarry-Brown.ttf"; sourceTree = SOURCE_ROOT; };
-		3DA89D222318103000085626 /* BPreplay.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = BPreplay.otf; path = SetGame/Fonts/BPreplay.otf; sourceTree = SOURCE_ROOT; };
-		3DA89D232318103000085626 /* BPreplayBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = BPreplayBold.otf; path = SetGame/Fonts/BPreplayBold.otf; sourceTree = SOURCE_ROOT; };
-		3DA89D242318103000085626 /* BPreplayItalics.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = BPreplayItalics.otf; path = SetGame/Fonts/BPreplayItalics.otf; sourceTree = SOURCE_ROOT; };
-		3DA89D252318103100085626 /* BPreplayBoldItalics.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BPreplayBoldItalics.otf; sourceTree = "<group>"; };
 		3DB1ECED22B69D6500B70EB9 /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		3DB1ECF422BCD92000B70EB9 /* PlayingCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingCardView.swift; sourceTree = "<group>"; };
 		3DE3A79222E1F1CB00717455 /* ExtensionConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionConstants.swift; sourceTree = "<group>"; };
@@ -111,6 +105,7 @@
 				3D0DDFAC228ED2B200EF5FAE /* Game.swift */,
 				3D0DDFAE228ED2F400EF5FAE /* Card.swift */,
 				3D0DDFB12294059800EF5FAE /* ExtensionMethods.swift */,
+				3DB1ECED22B69D6500B70EB9 /* Grid.swift */,
 				3DE3A79222E1F1CB00717455 /* ExtensionConstants.swift */,
 				3D781D0C22F0672700D4D3C1 /* Score.swift */,
 			);
@@ -123,9 +118,9 @@
 				3DECE75C22C4FB7F00DF4624 /* ShapeView.swift */,
 				3D1E715D22E61FC00081CAE0 /* PlayingCardButton.swift */,
 				3DB1ECF422BCD92000B70EB9 /* PlayingCardView.swift */,
-				3DB1ECED22B69D6500B70EB9 /* Grid.swift */,
 				3D8DEE8523016F1200B33422 /* UIFactory.swift */,
 				3D8DEE8323016EBE00B33422 /* AnimationFactory.swift */,
+				3D9BBC5E23214436008366D3 /* ScoreView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -144,11 +139,7 @@
 		3DDF4BD522EF050E00030AC6 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				3DA89D222318103000085626 /* BPreplay.otf */,
-				3DA89D232318103000085626 /* BPreplayBold.otf */,
-				3DA89D252318103100085626 /* BPreplayBoldItalics.otf */,
-				3DA89D242318103000085626 /* BPreplayItalics.otf */,
-				3DA89D212318103000085626 /* CheGuevaraBarry-Brown.ttf */,
+				3D93AEF6231D78EE00A3AA1E /* CheGuevaraBarry-Brown.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -212,13 +203,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D0DDFA5228EBAE600EF5FAE /* LaunchScreen.storyboard in Resources */,
-				3DA89D292318103100085626 /* BPreplayItalics.otf in Resources */,
-				3DA89D282318103100085626 /* BPreplayBold.otf in Resources */,
-				3DA89D262318103100085626 /* CheGuevaraBarry-Brown.ttf in Resources */,
-				3DA89D272318103100085626 /* BPreplay.otf in Resources */,
+				3D93AEF7231D78EE00A3AA1E /* CheGuevaraBarry-Brown.ttf in Resources */,
 				3D0DDFA2228EBAE600EF5FAE /* Assets.xcassets in Resources */,
 				3D0DDFA0228EBAE400EF5FAE /* Main.storyboard in Resources */,
-				3DA89D2A2318103100085626 /* BPreplayBoldItalics.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +219,7 @@
 				3D8DEE8423016EBE00B33422 /* AnimationFactory.swift in Sources */,
 				3DECE75D22C4FB7F00DF4624 /* ShapeView.swift in Sources */,
 				3D0DDFB22294059800EF5FAE /* ExtensionMethods.swift in Sources */,
+				3D9BBC5F23214437008366D3 /* ScoreView.swift in Sources */,
 				3DE89BA423019B0E00587188 /* MenuViewController.swift in Sources */,
 				3D1E715E22E61FC00081CAE0 /* PlayingCardButton.swift in Sources */,
 				3D4E677F23117BB900513046 /* PushVerticalAnimator.swift in Sources */,

@@ -25,15 +25,22 @@ extension GraphicalSetViewController {
         static let scoreGradeFourthSuffix: String = " 🥉"
         static let scoreGradeFifthSuffix: String = " 🥔"
         static let scoreZeroValue: String = "💩"
+        static let shadowOffset: CGSize = CGSize(width: 0, height: 5)
+        static let blackShadowColor: CGColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
     }
 }
 
 extension MenuViewController {
     struct Constants {
-        static let mainThemeBackgroundColor: UIColor = #colorLiteral(red: 0.590934428, green: 0.5910381495, blue: 0.5909208137, alpha: 1)
-        static let gameTitleTextColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        static let mainThemeBackgroundColor: UIColor = #colorLiteral(red: 0.9791627526, green: 0.9965469241, blue: 0.9675421119, alpha: 1)
         static let continueButtonHighlightedColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         static let continueButtonColor: UIColor = #colorLiteral(red: 0.904109589, green: 0.8681550845, blue: 0.4986197281, alpha: 1)
+        static let gameLogoTextColor: UIColor = #colorLiteral(red: 0.5318900347, green: 0.6458258629, blue: 0.9886173606, alpha: 1)
+        static let creditsTextColor: UIColor = #colorLiteral(red: 0.8968842446, green: 0.4420605146, blue: 0.6203331355, alpha: 1)
+        static let gameLogoBackgroundColor: UIColor = #colorLiteral(red: 0.9998316169, green: 0.9947374601, blue: 0.8880715051, alpha: 1)
+        static let shadowOffset: CGSize = CGSize(width: 0, height: 0)
+        static let blueShadowColor: CGColor = #colorLiteral(red: 0.103215372, green: 0.009988584561, blue: 0.3595890411, alpha: 1)
+        static let logoShadowColor: CGColor = #colorLiteral(red: 0.1312425712, green: 0, blue: 0.3047945205, alpha: 0.4691780822)
     }
 }
 
@@ -62,10 +69,7 @@ extension UIFactory {
         static let buttonBackgroundColor: UIColor = UIColor.white
         static let cornerRoundnessFactor: CGFloat = 1
         static let shadowRadius: CGFloat = 15
-        static let shadowOpacity: Float = 0.7
-        static let shadowOffset: CGSize = CGSize(width: 0, height: 15)
-        static let shadowInsets: CGSize = CGSize(width: 2, height: 20)
-        static let shadowColor: CGColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        static let shadowOpacity: Float = 0.3
     }
 }
 
@@ -123,7 +127,8 @@ extension ShapeView {
         static let symbolStrokeWidthToSymbolHeight: CGFloat = 1 / 10
         static let hatchStep: CGFloat = 6
         static let hatchStrokeWidth: CGFloat = 3
-        static let shapeColors: [UIColor] = [#colorLiteral(red: 0.4474182725, green: 0.9546989799, blue: 0.6607666612, alpha: 1), #colorLiteral(red: 0.9279355407, green: 0.3509399891, blue: 0.611196816, alpha: 1), #colorLiteral(red: 0.8460462689, green: 0.5130195022, blue: 0.9950392842, alpha: 1)]
+        static let shapeColors: [UIColor] = [#colorLiteral(red: 0.3864297653, green: 0.8245619936, blue: 0.5706961953, alpha: 1), #colorLiteral(red: 0.9279355407, green: 0.3509399891, blue: 0.611196816, alpha: 1), #colorLiteral(red: 0.8460462689, green: 0.5130195022, blue: 0.9950392842, alpha: 1)]
+        //[#colorLiteral(red: 0.4474182725, green: 0.9546989799, blue: 0.6607666612, alpha: 1), #colorLiteral(red: 0.9279355407, green: 0.3509399891, blue: 0.611196816, alpha: 1), #colorLiteral(red: 0.8460462689, green: 0.5130195022, blue: 0.9950392842, alpha: 1)]
         //[#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)]
         //[#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.897260274, green: 0.680268734, blue: 0, alpha: 1)] //[#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)]
     }
