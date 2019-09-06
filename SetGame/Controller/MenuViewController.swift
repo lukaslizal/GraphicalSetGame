@@ -10,11 +10,25 @@ import UIKit
 
 // TODO: Cleanup code, refactor, add comments, implement score indicator, menu->game poptransition - profile performance (many cards gets stuttery)
 
+/**
+ Game menu.
+ 
+ Displays:
+ + Interactive logo with credits
+ + Continue game button with score bar
+ + Restart game (with confirmation)
+ + Tutorial Button
+ + Highscores Button
+ 
+ ViewController's main feature is responsive UI, works in both landscape and portrait mode and all device sizes
+ 
+ - author:
+ Lukas Lizal
+ */
 class MenuViewController: UIViewController, UIDynamicAnimatorDelegate {
 
-    private var isStatusbarHidden: Bool = true
     internal var gameMVC: GraphicalSetViewController?
-
+    private var isStatusbarHidden: Bool = true
     private var dynamicAnimator: UIDynamicAnimator!
     private var snapBehavior: UISnapBehavior!
     private var disableRotationBehavior: UIDynamicItemBehavior!
@@ -113,6 +127,8 @@ class MenuViewController: UIViewController, UIDynamicAnimatorDelegate {
         }
     }
 
+//    When seting self as delegate snap interaction stops working properly.
+//    Instead of using this delegate method there is Dispatch queue with delay in pan handler method
 //    func dynamicAnimatorDidPause(_ animator: UIDynamicAnimator) {
 //        self.gameLogoDragPlaceholder.isHidden = true
 //        self.gameLogoView.isHidden = false
@@ -148,10 +164,10 @@ class MenuViewController: UIViewController, UIDynamicAnimatorDelegate {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(pan))
         gameLogoView.addGestureRecognizer(panGesture)
         gameLogoView.isUserInteractionEnabled = true
-//        gameLogoDragPlaceholder.addGestureRecognizer(panGesture)
-//        gameLogoDragPlaceholder.isUserInteractionEnabled = true
 
         dynamicAnimator = UIDynamicAnimator(referenceView: gameLogoContainer)
+//      When seting self as delegate snap interaction stops working properly.
+//      Instead of using this delegate method there is Dispatch queue with delay in pan handler method
 //        dynamicAnimator.delegate = self
         snapBehavior = UISnapBehavior(item: gameLogoDragPlaceholder, snapTo: CGPoint(x: gameLogoContainer.center.x, y: gameLogoContainer.center.y - 10))
         snapBehavior.damping = 0.2
@@ -166,7 +182,7 @@ class MenuViewController: UIViewController, UIDynamicAnimatorDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
                 self.snapBehavior.snapPoint = CGPoint(x: self.gameLogoContainer.center.x, y: self.gameLogoContainer.center.y - 10)
 
-                //        creditsLabel
+                //        creditsLabels
                 self.creditsLabels[0].text = "by"
                 self.creditsLabels[0].font = self.creditsLabels[0].font.withSize(self.gameLogoContainer.frame.height / 6)
                 self.creditsLabels[0].textColor = Constants.creditsTextColor
@@ -178,7 +194,6 @@ class MenuViewController: UIViewController, UIDynamicAnimatorDelegate {
                 self.creditsLabels[1].textColor = Constants.creditsTextColor
                 self.creditsLabels[1].numberOfLines = 2
                 UIFactory.customShadow(on: self.creditsLabels[1], color: Constants.blueShadowColor, offset: CGSize.zero)
-                //        creditsLabel.adjustsFontSizeToFitWidth = true
             })
 
         continueGameButton.layer.cornerRadius = continueGameButton.frame.height / 2
@@ -198,11 +213,11 @@ class MenuViewController: UIViewController, UIDynamicAnimatorDelegate {
         gameLogoView.layer.cornerRadius = gameLogoContainer.frame.width / 5
         gameLogoLabel.font = gameLogoLabel.font.withSize(gameLogoLabel.frame.height)
         gameLogoLabel.adjustsFontSizeToFitWidth = true
+        
         for view in gameLogoBackgroundCardDeck {
             view.layer.cornerRadius = gameLogoContainer.frame.width / 5
         }
-
-
+        
         for index in 0..<gameLogoShapeStack.arrangedSubviews.count {
             let shapeViews = gameLogoShapeStack.arrangedSubviews as! [ShapeView]
             let shapeView = shapeViews[index]
@@ -212,23 +227,14 @@ class MenuViewController: UIViewController, UIDynamicAnimatorDelegate {
         }
 
         UIFactory.customShadow(on: gameLogoView.superview, color: Constants.logoShadowColor, offset: Constants.shadowOffset)
-
         UIFactory.customShadow(on: continueGameButton, color: Constants.blueShadowColor, offset: Constants.shadowOffset)
-
         UIFactory.customShadow(on: scoreView, color: Constants.blueShadowColor, offset: Constants.shadowOffset)
-
         UIFactory.customShadow(on: restartGameButton, color: Constants.blueShadowColor, offset: Constants.shadowOffset)
-
         UIFactory.customShadow(on: yesRestartButton, color: Constants.blueShadowColor, offset: Constants.shadowOffset)
-
         UIFactory.customShadow(on: noRestartButton, color: Constants.blueShadowColor, offset: Constants.shadowOffset)
-
         UIFactory.customShadow(on: confirmationRestartButton, color: Constants.blueShadowColor, offset: Constants.shadowOffset)
-
         UIFactory.customShadow(on: tutorialButton, color: Constants.blueShadowColor, offset: Constants.shadowOffset)
-
         UIFactory.customShadow(on: highScoresButton, color: Constants.blueShadowColor, offset: Constants.shadowOffset)
-
     }
 
     internal override func viewDidAppear(_ animated: Bool) {

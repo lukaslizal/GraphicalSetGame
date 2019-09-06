@@ -1,0 +1,6 @@
+framework module Pods_SetGame {
+  umbrella header "Pods-SetGame-umbrella.h"
+
+  export *
+  module * { export * }
+}

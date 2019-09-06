@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import Lottie
 
 // TODO:
 // animated deal v
@@ -35,11 +36,11 @@ import Foundation
 // continue button reveal animation v
 // continue button animation flashing v
 // restart game confirmation v
-// score view
-// logo view
-// menu animated background
-// rework color scheme
-// make launch screen x
+// score view v
+// logo view v
+// menu background
+// rework color scheme v
+// make launch screen v
 // make gifs x
 // add info/tutorial screen + first opening tutorial x
 // custom card button add target-action pattern x
@@ -56,9 +57,18 @@ import Foundation
 
 /**
  Displays actual gameplay screen.
- ## Basic game rules:
- 1. Three cards, where two cards share same one feature but third card does not, is not considered a set.
- 2. Any other three cards are considered a set
+ 
+ Displays menu bar which consists of:
+    + pause game button
+    + score indicator view
+    + deal more cards on table button
+ Another part of screen represents table with cards.
+ 
+ ViewController's features:
+    + refreshing View to reflect Model changes, changing Model according to user input
+    + refresh View using animations
+    + UI is responsive, works in both landscape and portrait mode and all device sizes
+ 
  
  - author:
  Lukas Lizal
@@ -121,12 +131,7 @@ class GraphicalSetViewController: UIViewController, UINavigationControllerDelega
                 menuViewController.gameMVC = self
                 navigationController?.pushViewController(menuViewController, animated: true)
             }
-//            present(vc, animated: true, completion: {
-//                print("menuPresented")
-//            })
         }
-//        newGame()
-//        updateUI()
     }
     @IBAction internal func dealCardsPressed(_ sender: UIButton) {
         dealThreeCards()
@@ -230,13 +235,12 @@ class GraphicalSetViewController: UIViewController, UINavigationControllerDelega
         self.targetGridFlagLayoutChanged = true
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.tableGrid = UIFactory.updateGrid(toSize: self.game.cardsOnTable.count, inside: self.playingBoardView.layer.bounds)
+            
             // Button as round as it gets.
             UIFactory.setMaxCornerRadius(on: self.newGameButton)
             UIFactory.setMaxCornerRadius(on: self.scoreLabel)
             UIFactory.setMaxCornerRadius(on: self.dealCardsButton)
             self.scoreView.layer.cornerRadius = min(self.scoreView.frame.width, self.scoreView.frame.height) / 8
-            
-//            self.menuBorder.layer.cornerRadius = min(self.menuBorder.layer.bounds.width/2, self.menuBorder.layer.bounds.height/2)
             
             // Recalculate soft shadows.
             UIFactory.customShadow(on: self.newGameButton.superview, color: Constants.blackShadowColor, offset: Constants.shadowOffset)

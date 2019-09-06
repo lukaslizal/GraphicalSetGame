@@ -34,12 +34,12 @@ extension MenuViewController {
     struct Constants {
         static let mainThemeBackgroundColor: UIColor = #colorLiteral(red: 0.9791627526, green: 0.9965469241, blue: 0.9675421119, alpha: 1)
         static let continueButtonHighlightedColor: UIColor = #colorLiteral(red: 1, green: 0.6393888441, blue: 0.5101942697, alpha: 1)
-        static let continueButtonColor: UIColor = #colorLiteral(red: 1, green: 0.9747960535, blue: 0.7157534247, alpha: 1)
+        static let continueButtonColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         static let gameLogoTextColor: UIColor = #colorLiteral(red: 0.5318900347, green: 0.6458258629, blue: 0.9886173606, alpha: 1)
         static let creditsTextColor: UIColor = #colorLiteral(red: 0.9998316169, green: 0.9947374601, blue: 0.8880715051, alpha: 1) // #colorLiteral(red: 0.8968842446, green: 0.4420605146, blue: 0.6203331355, alpha: 1)
         static let gameLogoBackgroundColor: UIColor = #colorLiteral(red: 0.9998316169, green: 0.9947374601, blue: 0.8880715051, alpha: 1)
         static let shadowOffset: CGSize = CGSize(width: 0, height: 0)
-        static let blueShadowColor: CGColor = #colorLiteral(red: 0.000983003544, green: 9.512937688e-05, blue: 0.003424657538, alpha: 0.5616438356)
+        static let blueShadowColor: CGColor = #colorLiteral(red: 0.000983003544, green: 9.512937688e-05, blue: 0.003424657538, alpha: 0.7397260274)
         static let logoShadowColor: CGColor = #colorLiteral(red: 0.1312425712, green: 0, blue: 0.3047945205, alpha: 0.4691780822)
     }
 }
@@ -143,7 +143,7 @@ extension ShapeView {
 
 extension Game {
     struct Constants {
-        static let cheatModeIsActive = true
+        static let cheatModeIsActive = false
         static let initialCardCountOnTable: Int = 21 // 20 cards is a maximum amount of card that can not create any set.
     }
 }
