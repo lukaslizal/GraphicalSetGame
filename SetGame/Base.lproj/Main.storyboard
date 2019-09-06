@@ -71,7 +71,7 @@
                                                                                 <attributedString key="attributedText">
                                                                                     <fragment content="by Lukáš Lízal">
                                                                                         <attributes>
-                                                                                            <color key="NSColor" red="0.89688424459041094" green="0.44206051457740486" blue="0.62033313548490587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                             <font key="NSFont" size="36" name="CheGuevaraBarry-Brown"/>
                                                                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                                         </attributes>
@@ -378,7 +378,7 @@
                                                                     </button>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="11O-tW-0ep" customClass="ScoreView" customModule="SetGame" customModuleProvider="target">
                                                                         <rect key="frame" x="56" y="0.0" width="558.5" height="50"/>
-                                                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     </view>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XUE-6b-OTw">
                                                                         <rect key="frame" x="50" y="0.0" width="564.5" height="50"/>
@@ -548,9 +548,9 @@
                                                                     <constraint firstAttribute="bottom" secondItem="tlS-CL-TZw" secondAttribute="bottom" id="cnV-jm-bTW"/>
                                                                 </constraints>
                                                             </view>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qHe-Lc-61S">
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qHe-Lc-61S" customClass="ScoreView" customModule="SetGame" customModuleProvider="target">
                                                                 <rect key="frame" x="58" y="0.0" width="534" height="50"/>
-                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </view>
                                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8ph-6O-Mv3" userLabel="ScoreContainer">
                                                                 <rect key="frame" x="596" y="0.0" width="0.0" height="50"/>

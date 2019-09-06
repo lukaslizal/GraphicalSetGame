@@ -32,7 +32,7 @@ class MenuViewController: UIViewController, UIDynamicAnimatorDelegate {
     @IBOutlet weak var gameLogoShapeStack: UIStackView!
     @IBOutlet var gameLogoBackgroundCardDeck: [UIView]!
     @IBOutlet var creditsLabels: [UILabel]!
-    
+
     @IBOutlet weak var restartGameButton: UIButton!
     @IBAction func restartGameConfirmation(_ sender: Any) {
         // show confirmation dialogue
@@ -171,11 +171,13 @@ class MenuViewController: UIViewController, UIDynamicAnimatorDelegate {
                 self.creditsLabels[0].font = self.creditsLabels[0].font.withSize(self.gameLogoContainer.frame.height / 6)
                 self.creditsLabels[0].textColor = Constants.creditsTextColor
                 self.creditsLabels[0].numberOfLines = 1
-            
-            self.creditsLabels[1].text = "Lukáš\nLízal"
-            self.creditsLabels[1].font = self.creditsLabels[1].font.withSize(self.gameLogoContainer.frame.height / 6)
-            self.creditsLabels[1].textColor = Constants.creditsTextColor
-            self.creditsLabels[1].numberOfLines = 2
+                UIFactory.customShadow(on: self.creditsLabels[0], color: Constants.blueShadowColor, offset: CGSize.zero)
+
+                self.creditsLabels[1].text = "Lukáš\nLízal"
+                self.creditsLabels[1].font = self.creditsLabels[1].font.withSize(self.gameLogoContainer.frame.height / 6)
+                self.creditsLabels[1].textColor = Constants.creditsTextColor
+                self.creditsLabels[1].numberOfLines = 2
+                UIFactory.customShadow(on: self.creditsLabels[1], color: Constants.blueShadowColor, offset: CGSize.zero)
                 //        creditsLabel.adjustsFontSizeToFitWidth = true
             })
 

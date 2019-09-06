@@ -112,7 +112,7 @@ class GraphicalSetViewController: UIViewController, UINavigationControllerDelega
     @IBOutlet weak internal var newGameButton: UIButton!
     @IBOutlet weak internal var dealCardsButton: UIButton!
     @IBOutlet weak internal var scoreLabel: UILabel!
-    @IBOutlet weak var scoreView: UIView!
+    @IBOutlet weak var scoreView: ScoreView!
     @IBOutlet weak internal var menuView: UIView!
     @IBOutlet weak var menuBorder: UIView!
     @IBAction internal func newGamePressed(_ sender: UIButton) {
