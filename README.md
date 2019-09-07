@@ -14,11 +14,11 @@ Player needs to find such three cards that together must fulfill all four follow
 
 ## Game Mechanics Examples
 
-Following three cards together **MAKE** set:
+According to rules from above, following three cards together **MAKE** set:
 
 ![Set](GIF/successfulSet.png)
 
-Following three cards together **DON'T MAKE** set:
+And following three cards together **DON'T MAKE** set:
 
 ![Not a set](GIF/unsuccessfulSet.png)
 
