@@ -8,7 +8,7 @@
 
 import UIKit
 
-// TODO: Cleanup code, refactor, add comments, implement score indicator, menu->game poptransition - profile performance (many cards gets stuttery)
+// TODO: Cleanup code, UIFactory, add comments, implement score indicator, menu->game poptransition - profile performance (many cards gets stuttery)
 
 /**
  Game menu.
@@ -61,6 +61,7 @@ class MenuViewController: UIViewController, UIDynamicAnimatorDelegate {
     @IBAction func yesRestart(_ sender: Any) {
         restartGame()
     }
+    
     @IBOutlet weak var noRestartButton: UIButton!
     @IBAction func abortRestart(_ sender: Any) {
         // hide confirmation dialogue
@@ -79,7 +80,6 @@ class MenuViewController: UIViewController, UIDynamicAnimatorDelegate {
     @IBAction func continueGame(_ sender: Any) {
         // hide confirmation dialogue
         isStatusbarHidden = true
-
         self.continueBarVerticalCenterConstraint.constant = 100
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
@@ -88,7 +88,7 @@ class MenuViewController: UIViewController, UIDynamicAnimatorDelegate {
             self.setNeedsStatusBarAppearanceUpdate()
         }
         // continue game
-        navigationController?.popToViewController(gameMVC!, animated: true)
+        presentingViewController?.dismiss(animated: true, completion: nil)
     }
     @IBOutlet weak var continueBar: UIView!
     @IBOutlet weak var continueBarVerticalCenterConstraint: NSLayoutConstraint!
@@ -105,7 +105,6 @@ class MenuViewController: UIViewController, UIDynamicAnimatorDelegate {
             gameLogoDragPlaceholder.center = gameLogoView.center
             gameLogoDragPlaceholder.layer.cornerRadius = gameLogoView.layer.cornerRadius
             gameLogoDragPlaceholder.backgroundColor = UIColor(patternImage: snapshot)
-//            gameLogoDragPlaceholder.backgroundColor = .red
             gameLogoView.isHidden = true
             gameLogoDragPlaceholder.isHidden = false
         case .changed:
@@ -126,6 +125,13 @@ class MenuViewController: UIViewController, UIDynamicAnimatorDelegate {
             break
         }
     }
+    
+    @objc func appWillEnterForeground() {
+        continueGameButton.backgroundColor = Constants.continueButtonHighlightedColor
+        UIView.animate(withDuration: 0.8, delay: 0, options: [.curveEaseInOut, .repeat, .autoreverse, .allowUserInteraction], animations: {
+            self.continueGameButton.backgroundColor = Constants.continueButtonColor
+        }, completion: nil)
+    }
 
 //    When seting self as delegate snap interaction stops working properly.
 //    Instead of using this delegate method there is Dispatch queue with delay in pan handler method
@@ -137,6 +143,7 @@ class MenuViewController: UIViewController, UIDynamicAnimatorDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification , object: nil)
         let backgroundView = UIView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 100, height: 100)))
         view.addSubview(backgroundView)
         view.sendSubviewToBack(backgroundView)
@@ -150,11 +157,6 @@ class MenuViewController: UIViewController, UIDynamicAnimatorDelegate {
 
         view.clipsToBounds = true
         continueBarVerticalCenterConstraint.constant = 100
-
-        continueGameButton.backgroundColor = Constants.continueButtonColor
-        UIView.animate(withDuration: 0.8, delay: 0, options: [.curveEaseInOut, .repeat, .autoreverse, .allowUserInteraction], animations: {
-                self.continueGameButton.backgroundColor = Constants.continueButtonHighlightedColor
-            }, completion: nil)
 
         gameLogoLabel.textColor = Constants.gameLogoTextColor
         gameLogoView.backgroundColor = Constants.gameLogoBackgroundColor
@@ -243,12 +245,18 @@ class MenuViewController: UIViewController, UIDynamicAnimatorDelegate {
         UIView.animate(withDuration: 0.5) {
             self.setNeedsStatusBarAppearanceUpdate()
         }
+        
+        continueGameButton.backgroundColor = Constants.continueButtonHighlightedColor
+        UIView.animate(withDuration: 0.8, delay: 0, options: [.curveEaseInOut, .repeat, .autoreverse, .allowUserInteraction], animations: {
+            self.continueGameButton.backgroundColor = Constants.continueButtonColor
+        }, completion: nil)
+        
         self.continueBarVerticalCenterConstraint.constant = 0
         UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 10, options: [.curveEaseOut], animations: {
                 self.view.layoutIfNeeded()
             }, completion: nil)
     }
-
+    
     private func restartGame() {
         isStatusbarHidden = true
 
@@ -256,16 +264,14 @@ class MenuViewController: UIViewController, UIDynamicAnimatorDelegate {
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
-
         UIView.animate(withDuration: 0.5) {
             self.setNeedsStatusBarAppearanceUpdate()
         }
-        CATransaction.begin()
-        navigationController?.popToViewController(gameMVC!, animated: true)
-        CATransaction.setCompletionBlock({
+        // Clear out playing table before transitioning to restarted game.
+        self.gameMVC?.flushGame()
+        presentingViewController?.dismiss(animated: true, completion: {
             self.gameMVC?.restartGame()
         })
-        CATransaction.commit()
     }
 
 }

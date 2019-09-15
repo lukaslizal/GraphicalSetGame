@@ -41,19 +41,21 @@ import Lottie
 // menu background
 // rework color scheme v
 // make launch screen v
-// make gifs x
+// make gifs v
+// score view
 // add info/tutorial screen + first opening tutorial x
 // custom card button add target-action pattern x
+// profile performance/memory x
+// rework transitions - remove Navigation Controller, use segues + rewind x
+// less than 21 cards remaining in pack -> end of game x
+// add winner screen (Lottie animation) x
+// add local persistant high score x
 //
 // deselect transfrom.identity doesnt scale to size of other cards v
 // autolayout on (furious) device rotation breakdown v
 // make card draw subrects as vertical stackview v
 // device rotation sometimes stuck in disabled flag mode bug v
 // shuffle not working bug v
-//
-// less than 21 cards remaining in pack -> end of game
-// add winner screen (Lottie animation)
-// add local persistant high score
 
 /**
  Displays actual gameplay screen.
@@ -73,12 +75,11 @@ import Lottie
  - author:
  Lukas Lizal
  */
-class GraphicalSetViewController: UIViewController, UINavigationControllerDelegate, CardTap {
+class GraphicalSetViewController: UIViewController, CardTap {
 
     // MARK: STORED PROPERTIES
     
     internal var transitionAnimator = PushVerticalAnimator()
-    
     private var game: Game = Game()
     var playingCardButtons: [PlayingCardButton] = []
     private var targetGridFlagLayoutChanged = true
@@ -129,16 +130,29 @@ class GraphicalSetViewController: UIViewController, UINavigationControllerDelega
         if let vc = storyboard?.instantiateViewController(withIdentifier: "menu") {
             if let menuViewController = vc as? MenuViewController{
                 menuViewController.gameMVC = self
-                navigationController?.pushViewController(menuViewController, animated: true)
+//                menuViewController.modalPresentationStyle = .custom
+//                self.modalPresentationStyle = .custom
+                menuViewController.transitioningDelegate = self
+//                self.transitioningDelegate = self
+                present(menuViewController, animated: true, completion: nil)
+//                performSegue(withIdentifier: "menuSegue", sender: self)
+//                navigationController?.pushViewController(menuViewController, animated: true)
             }
         }
     }
+    
     @IBAction internal func dealCardsPressed(_ sender: UIButton) {
         dealThreeCards()
         updateUI()
         updateScoreLabel()
     }
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let menuVC = segue.destination as? MenuViewController{
+            menuVC.gameMVC = self
+        }
+    }
+    
     // MARK: TOUCH CONTROLS
 
     internal func tapped(playingCardButton: PlayingCardButton) -> Bool {
@@ -197,27 +211,14 @@ class GraphicalSetViewController: UIViewController, UINavigationControllerDelega
             return
         }
     }
-    
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
-        switch operation {
-        case .push:
-            transitionAnimator.presenting = true
-            return transitionAnimator
-        case .pop:
-            transitionAnimator.presenting = false
-            return transitionAnimator
-        default:
-            return nil
-        }
-    }
 
     // MARK: VIEWCONTROLLER OVERRIDE METHODS
 
     internal override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        self.navigationController?.delegate = self
+//        self.navigationController?.delegate = self
+        
         
         newGameButton.imageView?.contentMode = .scaleAspectFit
         
@@ -264,6 +265,10 @@ class GraphicalSetViewController: UIViewController, UINavigationControllerDelega
     internal func restartGame(){
         newGame()
         updateUI()
+    }
+    
+    internal func flushGame(){
+        game = Game(with: 0)
     }
     
     private func newGame() {
@@ -462,3 +467,31 @@ extension GraphicalSetViewController: UIGestureRecognizerDelegate {
     }
 }
 
+//extension GraphicalSetViewController:  UINavigationControllerDelegate {
+//    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//
+//        switch operation {
+//        case .push:
+//            transitionAnimator.presenting = true
+//            return transitionAnimator
+//        case .pop:
+//            transitionAnimator.presenting = false
+//            return transitionAnimator
+//        default:
+//            return nil
+//        }
+//    }
+//}
+
+extension GraphicalSetViewController:  UIViewControllerTransitioningDelegate {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transitionAnimator.presenting = false
+        return transitionAnimator
+    }
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transitionAnimator.presenting = true
+        return transitionAnimator
+//        return nil
+    }
+}

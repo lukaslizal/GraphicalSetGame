@@ -106,13 +106,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetGame/Controller/GraphicalSetViewController.swift"
-            timestampString = "589479221.716906"
+            timestampString = "590257942.572313"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "283"
-            endingLineNumber = "283"
-            landmarkName = "resetUI()"
-            landmarkType = "7">
+            startingLineNumber = "288"
+            endingLineNumber = "288"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -122,13 +122,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetGame/Controller/GraphicalSetViewController.swift"
-            timestampString = "589479221.717273"
+            timestampString = "590257942.5729311"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "301"
-            endingLineNumber = "301"
-            landmarkName = "GraphicalSetViewController"
-            landmarkType = "3">
+            startingLineNumber = "306"
+            endingLineNumber = "306"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -143,6 +143,22 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "87"
             endingLineNumber = "87"
+            landmarkName = "longPressHandler(sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SetGame/Controller/GraphicalSetViewController.swift"
+            timestampString = "590257942.5734119"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -154,29 +170,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetGame/Controller/GraphicalSetViewController.swift"
-            timestampString = "589479221.717468"
+            timestampString = "590257942.573836"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
-            landmarkName = "dealCardsPressed(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SetGame/Controller/GraphicalSetViewController.swift"
-            timestampString = "589479221.717679"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
-            landmarkName = "dealCardsPressed(_:)"
-            landmarkType = "7">
+            startingLineNumber = "148"
+            endingLineNumber = "148"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -191,8 +191,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "86"
             endingLineNumber = "86"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "longPressHandler(sender:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -202,13 +202,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetGame/Controller/GraphicalSetViewController.swift"
-            timestampString = "589479221.717864"
+            timestampString = "590257942.574276"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "284"
-            endingLineNumber = "284"
-            landmarkName = "GraphicalSetViewController"
-            landmarkType = "3">
+            startingLineNumber = "289"
+            endingLineNumber = "289"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

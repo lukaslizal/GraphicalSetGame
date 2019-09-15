@@ -20,7 +20,6 @@
 		3D231B242323CE42006F3926 /* successfulSet.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D231B222323CE42006F3926 /* successfulSet.png */; };
 		3D231B252323CE42006F3926 /* unsuccessfulSet.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D231B232323CE42006F3926 /* unsuccessfulSet.png */; };
 		3D4E677F23117BB900513046 /* PushVerticalAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4E677E23117BB900513046 /* PushVerticalAnimator.swift */; };
-		3D4E67832313C5C600513046 /* GameNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4E67822313C5C600513046 /* GameNavigationController.swift */; };
 		3D781D0D22F0672700D4D3C1 /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D781D0C22F0672700D4D3C1 /* Score.swift */; };
 		3D8DEE8423016EBE00B33422 /* AnimationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8DEE8323016EBE00B33422 /* AnimationFactory.swift */; };
 		3D8DEE8623016F1200B33422 /* UIFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8DEE8523016F1200B33422 /* UIFactory.swift */; };
@@ -71,7 +70,6 @@
 		3D231B222323CE42006F3926 /* successfulSet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = successfulSet.png; sourceTree = "<group>"; };
 		3D231B232323CE42006F3926 /* unsuccessfulSet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unsuccessfulSet.png; sourceTree = "<group>"; };
 		3D4E677E23117BB900513046 /* PushVerticalAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushVerticalAnimator.swift; sourceTree = "<group>"; };
-		3D4E67822313C5C600513046 /* GameNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameNavigationController.swift; sourceTree = "<group>"; };
 		3D781D0C22F0672700D4D3C1 /* Score.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
 		3D8DEE8323016EBE00B33422 /* AnimationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationFactory.swift; sourceTree = "<group>"; };
 		3D8DEE8523016F1200B33422 /* UIFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFactory.swift; sourceTree = "<group>"; };
@@ -204,7 +202,6 @@
 				3DA5517A22C935CD00437A14 /* GraphicalSetViewController.swift */,
 				3DE89BA323019B0E00587188 /* MenuViewController.swift */,
 				3D4E677E23117BB900513046 /* PushVerticalAnimator.swift */,
-				3D4E67822313C5C600513046 /* GameNavigationController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -418,7 +415,6 @@
 				3D1E715E22E61FC00081CAE0 /* PlayingCardButton.swift in Sources */,
 				3D4E677F23117BB900513046 /* PushVerticalAnimator.swift in Sources */,
 				3D8DEE8623016F1200B33422 /* UIFactory.swift in Sources */,
-				3D4E67832313C5C600513046 /* GameNavigationController.swift in Sources */,
 				3DB1ECF522BCD92000B70EB9 /* PlayingCardView.swift in Sources */,
 				3D0DDFAD228ED2B200EF5FAE /* Game.swift in Sources */,
 				3DE3A79322E1F1CB00717455 /* ExtensionConstants.swift in Sources */,

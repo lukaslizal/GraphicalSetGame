@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TsQ-Xl-qD1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LeF-HA-Qhp">
     <device id="ipad10_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -500,7 +500,6 @@
                         <outletCollection property="gameLogoBackgroundCardDeck" destination="yzi-1F-TgT" collectionClass="NSMutableArray" id="ZaM-cG-Rq3"/>
                         <outletCollection property="creditsLabels" destination="M5U-ta-5I7" collectionClass="NSMutableArray" id="W4z-V4-ZtV"/>
                         <outletCollection property="creditsLabels" destination="1av-Jp-llO" collectionClass="NSMutableArray" id="RCS-PC-hBw"/>
-                        <segue destination="LeF-HA-Qhp" kind="show" identifier="showGame" id="r8d-4g-TMW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8JB-Si-TIT" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -731,39 +730,17 @@
                         <outlet property="playingBoardView" destination="XaF-xk-YXw" id="tDT-Bn-jeu"/>
                         <outlet property="scoreLabel" destination="J0e-Xa-vgq" id="xrv-kc-U3M"/>
                         <outlet property="scoreView" destination="qHe-Lc-61S" id="sID-3e-970"/>
+                        <segue destination="iH1-yq-4D8" kind="presentation" identifier="menuSegue" id="Mu5-zx-Q8a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Irc-b7-OJ3" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="6eP-aa-xwN"/>
             </objects>
-            <point key="canvasLocation" x="-336.01756954612006" y="1311.9140625"/>
-        </scene>
-        <!--Game Navigation Controller-->
-        <scene sceneID="T3r-ls-Q9V">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="TsQ-Xl-qD1" customClass="GameNavigationController" customModule="SetGame" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="KlT-mE-SFw">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="C4g-sV-nr3">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
-                    <connections>
-                        <segue destination="LeF-HA-Qhp" kind="relationship" relationship="rootViewController" id="BPx-vG-YN3"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tTe-KY-p6O" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1331.25" y="972.88732394366195"/>
+            <point key="canvasLocation" x="-1188" y="261"/>
         </scene>
     </scenes>
     <resources>
         <image name="pauseLighter" width="100" height="100"/>
         <image name="playLighter" width="100" height="100"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="r8d-4g-TMW"/>
-    </inferredMetricsTieBreakers>
 </document>
