@@ -106,13 +106,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetGame/Controller/GraphicalSetViewController.swift"
-            timestampString = "590257942.572313"
+            timestampString = "590661024.60232"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "288"
             endingLineNumber = "288"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "resetUI()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -122,13 +122,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetGame/Controller/GraphicalSetViewController.swift"
-            timestampString = "590257942.5729311"
+            timestampString = "590661024.603177"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "306"
             endingLineNumber = "306"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "GraphicalSetViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -138,7 +138,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetGame/View/PlayingCardButton.swift"
-            timestampString = "589409127.3988121"
+            timestampString = "590661024.603832"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "87"
@@ -154,13 +154,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetGame/Controller/GraphicalSetViewController.swift"
-            timestampString = "590257942.5734119"
+            timestampString = "590661024.604475"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "146"
             endingLineNumber = "146"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "dealCardsPressed(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -170,13 +170,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetGame/Controller/GraphicalSetViewController.swift"
-            timestampString = "590257942.573836"
+            timestampString = "590661024.605085"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "148"
             endingLineNumber = "148"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "dealCardsPressed(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -186,7 +186,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetGame/View/PlayingCardButton.swift"
-            timestampString = "589409127.400579"
+            timestampString = "590661024.605811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "86"
@@ -202,13 +202,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SetGame/Controller/GraphicalSetViewController.swift"
-            timestampString = "590257942.574276"
+            timestampString = "590661024.606369"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "289"
             endingLineNumber = "289"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "GraphicalSetViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
